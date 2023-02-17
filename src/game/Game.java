@@ -55,7 +55,8 @@ public class Game {
 
 
         //3. make a view to look into the game world
-        UserView view = new UserView(game.getWorld(), 500, 500);
+//        UserView view = new UserView(game.getWorld(), 500, 500);
+        GameView view = new GameView(game, 500, 500);
 
 
         //optional: draw a 1-metre grid over the view
