@@ -8,11 +8,13 @@ public class Student extends DynamicBody {
     private static final BodyImage image = new BodyImage("data/student.png", 4f);
     private int credits;
 
+
     public Student(World world) {
         super(world, studentImage);
         addImage(image);
         this.credits = 0;
     }
+
 
     public int getCredits() {
         return credits;

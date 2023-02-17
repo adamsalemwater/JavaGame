@@ -21,19 +21,19 @@ public class Game {
     public Game() {
 
         //1. make an empty game world
-        World world = new World();
+//        World world = new World();
 
         //2. populate it with bodies (ex: platforms, collectibles, characters)
 
         //make a ground platform
-        Shape shape = new BoxShape(30, 0.5f);
-        StaticBody ground = new StaticBody(world, shape);
-        ground.setPosition(new Vec2(0f, -11.5f));
+//        Shape shape = new BoxShape(30, 0.5f);
+//        StaticBody ground = new StaticBody(world, shape);
+//        ground.setPosition(new Vec2(0f, -11.5f));
 
         // make a suspended platform
-        Shape platformShape = new BoxShape(3, 0.5f);
-        StaticBody platform1 = new StaticBody(world, platformShape);
-        platform1.setPosition(new Vec2(-8, -4f));
+//        Shape platformShape = new BoxShape(3, 0.5f);
+//        StaticBody platform1 = new StaticBody(world, platformShape);
+//        platform1.setPosition(new Vec2(-8, -4f));
 
         //make a character (with an overlaid image)
 //        Shape studentShape = new BoxShape(1,2);
@@ -41,7 +41,11 @@ public class Game {
 //        student.setPosition(new Vec2(4,-5));
 //        student.addImage(new BodyImage("data/student.png", 4));
 
-        Student student = new Student(world);
+        // use GameWorld class to create and populate the world
+
+        GameWorld game = new GameWorld();
+
+        Student student = new Student(game.getWorld());
         student.setPosition(new Vec2(7,-9));
 
         student.setLinearVelocity(new Vec2(0, 4));
@@ -49,8 +53,9 @@ public class Game {
         student.setCredits(15);
 
 
+
         //3. make a view to look into the game world
-        UserView view = new UserView(world, 500, 500);
+        UserView view = new UserView(game.getWorld(), 500, 500);
 
 
         //optional: draw a 1-metre grid over the view
@@ -74,10 +79,10 @@ public class Game {
         frame.setVisible(true);
 
         //optional: uncomment this to make a debugging view
-         JFrame debugView = new DebugViewer(world, 500, 500);
+         JFrame debugView = new DebugViewer(game.getWorld(), 500, 500);
 
         // start our game world simulation!
-        world.start();
+//        world.start();
     }
 
     /** Run the game. */
