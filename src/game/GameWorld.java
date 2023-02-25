@@ -9,6 +9,7 @@ import org.jbox2d.common.Vec2;
 public class GameWorld extends World {
 
     private World world;
+    private Student student;
 
     public GameWorld() {
         super();
@@ -21,7 +22,7 @@ public class GameWorld extends World {
         ground.setPosition(new Vec2(0f, -11.5f));
 
         // make the character
-        Student student = new Student(this);
+        student = new Student(this);
         student.setPosition(new Vec2(7, -9));
 
         // add everything that makes the world such as platforms and other objects
@@ -30,9 +31,14 @@ public class GameWorld extends World {
         // make a suspended platform
         Shape platformShape = new BoxShape(3, 0.5f);
         StaticBody platform1 = new StaticBody(world, platformShape);
-        platform1.setPosition(new Vec2(-8, -4f));
+        platform1.setPosition(new Vec2(-8, -4));
+
 
         this.world.start();
+    }
+
+    public Student getStudent() {
+        return student;
     }
 
     public World getWorld() {

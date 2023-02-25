@@ -48,15 +48,24 @@ public class Game {
         Student student = new Student(game.getWorld());
         student.setPosition(new Vec2(7,-9));
 
-        student.setLinearVelocity(new Vec2(0, 4));
+//        student.setLinearVelocity(new Vec2(0, 4));
 
         student.setCredits(15);
+
+        StudentController studentController = new StudentController(game.getStudent());
 
 
 
         //3. make a view to look into the game world
 //        UserView view = new UserView(game.getWorld(), 500, 500);
-        GameView view = new GameView(game, 500, 500);
+        GameView view = new GameView(game.getWorld(), 500, 500);
+
+
+        view.addKeyListener(studentController);
+
+
+
+
 
 
         //optional: draw a 1-metre grid over the view
@@ -84,6 +93,9 @@ public class Game {
 
         // start our game world simulation!
 //        world.start();
+
+        view.requestFocus();
+
     }
 
     /** Run the game. */
