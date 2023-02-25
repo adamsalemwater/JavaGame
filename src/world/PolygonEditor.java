@@ -1,4 +1,4 @@
-package game;
+package world;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;
@@ -6,7 +6,6 @@ import java.awt.Image;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Color;
-import java.awt.Point;
 import java.awt.RenderingHints;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
@@ -241,7 +240,7 @@ public class PolygonEditor extends JPanel
      * @param args command line arguments.
      */
     public static void main(String[] args) {
-        String fileName = "data/student.png";
+        String fileName = "data/Slingshot.png";
         float boxHeight = 4.0f;
         int firstCoordIndex = 0;
         if (args.length > 0) {

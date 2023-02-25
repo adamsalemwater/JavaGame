@@ -1,4 +1,4 @@
-package game;
+package world;
 
 import city.cs.engine.BoxShape;
 import city.cs.engine.Shape;
@@ -9,7 +9,9 @@ import org.jbox2d.common.Vec2;
 public class GameWorld extends World {
 
     private World world;
-    private Student student;
+
+
+    private Slingshot slingshotBoy;
 
     public GameWorld() {
         super();
@@ -21,11 +23,14 @@ public class GameWorld extends World {
         StaticBody ground = new StaticBody(this.world, shape);
         ground.setPosition(new Vec2(0f, -11.5f));
 
-        // make the character
-        student = new Student(this);
-        student.setPosition(new Vec2(7, -9));
+        // make the boy with the slingshot character
+
+        slingshotBoy = new Slingshot(world);
+        slingshotBoy.setPosition(new Vec2(0, -9));
 
         // add everything that makes the world such as platforms and other objects
+
+
 
 
         // make a suspended platform
@@ -37,9 +42,11 @@ public class GameWorld extends World {
         this.world.start();
     }
 
-    public Student getStudent() {
-        return student;
+    public Slingshot getSlingshotBoy() {
+        return slingshotBoy;
     }
+
+
 
     public World getWorld() {
         return world;

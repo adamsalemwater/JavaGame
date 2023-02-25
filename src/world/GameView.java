@@ -1,4 +1,4 @@
-package game;
+package world;
 
 import city.cs.engine.UserView;
 import city.cs.engine.World;
