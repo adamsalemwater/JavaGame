@@ -70,7 +70,8 @@ public class Game {
 
         view.addKeyListener(slingshotStudentController);
 
-       view.requestFocus();
+        view.requestFocus();
+        
     }
 
     /** Run the game. */

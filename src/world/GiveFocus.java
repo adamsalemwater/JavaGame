@@ -18,7 +18,7 @@ public class GiveFocus implements MouseListener {
 
     @Override
     public void mousePressed(MouseEvent e) {
-
+        System.out.println("The mouse was pressed");
     }
 
     @Override
