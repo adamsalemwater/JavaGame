@@ -13,7 +13,6 @@ public class GiveFocus implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-
     }
 
     @Override
@@ -33,6 +32,5 @@ public class GiveFocus implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
-
     }
 }

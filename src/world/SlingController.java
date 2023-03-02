@@ -30,13 +30,12 @@ public class SlingController implements KeyListener {
         }
         if (code == KeyEvent.VK_W) {
             slingshotBoy.jump(5);
-            slingshotBoy.stopWalking();
             System.out.println("jump");
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-
+        slingshotBoy.stopWalking();
     }
 }
