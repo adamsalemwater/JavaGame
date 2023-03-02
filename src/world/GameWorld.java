@@ -31,7 +31,7 @@ public class GameWorld extends World {
 
         // add everything that makes the world such as platforms and other objects
 
-        
+
 
 
         // create two suspended platforms using a for loop
