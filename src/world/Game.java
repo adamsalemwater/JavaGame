@@ -71,13 +71,10 @@ public class Game {
 
         view.addKeyListener(slingshotStudentController);
 
-<<<<<<< Updated upstream
        view.requestFocus();
 
-=======
         view.requestFocus();
         
->>>>>>> Stashed changes
     }
 
     /** Run the game. */
