@@ -11,7 +11,7 @@ public class GameWorld extends World {
     private Slingshot slingshotBoy;
     private Dragon dragon;
 
-    public GameWorld() {
+    public GameWorld()  {
         super();
 
         this.world = new World();
@@ -33,7 +33,7 @@ public class GameWorld extends World {
         // make the enemy dragon facing the boy
 
         dragon = new Dragon(world);
-        dragon.setPosition(new Vec2(7,-9));
+        dragon.setPosition(new Vec2(7,-10));
 
         // add everything that makes the world such as platforms and other objects
 
@@ -52,6 +52,20 @@ public class GameWorld extends World {
             platform1.addImage(suspendedPlatform);
 
         }
+
+        // add a mushroom which the boy can use to bounce onto the suspended platforms
+
+        BodyImage mushroomImage = new BodyImage("data/Mushroom.png", 2.5f);
+        Shape mushroomShape = new PolygonShape(-0.067f,1.245f, 1.244f,0.206f, 0.175f,-1.131f, -1.265f,0.047f
+        );
+        StaticBody mushroomBody = new StaticBody(world, mushroomShape);
+        mushroomBody.setPosition(new Vec2(0, -9));
+        mushroomBody.addImage(mushroomImage);
+        SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
+        mushroomBounce.setRestitution(2.5f);
+
+
+
 
 
         this.world.start();
