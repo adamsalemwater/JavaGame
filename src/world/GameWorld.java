@@ -9,6 +9,7 @@ public class GameWorld extends World {
 
 
     private Slingshot slingshotBoy;
+    private Dragon dragon;
 
     public GameWorld() {
         super();
@@ -27,7 +28,12 @@ public class GameWorld extends World {
         // make the boy with the slingshot character
 
         slingshotBoy = new Slingshot(world);
-        slingshotBoy.setPosition(new Vec2(0, -9));
+        slingshotBoy.setPosition(new Vec2(-5, -9));
+
+        // make the enemy dragon facing the boy
+
+        dragon = new Dragon(world);
+        dragon.setPosition(new Vec2(7,-9));
 
         // add everything that makes the world such as platforms and other objects
 
@@ -49,6 +55,10 @@ public class GameWorld extends World {
 
 
         this.world.start();
+    }
+
+    public Dragon getDragon() {
+        return dragon;
     }
 
     public Slingshot getSlingshotBoy() {

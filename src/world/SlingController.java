@@ -21,11 +21,11 @@ public class SlingController implements KeyListener {
 
 
         if (code == KeyEvent.VK_A) {
-            slingshotBoy.startWalking(-5);
+            slingshotBoy.startWalking(-4);
             System.out.println("move left");
         }
         if (code == KeyEvent.VK_D) {
-            slingshotBoy.startWalking(5);
+            slingshotBoy.startWalking(4);
             System.out.println("move right");
         }
         if (code == KeyEvent.VK_W) {
