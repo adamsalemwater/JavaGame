@@ -9,6 +9,8 @@ import javax.swing.JFrame;
  */
 public class Game {
 
+    // struggling with git
+
 
     /** Initialise a new Game. */
     public Game() {
