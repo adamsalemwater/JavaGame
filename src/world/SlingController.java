@@ -1,14 +1,18 @@
 package world;
 
+import city.cs.engine.World;
+
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 public class SlingController implements KeyListener {
 
     private Slingshot slingshotBoy;
+    private World world;
 
-    public SlingController(Slingshot slingshotBoy) {
+    public SlingController(Slingshot slingshotBoy, World world) {
         this.slingshotBoy = slingshotBoy;
+        this.world = world;
     }
     @Override
     public void keyTyped(KeyEvent e) {
@@ -21,17 +25,25 @@ public class SlingController implements KeyListener {
 
 
         if (code == KeyEvent.VK_A) {
+              if (slingshotBoy.isRightFacing()) {
+                  slingshotBoy.removeAllImages();
+                  slingshotBoy.switchRightFacing();
+                  slingshotBoy.setImage();
+              }
             slingshotBoy.startWalking(-4);
-            System.out.println("move left");
         }
         if (code == KeyEvent.VK_D) {
+            if (!slingshotBoy.isRightFacing()) {
+                slingshotBoy.removeAllImages();
+                slingshotBoy.switchRightFacing();
+                slingshotBoy.setImage();
+            }
             slingshotBoy.startWalking(4);
-            System.out.println("move right");
         }
         if (code == KeyEvent.VK_W) {
             slingshotBoy.jump(5);
-            System.out.println("jump");
         }
+
     }
 
     @Override

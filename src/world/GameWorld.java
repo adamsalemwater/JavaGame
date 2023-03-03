@@ -27,8 +27,10 @@ public class GameWorld extends World {
 
         // make the boy with the slingshot character
 
-        slingshotBoy = new Slingshot(world);
-        slingshotBoy.setPosition(new Vec2(-5, -9));
+        slingshotBoy = new Slingshot(world, -5, -9, true);
+        slingshotBoy.setImage();
+
+        // check if call to switchImage changes the side the image is looking in
 
         // make the enemy dragon facing the boy
 
@@ -40,18 +42,35 @@ public class GameWorld extends World {
 
 
 
-        // create two suspended platforms using a for loop
+        // create two suspended platforms using a for loop on the same y-axis
 
-        for (int xCoord=-8; xCoord < 10; xCoord+=15) {
 
-            int yCoord = -4;
-            BodyImage suspendedPlatform = new BodyImage("data/platform.png", 5f);
+
+        for (int xCoord=-5; xCoord < 15; xCoord+=10) {
+
+            int yCoord = 0;
+            BodyImage platformImage2 = new BodyImage("data/platform.png", 5f);
             Shape platformShape = new PolygonShape(-3.05f,1.31f, 2.57f,1.29f, 2.55f,-0.41f, -3.03f,-0.41f);
-            StaticBody platform1 = new StaticBody(world, platformShape);
-            platform1.setPosition(new Vec2(xCoord, yCoord));
-            platform1.addImage(suspendedPlatform);
+            StaticBody platform = new StaticBody(world, platformShape);
+            platform.setPosition(new Vec2(xCoord, yCoord));
+            platform.addImage(platformImage2);
 
         }
+
+        // create a two small platform which are near the edges of the screen
+
+        for (int xCoord=-10; xCoord<15; xCoord+=20) {
+
+            float yCoord = -4.5f;
+            BodyImage platformImage3 = new BodyImage("data/platform.png", 3.5f);
+            Shape platformShape = new PolygonShape(-2.09f,0.85f, 1.8f,0.88f, 1.78f,-0.3f
+            );
+            StaticBody platform = new StaticBody(world, platformShape);
+            platform.setPosition(new Vec2(xCoord, yCoord));
+            platform.addImage(platformImage3);
+        }
+
+
 
         // add a mushroom which the boy can use to bounce onto the suspended platforms
 

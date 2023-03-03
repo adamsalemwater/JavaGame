@@ -22,6 +22,7 @@ public class Game {
 
 
 
+
 //        student.setLinearVelocity(new Vec2(0, 4));
 
 
@@ -67,7 +68,7 @@ public class Game {
 
 
 
-        SlingController slingshotStudentController = new SlingController(slingshotBoy);
+        SlingController slingshotStudentController = new SlingController(slingshotBoy, world);
 
         view.addKeyListener(slingshotStudentController);
 
