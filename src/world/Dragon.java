@@ -35,15 +35,16 @@ public class Dragon extends Walker implements ActionListener, StepListener {
         this.move = 1.5f;
 
         this.setPosition(new Vec2(x, y));
-        this.startWalking(move);
         world.addStepListener(this);
     }
 
    public void setImage() {
         if (this.rightFacing) {
             this.addImage(dragonImageRight);
+            this.startWalking(move);
         } else {
             this.addImage(dragonImageLeft);
+            this.startWalking(-move);
         }
    }
 
@@ -75,13 +76,11 @@ public class Dragon extends Walker implements ActionListener, StepListener {
             this.removeAllImages();
             this.switchImage();
             this.setImage();
-            this.startWalking(-move);
         }
         if (this.getPosition().x < leftBorder) {
             this.removeAllImages();
             this.switchImage();
             this.setImage();
-            this.startWalking(move);
         }
     }
 

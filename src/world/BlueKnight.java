@@ -13,12 +13,19 @@ public class BlueKnight extends Walker implements StepListener {
     private static final BodyImage blueKnightAttackRight = new BodyImage("data/BlueKnightAttackRight.png", 12f);
     private static final BodyImage blueKnightAttackLeft = new BodyImage("data/BlueKnightAttackLeft.png", 12f);
 
-    boolean rightFacing;
+    private boolean rightFacing;
+    private float move, rightBorder, leftBorder;
 
     public BlueKnight(World world, float x, float y, boolean rightFacing) {
         super(world, knightShape);
         this.rightFacing = rightFacing;
+
+        this.rightBorder = -2.5f;
+        this.leftBorder = -7.0f;
+        this.move = 1.3f;
+
         this.setPosition(new Vec2(x, y));
+        world.addStepListener(this);
     }
 
     public void switchDirection() {
@@ -29,8 +36,10 @@ public class BlueKnight extends Walker implements StepListener {
         this.removeAllImages();
         if (this.rightFacing) {
             this.addImage(blueKnightRight);
+            this.startWalking(move);
         } else {
             this.addImage(blueKnightLeft);
+            this.startWalking(-move);
         }
     }
 
@@ -45,7 +54,16 @@ public class BlueKnight extends Walker implements StepListener {
 
     @Override
     public void preStep(StepEvent stepEvent) {
-
+        if ((this.getPosition().x > rightBorder)) {
+            this.removeAllImages();
+            this.switchDirection();
+            this.setImage();
+        }
+        if (this.getPosition().x < leftBorder) {
+            this.removeAllImages();
+            this.switchDirection();
+            this.setImage();
+        }
     }
 
     @Override
