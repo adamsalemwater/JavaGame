@@ -71,6 +71,5 @@ public class SlingController implements KeyListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         slingshotBoy.removeAllImages();
         slingshotBoy.setImage();
-        System.out.println("Reverted back to normal image");
     }
 }

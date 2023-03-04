@@ -3,7 +3,7 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-public class BlueKnight extends Walker {
+public class BlueKnight extends Walker implements StepListener {
 
     private static final Shape knightShape = new PolygonShape(-1.54f,0.93f, -0.09f,0.93f, -0.09f,-0.82f, -1.54f,-0.74f
     );
@@ -41,5 +41,15 @@ public class BlueKnight extends Walker {
         } else {
             this.addImage(blueKnightAttackLeft);
         }
+    }
+
+    @Override
+    public void preStep(StepEvent stepEvent) {
+
+    }
+
+    @Override
+    public void postStep(StepEvent stepEvent) {
+
     }
 }

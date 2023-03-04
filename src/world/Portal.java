@@ -11,8 +11,6 @@ public class Portal extends StaticBody{
     private boolean isRed;
     private Portal otherPortal;
 
-    private StaticBody portalBody;
-
     public Portal(World world, float x, float y, boolean isRed) {
 
         super(world, portalShape);

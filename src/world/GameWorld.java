@@ -27,13 +27,13 @@ public class GameWorld extends World {
 
         // make the boy with the slingshot character
 
-        slingshotBoy = new Slingshot(world, -5, -9, true);
+        slingshotBoy = new Slingshot(world, -5, -9f, true);
         slingshotBoy.setImage();
 
 
         // create a dragon object
 
-        dragon = new Dragon(world, 4, -10, false);
+        dragon = new Dragon(world, 4, -8, true);
         dragon.setImage();
 
 
@@ -90,7 +90,7 @@ public class GameWorld extends World {
             mushroomBody.setPosition(new Vec2(xCoord, -8));
             mushroomBody.addImage(mushroomImage);
             SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
-            mushroomBounce.setRestitution(2.5f);
+            mushroomBounce.setRestitution(2);
         }
 
 
@@ -110,11 +110,11 @@ public class GameWorld extends World {
         Portal redPortal = new Portal(world, -12, 6, true);
         Portal bluePortal = new Portal(world, 12, 6.3f, false);
 
-        Portal redPortal1 = new Portal(world, -12, -2.5f,true, redPortal);
+        Portal redPortal2 = new Portal(world, -12, -2.5f,true, redPortal);
         Portal bluePortal2 = new Portal(world, 12, -2.2f, false, bluePortal);
 
 
-        CollisionListener clRed = new PortalCollision(redPortal1);
+        CollisionListener clRed = new PortalCollision(redPortal2);
         CollisionListener clBlue = new PortalCollision(bluePortal2);
         slingshotBoy.addCollisionListener(clRed);
         slingshotBoy.addCollisionListener(clBlue);

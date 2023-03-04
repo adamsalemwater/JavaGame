@@ -63,21 +63,19 @@ public class Game {
         //optional: uncomment this to make a debugging view
          JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
 
-        // start our game world simulation!
-//        world.start();
-
-
 
         SlingController slingshotStudentController = new SlingController(slingshotBoy, world);
 
         view.addKeyListener(slingshotStudentController);
 
-       view.requestFocus();
-
         view.requestFocus();
 
         Tracker slingshotTracker = new Tracker(view, slingshotBoy);
         world.addStepListener(slingshotTracker);
+
+
+        // start our game world simulation
+        world.start();
         
     }
 

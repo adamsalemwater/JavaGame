@@ -2,6 +2,7 @@ package world;
 
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.CollisionListener;
+import org.jbox2d.common.Vec2;
 
 public class PortalCollision implements CollisionListener {
 
@@ -16,7 +17,7 @@ public class PortalCollision implements CollisionListener {
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Portal) {
-            collisionEvent.getReportingBody().setPosition(this.portal.getOtherPortal().getPosition());
+            collisionEvent.getReportingBody().setPosition(portal.getOtherPortal().getPosition());
         }
     }
 }
