@@ -17,8 +17,8 @@ public class GameWorld extends World {
         this.world = new World();
 
         // make the ground
-        BodyImage platformImage = new BodyImage("data/platform.png",14f);
-        Shape shape = new PolygonShape(-8.42f,3.73f, 7.08f,3.78f, 7.19f,-1.1f, -8.48f,-1.1f);
+        BodyImage platformImage = new BodyImage("data/platform.png",18f);
+        Shape shape = new PolygonShape(-10.97f,4.52f, 9.18f,4.38f, 9.18f,-1.35f, -10.9f,-1.69f);
         StaticBody ground = new StaticBody(this.world, shape);
         SolidFixture actualGround = new SolidFixture(ground, shape);
         actualGround.setFriction(1f);
@@ -30,12 +30,12 @@ public class GameWorld extends World {
         slingshotBoy = new Slingshot(world, -5, -9, true);
         slingshotBoy.setImage();
 
-        // check if call to switchImage changes the side the image is looking in
 
-        // make the enemy dragon facing the boy
+        // create a dragon object
 
-        dragon = new Dragon(world);
-        dragon.setPosition(new Vec2(7,-10));
+        dragon = new Dragon(world, 4, -10, false);
+        dragon.setImage();
+
 
         // add everything that makes the world such as platforms and other objects
 
@@ -57,14 +57,21 @@ public class GameWorld extends World {
 
         }
 
+        // create a blue knight on one platform and a red knight on the other
+
+        Knight blueKnight = new Knight(world, -5, 0, true, false);
+        blueKnight.setImage();
+
+        Knight redKnight = new Knight(world, 5,0,false, true);
+        redKnight.setImage();
+
         // create a two small platform which are near the edges of the screen
 
-        for (int xCoord=-10; xCoord<15; xCoord+=20) {
+        for (int xCoord=-12; xCoord<15; xCoord+=24) {
 
             float yCoord = -4.5f;
             BodyImage platformImage3 = new BodyImage("data/platform.png", 3.5f);
-            Shape platformShape = new PolygonShape(-2.09f,0.85f, 1.8f,0.88f, 1.78f,-0.3f
-            );
+            Shape platformShape = new PolygonShape(-2.11f,0.88f, 1.8f,0.88f, 1.78f,-0.29f, -2.11f,-0.32f);
             StaticBody platform = new StaticBody(world, platformShape);
             platform.setPosition(new Vec2(xCoord, yCoord));
             platform.addImage(platformImage3);
@@ -72,16 +79,22 @@ public class GameWorld extends World {
 
 
 
-        // add a mushroom which the boy can use to bounce onto the suspended platforms
+        // add two mushrooms either side of the ground which the boy can use to bounce onto the suspended platforms
 
-        BodyImage mushroomImage = new BodyImage("data/Mushroom.png", 2.5f);
-        Shape mushroomShape = new PolygonShape(-0.067f,1.245f, 1.244f,0.206f, 0.175f,-1.131f, -1.265f,0.047f
-        );
-        StaticBody mushroomBody = new StaticBody(world, mushroomShape);
-        mushroomBody.setPosition(new Vec2(0, -9));
-        mushroomBody.addImage(mushroomImage);
-        SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
-        mushroomBounce.setRestitution(2.5f);
+        for (int xCoord=-9; xCoord<10; xCoord+=17) {
+            BodyImage mushroomImage = new BodyImage("data/Mushroom.png", 2.5f);
+            Shape mushroomShape = new PolygonShape(-0.067f,1.245f, 1.244f,0.206f, 0.175f,-1.131f, -1.265f,0.047f
+            );
+            StaticBody mushroomBody = new StaticBody(world, mushroomShape);
+            mushroomBody.setPosition(new Vec2(xCoord, -8));
+            mushroomBody.addImage(mushroomImage);
+            SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
+            mushroomBounce.setRestitution(2.5f);
+        }
+
+
+
+
 
 
 

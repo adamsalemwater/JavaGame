@@ -42,9 +42,14 @@ public class Slingshot extends Walker {
     }
 
     public void shootingImage() {
-//        BodyImage shootingImage = new BodyImage("")
-//        this.removeAllImages();
-//        this.addImage()
+        BodyImage shootingImage;
+        if (this.rightFacing) {
+             shootingImage = new BodyImage("data/ShootRight.png", 3f);
+        } else {
+            shootingImage = new BodyImage("data/ShootLeft.png", 3f);
+        }
+        this.removeAllImages();
+        this.addImage(shootingImage);
     }
 
 }
