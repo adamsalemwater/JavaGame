@@ -50,7 +50,8 @@ public class GameWorld extends World {
 
             int yCoord = 0;
             BodyImage platformImage2 = new BodyImage("data/platform.png", 5f);
-            Shape platformShape = new PolygonShape(-3.05f,1.31f, 2.57f,1.29f, 2.55f,-0.41f, -3.03f,-0.41f);
+            Shape platformShape = new PolygonShape(-3.01f,1.31f, 2.53f,1.33f, 2.57f,-0.51f, -3.03f,-0.53f
+            );
             StaticBody platform = new StaticBody(world, platformShape);
             platform.setPosition(new Vec2(xCoord, yCoord));
             platform.addImage(platformImage2);
@@ -59,10 +60,10 @@ public class GameWorld extends World {
 
         // create a blue knight on one platform and a red knight on the other
 
-        Knight blueKnight = new Knight(world, -5, 0, true, false);
-        blueKnight.setImage();
+        BlueKnight blueRedKnight = new BlueKnight(world, -5, 3, true);
+        blueRedKnight.setImage();
 
-        Knight redKnight = new Knight(world, 5,0,false, true);
+        RedKnight redKnight = new RedKnight(world, 5,0,false);
         redKnight.setImage();
 
         // create a two small platform which are near the edges of the screen
@@ -93,9 +94,30 @@ public class GameWorld extends World {
         }
 
 
+        // add another two suspended platforms which are the destinations for future portals to be placed
+
+        for (int xCoord=-10; xCoord<15; xCoord+=10) {
+
+            BodyImage platformImage3 = new BodyImage("data/platform.png", 4f);
+            Shape platformShape = new PolygonShape(-2.45f,1.05f, 2.07f,1.05f, 2.07f,-0.36f, -2.42f,-0.36f);
+            StaticBody platform = new StaticBody(world, platformShape);
+            platform.setPosition(new Vec2(xCoord, 4));
+            platform.addImage(platformImage3);
+        }
+
+        // adding four portals which place the character on to the suspended platforms above
+
+        Portal redPortal = new Portal(world, -12, 6, true);
+        Portal bluePortal = new Portal(world, 12, 6.3f, false);
+
+        Portal redPortal1 = new Portal(world, -12, -2.5f,true, redPortal);
+        Portal bluePortal2 = new Portal(world, 12, -2.2f, false, bluePortal);
 
 
-
+        CollisionListener clRed = new PortalCollision(redPortal1);
+        CollisionListener clBlue = new PortalCollision(bluePortal2);
+        slingshotBoy.addCollisionListener(clRed);
+        slingshotBoy.addCollisionListener(clBlue);
 
 
 

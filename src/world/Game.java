@@ -75,6 +75,9 @@ public class Game {
        view.requestFocus();
 
         view.requestFocus();
+
+        Tracker slingshotTracker = new Tracker(view, slingshotBoy);
+        world.addStepListener(slingshotTracker);
         
     }
 

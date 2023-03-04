@@ -3,6 +3,7 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+
 public class Slingshot extends Walker {
 
     private static final Shape slingshotBody = new PolygonShape(-0.26f,0.83f, 0.43f,-0.03f, 0.03f,-0.64f, -0.64f,-0.61f, -0.74f,0.05f
@@ -51,5 +52,4 @@ public class Slingshot extends Walker {
         this.removeAllImages();
         this.addImage(shootingImage);
     }
-
 }
