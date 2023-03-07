@@ -13,7 +13,7 @@ public class SlingController implements KeyListener, ActionListener {
     private Slingshot slingshotBoy;
     private World world;
 
-    public SlingController(Slingshot slingshotBoy, World world) {
+    public SlingController(World world, Slingshot slingshotBoy) {
         this.slingshotBoy = slingshotBoy;
         this.world = world;
     }
@@ -53,19 +53,19 @@ public class SlingController implements KeyListener, ActionListener {
 
         if (code  == KeyEvent.VK_SPACE) {
             slingshotBoy.shootingImage();
-            Timer timer = new Timer(100, this);
+            slingshotBoy.shoot();
+            Timer timer = new Timer(500, this);
             timer.setRepeats(false);
             timer.start();
         }
 
     }
 
+
     @Override
     public void keyReleased(KeyEvent e) {
         slingshotBoy.stopWalking();
     }
-
-    // override methods for ActionListener interface
 
     @Override
     public void actionPerformed(ActionEvent e) {

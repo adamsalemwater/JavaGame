@@ -2,7 +2,6 @@ package world;
 
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.CollisionListener;
-import org.jbox2d.common.Vec2;
 
 public class PortalCollision implements CollisionListener {
 

@@ -3,11 +3,8 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
-public class Dragon extends Walker implements ActionListener, StepListener {
+public class Dragon extends Enemy implements StepListener {
 
     // instance fields for creating dragon
 
@@ -25,9 +22,8 @@ public class Dragon extends Walker implements ActionListener, StepListener {
     private float leftBorder;
     private float rightBorder;
 
-
     public Dragon(World world, float x, float y, boolean rightFacing) {
-        super(world, dragonShape);
+        super(world, dragonShape, 5);
 
         this.rightFacing = rightFacing;
         this.leftBorder = -3.5f;
@@ -65,10 +61,6 @@ public class Dragon extends Walker implements ActionListener, StepListener {
         }
    }
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-    }
-
 
     @Override
     public void preStep(StepEvent stepEvent) {
@@ -82,10 +74,17 @@ public class Dragon extends Walker implements ActionListener, StepListener {
             this.switchImage();
             this.setImage();
         }
+
+        if (this.getLives() == 0) {
+            this.destroy();
+        }
+
     }
 
     @Override
     public void postStep(StepEvent stepEvent) {
 
     }
+
+
 }

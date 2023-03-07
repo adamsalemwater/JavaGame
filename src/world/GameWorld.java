@@ -10,6 +10,9 @@ public class GameWorld extends World {
 
     private Slingshot slingshotBoy;
     private Dragon dragon;
+    private BlueKnight blueKnight;
+    private RedKnight redKnight;
+
 
     public GameWorld()  {
         super();
@@ -60,10 +63,10 @@ public class GameWorld extends World {
 
         // create a blue knight on one platform and a red knight on the other
 
-        BlueKnight blueRedKnight = new BlueKnight(world, -5, 3, true);
-        blueRedKnight.setImage();
+        blueKnight = new BlueKnight(world, -5, 3, true);
+        blueKnight.setImage();
 
-        RedKnight redKnight = new RedKnight(world, 5,0,false);
+        redKnight = new RedKnight(world, 5,0,false);
         redKnight.setImage();
 
         // create a two small platform which are near the edges of the screen
@@ -122,6 +125,10 @@ public class GameWorld extends World {
 
 
 
+
+        System.out.println(dragon.getLives());
+
+
         this.world.start();
     }
 
@@ -138,4 +145,5 @@ public class GameWorld extends World {
     public World getWorld() {
         return world;
     }
+
 }

@@ -3,7 +3,7 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-public class BlueKnight extends Walker implements StepListener {
+public class BlueKnight extends Enemy implements StepListener {
 
     private static final Shape knightShape = new PolygonShape(-1.54f,0.93f, -0.09f,0.93f, -0.09f,-0.82f, -1.54f,-0.74f
     );
@@ -17,7 +17,7 @@ public class BlueKnight extends Walker implements StepListener {
     private float move, rightBorder, leftBorder;
 
     public BlueKnight(World world, float x, float y, boolean rightFacing) {
-        super(world, knightShape);
+        super(world, knightShape, 2);
         this.rightFacing = rightFacing;
 
         this.rightBorder = -2.5f;
@@ -63,6 +63,10 @@ public class BlueKnight extends Walker implements StepListener {
             this.removeAllImages();
             this.switchDirection();
             this.setImage();
+        }
+
+        if (this.getLives() == 0) {
+            this.destroy();
         }
     }
 

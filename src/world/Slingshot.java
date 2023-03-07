@@ -15,6 +15,9 @@ public class Slingshot extends Walker{
     private BodyImage slingshotImage;
     private boolean rightFacing;
     private float x, y;
+    private World world;
+
+    private int score;
 
 
 
@@ -23,6 +26,7 @@ public class Slingshot extends Walker{
         this.rightFacing = rightFacing;
         this.x = x;
         this.y = y;
+        this.world = w;
 
         this.setPosition(new Vec2(x, y));
     }
@@ -53,5 +57,35 @@ public class Slingshot extends Walker{
         }
         this.removeAllImages();
         this.addImage(shootingImage);
+    }
+
+    public void shoot() {
+
+        DynamicBody rock = new DynamicBody(world, new CircleShape(0.2f));
+
+        StoneCollision stoneHits = new StoneCollision(this);
+        rock.addCollisionListener(stoneHits);
+
+        if (this.rightFacing) {
+            rock.setPosition(new Vec2(this.getPosition().x + 2, this.getPosition().y));
+            rock.setLinearVelocity(new Vec2(5, 0));
+        } else {
+            rock.setPosition(new Vec2(this.getPosition().x - 2, this.getPosition().y));
+            rock.setLinearVelocity(new Vec2(-5, 0));
+        }
+
+
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public void addScore(int addition) {
+        this.score += addition;
     }
 }

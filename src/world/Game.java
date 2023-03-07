@@ -9,6 +9,8 @@ import javax.swing.JFrame;
  */
 public class Game {
 
+    private SlingController slingController;
+
 
     /** Initialise a new Game. */
     public Game() {
@@ -33,7 +35,7 @@ public class Game {
 
         //3. make a view to look into the game world
 //        UserView view = new UserView(game.getWorld(), 500, 500);
-        GameView view = new GameView(world.getWorld(), 500, 500);
+        GameView view = new GameView(world.getWorld(), 500, 500, slingshotBoy);
 
 
 
@@ -63,10 +65,9 @@ public class Game {
         //optional: uncomment this to make a debugging view
          JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
 
+         slingController = new SlingController(world, slingshotBoy);
 
-        SlingController slingshotStudentController = new SlingController(slingshotBoy, world);
-
-        view.addKeyListener(slingshotStudentController);
+        view.addKeyListener(slingController);
 
         view.requestFocus();
 
@@ -76,7 +77,12 @@ public class Game {
 
         // start our game world simulation
         world.start();
+
         
+    }
+
+    public SlingController getSlingController() {
+        return slingController;
     }
 
     /** Run the game. */
