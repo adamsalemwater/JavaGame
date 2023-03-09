@@ -34,6 +34,10 @@ public class Slingshot extends Walker implements StepListener{
 
         SlingshotHit slingshotHit = new SlingshotHit(this);
         this.addCollisionListener(slingshotHit);
+
+        FireballCollision fireballHit = new FireballCollision(this);
+        this.addCollisionListener(fireballHit);
+
         this.setPosition(new Vec2(x, y));
 
         world.addStepListener(this);
@@ -78,6 +82,7 @@ public class Slingshot extends Walker implements StepListener{
         StoneCollision stoneHits = new StoneCollision(this);
         rock.addCollisionListener(stoneHits);
         rock.setName("Stone");
+
 
         rock.setGravityScale(1.5f);
 
@@ -154,6 +159,9 @@ public class Slingshot extends Walker implements StepListener{
             if (collisionEvent.getOtherBody().getName() ==  "Collectible") {
                 this.slingshotBoy.addScore(10);
                 collisionEvent.getOtherBody().destroy();
+            }
+            if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
+                this.slingshotBoy.decrementLives(1f);
             }
         }
     }

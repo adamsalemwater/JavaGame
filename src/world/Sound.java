@@ -13,10 +13,10 @@ public class Sound {
     private URL soundURL[] = new URL[30];
 
     public Sound() {
-        this.urlSound.put("Jump", getClass().getResource("sound/Jump.wav"));
-        this.urlSound.put("Coin", getClass().getResource("sound/Coin.wav"));
-        this.urlSound.put("Background", getClass().getResource("sound/Background.wav"));
-        this.urlSound.put("Roar", getClass().getResource("sound/LionRoar.wav"));
+        this.urlSound.put("Jump", getClass().getResource("sound\\Jump.wav"));
+        this.urlSound.put("Coin", getClass().getResource("sound\\Coin.wav"));
+        this.urlSound.put("Background", getClass().getResource("sound\\Background.wav"));
+        this.urlSound.put("Roar", getClass().getResource("sound\\LionRoar.wav"));
 
         soundURL[0] = getClass().getResource("sound/Jump.wav");
         soundURL[1] = getClass().getResource("sound/Coin.wav");

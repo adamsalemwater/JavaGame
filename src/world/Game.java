@@ -1,11 +1,8 @@
 package world;
 
-import city.cs.engine.*;
 
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
-import java.io.IOException;
+
 
 /**
  * Your main game entry point
@@ -78,12 +75,12 @@ public class Game {
         Tracker slingshotTracker = new Tracker(view, slingshotBoy);
         world.addStepListener(slingshotTracker);
 
-        // add backgrund music to the game
+        // add background music to the game
 
-        Sound sound = new Sound();
-        sound.setFile(3);
-        sound.play();
-        sound.loop();
+//        Sound sound = new Sound();
+//        sound.setFile("Background");
+//        sound.play();
+//        sound.loop();
 
 
         // start our game world simulation

@@ -3,8 +3,12 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-public class Dragon extends Enemy implements StepListener {
+
+public class Dragon extends Enemy implements StepListener, ActionListener {
 
     // instance fields for creating dragon
 
@@ -14,6 +18,8 @@ public class Dragon extends Enemy implements StepListener {
     private static final BodyImage dragonImageRight = new BodyImage("data/DragonRight.png", 25f);
     private static final BodyImage dragonAttackRight = new BodyImage("data/DragonAttackRight.png", 25f);
     private static final BodyImage dragonAttackLeft = new BodyImage("data/DragonAttackLeft.png", 25f);
+    private static final BodyImage fireballRight = new BodyImage("data/FireballRight.png", 0.75f);
+    private static final BodyImage fireballLeft = new BodyImage("data/FireballLeft.png", 0.75f);
     private boolean rightFacing;
 
     // instance field for moving the dragon on the platform
@@ -21,6 +27,8 @@ public class Dragon extends Enemy implements StepListener {
     private float move;
     private float leftBorder;
     private float rightBorder;
+    private World world;
+
 
     public Dragon(World world, float x, float y, boolean rightFacing) {
         super(world, dragonShape, 5);
@@ -36,6 +44,10 @@ public class Dragon extends Enemy implements StepListener {
 
         CollisionListener dragonHit = new DragonHit(this);
         this.addCollisionListener(dragonHit);
+        this.world = world;
+
+        Timer timer = new Timer(10000, this);
+        timer.start();
     }
 
    public void setImage() {
@@ -56,6 +68,7 @@ public class Dragon extends Enemy implements StepListener {
         this.rightFacing = !rightFacing;
    }
 
+
    public void attackImage() {
         this.removeAllImages();
         if (this.rightFacing) {
@@ -63,9 +76,24 @@ public class Dragon extends Enemy implements StepListener {
         } else {
             this.addImage(dragonAttackLeft);
         }
+   }
 
+   public void fireball() {
 
+        Shape fireballShape = new PolygonShape(0.572f,0.032f, -0.059f,-0.135f, -0.482f,0.042f, -0.028f,0.184f
+        );
+        DynamicBody fireball = new DynamicBody(world, fireballShape);
+        fireball.setName("Fireball");
 
+       if (this.rightFacing) {
+           fireball.setPosition(new Vec2(this.getPosition().x + 1, this.getPosition().y - 2));
+           fireball.addImage(fireballRight);
+           fireball.setLinearVelocity(new Vec2(3, 0));
+       } else {
+           fireball.setPosition(new Vec2(this.getPosition().x - 1, this.getPosition().y - 2));
+           fireball.addImage(fireballLeft);
+           fireball.setLinearVelocity(new Vec2(-3, 0));
+       }
    }
 
 
@@ -92,6 +120,12 @@ public class Dragon extends Enemy implements StepListener {
     @Override
     public void postStep(StepEvent stepEvent) {
 
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.attackImage();
+        this.fireball();
     }
 
     public class DragonHit implements CollisionListener{
