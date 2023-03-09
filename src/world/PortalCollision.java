@@ -12,11 +12,10 @@ public class PortalCollision implements CollisionListener {
         this.portal = portal;
     }
 
-
     @Override
     public void collide(CollisionEvent collisionEvent) {
         if (collisionEvent.getOtherBody() instanceof Portal) {
-            collisionEvent.getReportingBody().setPosition(portal.getOtherPortal().getPosition());
+            collisionEvent.getReportingBody().setPosition(this.portal.getFinalDestination());
         }
     }
 }

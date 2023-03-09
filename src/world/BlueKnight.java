@@ -26,6 +26,10 @@ public class BlueKnight extends Enemy implements StepListener {
 
         this.setPosition(new Vec2(x, y));
         world.addStepListener(this);
+        this.setName("BlueKnight");
+
+        BlueKnightHit blueKnightHit = new BlueKnightHit(this);
+        this.addCollisionListener(blueKnightHit);
     }
 
     public void switchDirection() {
@@ -73,5 +77,22 @@ public class BlueKnight extends Enemy implements StepListener {
     @Override
     public void postStep(StepEvent stepEvent) {
 
+    }
+
+    public class BlueKnightHit implements CollisionListener {
+
+        private BlueKnight blueKnight;
+
+        public BlueKnightHit(BlueKnight blueKnight) {
+            this.blueKnight = blueKnight;
+        }
+
+
+        @Override
+        public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody().getName() == "Stone") {
+                this.blueKnight.decrementLives(1f);
+            }
+        }
     }
 }

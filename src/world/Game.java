@@ -2,7 +2,10 @@ package world;
 
 import city.cs.engine.*;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JFrame;
+import java.io.IOException;
 
 /**
  * Your main game entry point
@@ -17,6 +20,7 @@ public class Game {
 
 
         GameWorld world = new GameWorld();
+
 
 
        Slingshot slingshotBoy = world.getSlingshotBoy();
@@ -48,7 +52,7 @@ public class Game {
 
         //4. create a Java window (frame) and add the game
         //   view to it
-        final JFrame frame = new JFrame("City Game");
+        final JFrame frame = new JFrame("Slingshot Boy");
         frame.add(view);
 
         // enable the frame to quit the application
@@ -63,7 +67,7 @@ public class Game {
         frame.setVisible(true);
 
         //optional: uncomment this to make a debugging view
-         JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
+//         JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
 
          slingController = new SlingController(world, slingshotBoy);
 
@@ -73,6 +77,13 @@ public class Game {
 
         Tracker slingshotTracker = new Tracker(view, slingshotBoy);
         world.addStepListener(slingshotTracker);
+
+        // add backgrund music to the game
+
+        Sound sound = new Sound();
+        sound.setFile(3);
+        sound.play();
+        sound.loop();
 
 
         // start our game world simulation

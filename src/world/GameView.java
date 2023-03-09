@@ -10,11 +10,15 @@ import java.awt.*;
 public class GameView extends UserView {
 
     private Image background;
+    private Image scoreBoard;
     private Slingshot slingshotBoy;
+
+    private Image heart;
 
     public GameView(World world, int width, int height, Slingshot slingshotBoy) {
         super(world, width, height);
         background = new ImageIcon("data/Background.png").getImage();
+        scoreBoard = new ImageIcon("data/Score.png").getImage();
         this.slingshotBoy = slingshotBoy;
     }
 
@@ -25,6 +29,8 @@ public class GameView extends UserView {
 
     @Override
     protected void paintForeground(Graphics2D g) {
-        g.drawString(Integer.toString(slingshotBoy.getScore()), 0, 0);
+        g.setColor(Color.yellow);
+        g.drawImage(scoreBoard, 0, 0,100, 100, this);
+        g.drawString(Integer.toString(slingshotBoy.getScore()), 65, 55);
     }
 }

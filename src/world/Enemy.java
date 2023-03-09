@@ -24,4 +24,5 @@ public class Enemy extends Walker {
     public void decrementLives(float decrement) {
         this.lives -= decrement;
     }
+
 }

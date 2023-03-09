@@ -29,7 +29,7 @@ public class SlingController implements KeyListener, ActionListener {
         int code = e.getKeyCode();
 
 
-        if (code == KeyEvent.VK_A) {
+        if (code == KeyEvent.VK_LEFT) {
               if (slingshotBoy.isRightFacing()) {
                   slingshotBoy.removeAllImages();
                   slingshotBoy.switchRightFacing();
@@ -37,7 +37,7 @@ public class SlingController implements KeyListener, ActionListener {
               }
             slingshotBoy.startWalking(-4);
         }
-        if (code == KeyEvent.VK_D) {
+        if (code == KeyEvent.VK_RIGHT) {
             if (!slingshotBoy.isRightFacing()) {
                 slingshotBoy.removeAllImages();
                 slingshotBoy.switchRightFacing();
@@ -45,7 +45,7 @@ public class SlingController implements KeyListener, ActionListener {
             }
             slingshotBoy.startWalking(4);
         }
-        if (code == KeyEvent.VK_W) {
+        if (code == KeyEvent.VK_UP) {
             slingshotBoy.jump(7);
         }
 

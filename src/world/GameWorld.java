@@ -1,6 +1,7 @@
 package world;
 
 import city.cs.engine.*;
+import org.jbox2d.collision.Collision;
 import org.jbox2d.common.Vec2;
 
 public class GameWorld extends World {
@@ -110,40 +111,69 @@ public class GameWorld extends World {
 
         // adding four portals which place the character on to the suspended platforms above
 
-        Portal redPortal = new Portal(world, -12, 6, true);
-        Portal bluePortal = new Portal(world, 12, 6.3f, false);
+        Portal redPortal = new Portal(world, -12, 6, true, new Vec2(12, -2.2f));
+        Portal redPortal2 = new Portal(world, 12, 6.3f, true, new Vec2(-12, -2.5f));
 
-        Portal redPortal2 = new Portal(world, -12, -2.5f,true, redPortal);
-        Portal bluePortal2 = new Portal(world, 12, -2.2f, false, bluePortal);
+        Portal bluePortal = new Portal(world, -12, -2.5f,false, new Vec2(12, 6.3f));
+        Portal bluePortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-12, 6.3f));
 
 
-        CollisionListener clRed = new PortalCollision(redPortal2);
-        CollisionListener clBlue = new PortalCollision(bluePortal2);
+        CollisionListener clRed = new PortalCollision(redPortal);
+        CollisionListener clRed2 = new PortalCollision(redPortal2);
+        CollisionListener clBlue = new PortalCollision(bluePortal);
+        CollisionListener clBlue2 = new PortalCollision(bluePortal2);
+
         slingshotBoy.addCollisionListener(clRed);
         slingshotBoy.addCollisionListener(clBlue);
+        slingshotBoy.addCollisionListener(clBlue2);
+        slingshotBoy.addCollisionListener(clRed2);
 
 
+        // testing the collectible class
 
-
-
-        System.out.println(dragon.getLives());
+        Collectible collectible = new Collectible(world);
 
 
         this.world.start();
     }
 
-    public Dragon getDragon() {
-        return dragon;
+    public World getWorld() {
+        return world;
+    }
+
+    public void setWorld(World world) {
+        this.world = world;
     }
 
     public Slingshot getSlingshotBoy() {
         return slingshotBoy;
     }
 
-
-
-    public World getWorld() {
-        return world;
+    public void setSlingshotBoy(Slingshot slingshotBoy) {
+        this.slingshotBoy = slingshotBoy;
     }
 
+    public Dragon getDragon() {
+        return dragon;
+    }
+
+    public void setDragon(Dragon dragon) {
+        this.dragon = dragon;
+    }
+
+    public BlueKnight getBlueKnight() {
+        return blueKnight;
+    }
+
+    public void setBlueKnight(BlueKnight blueKnight) {
+        this.blueKnight = blueKnight;
+    }
+
+    public RedKnight getRedKnight() {
+        return redKnight;
+    }
+
+    public void setRedKnight(RedKnight redKnight) {
+        this.redKnight = redKnight;
+    }
 }

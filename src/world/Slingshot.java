@@ -4,7 +4,7 @@ import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
 
-public class Slingshot extends Walker{
+public class Slingshot extends Walker implements StepListener{
 
 
     private static final Shape slingshotBody = new PolygonShape(-0.26f,0.83f, 0.43f,-0.03f, 0.03f,-0.64f, -0.64f,-0.61f, -0.74f,0.05f
@@ -19,6 +19,8 @@ public class Slingshot extends Walker{
 
     private int score;
 
+    private int lives;
+
 
 
     public Slingshot(World w, float x, float y, boolean rightFacing) {
@@ -27,8 +29,15 @@ public class Slingshot extends Walker{
         this.x = x;
         this.y = y;
         this.world = w;
+        score = 0;
+        lives = 3;
 
+        SlingshotHit slingshotHit = new SlingshotHit(this);
+        this.addCollisionListener(slingshotHit);
         this.setPosition(new Vec2(x, y));
+
+        world.addStepListener(this);
+        this.setName("Slingshot");
     }
 
     public boolean isRightFacing() {
@@ -38,6 +47,7 @@ public class Slingshot extends Walker{
     public void switchRightFacing() {
         this.rightFacing = !this.rightFacing;
     }
+
 
     public void setImage() {
         if (this.rightFacing) {
@@ -61,20 +71,31 @@ public class Slingshot extends Walker{
 
     public void shoot() {
 
-        DynamicBody rock = new DynamicBody(world, new CircleShape(0.2f));
+        Shape rockShape = new PolygonShape(0.032f,0.228f, 0.108f,-0.06f, -0.12f,-0.044f, -0.1f,0.188f);
+        BodyImage rockImage = new BodyImage("data/Stone.png", 2);
+        DynamicBody rock = new DynamicBody(world, rockShape);
 
         StoneCollision stoneHits = new StoneCollision(this);
         rock.addCollisionListener(stoneHits);
+        rock.setName("Stone");
+
+        rock.setGravityScale(1.5f);
 
         if (this.rightFacing) {
-            rock.setPosition(new Vec2(this.getPosition().x + 2, this.getPosition().y));
-            rock.setLinearVelocity(new Vec2(5, 0));
+            rock.setPosition(new Vec2(this.getPosition().x + 1, this.getPosition().y));
+            rock.addImage(rockImage);
+            rock.setLinearVelocity(new Vec2(5, 5));
         } else {
-            rock.setPosition(new Vec2(this.getPosition().x - 2, this.getPosition().y));
-            rock.setLinearVelocity(new Vec2(-5, 0));
+            rock.setPosition(new Vec2(this.getPosition().x - 1, this.getPosition().y));
+            rock.addImage(rockImage);
+            rock.setLinearVelocity(new Vec2(-5, 5));
         }
 
 
+    }
+
+    public float getLives() {
+        return this.lives;
     }
 
     public int getScore() {
@@ -87,5 +108,53 @@ public class Slingshot extends Walker{
 
     public void addScore(int addition) {
         this.score += addition;
+    }
+
+    public void decrementLives(float life) {
+        this.lives -= life;
+    }
+
+    @Override
+    public void preStep(StepEvent stepEvent) {
+
+    }
+
+    @Override
+    public void postStep(StepEvent stepEvent) {
+        if (this.getPosition().y < -20) {
+            this.setPosition(new Vec2(0,-13));
+        }
+
+        if (this.lives == 0) {
+            this.destroy();
+        }
+
+
+
+    }
+
+    public class SlingshotHit implements CollisionListener {
+
+        private Slingshot slingshotBoy;
+
+        public SlingshotHit(Slingshot slingshotBoy) {
+            this.slingshotBoy = slingshotBoy;
+        }
+
+
+        @Override
+        public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody() instanceof Dragon) {
+                this.slingshotBoy.decrementLives(1);
+            }
+            if ((collisionEvent.getOtherBody() instanceof BlueKnight) ||
+            collisionEvent.getOtherBody() instanceof RedKnight) {
+                this.slingshotBoy.decrementLives(0.5f);
+            }
+            if (collisionEvent.getOtherBody().getName() ==  "Collectible") {
+                this.slingshotBoy.addScore(10);
+                collisionEvent.getOtherBody().destroy();
+            }
+        }
     }
 }

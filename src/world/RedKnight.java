@@ -28,6 +28,10 @@ public class RedKnight extends Enemy implements StepListener {
 
         this.setPosition(new Vec2(x, y));
         world.addStepListener(this);
+        this.setName("RedKnight");
+
+        RedKnightHit redKnightHit = new RedKnightHit(this);
+        this.addCollisionListener(redKnightHit);
     }
 
 
@@ -76,5 +80,22 @@ public class RedKnight extends Enemy implements StepListener {
     @Override
     public void postStep(StepEvent stepEvent) {
 
+    }
+
+    public class RedKnightHit implements CollisionListener {
+
+        private RedKnight redKnight;
+
+        public RedKnightHit(RedKnight redKnight) {
+            this.redKnight = redKnight;
+        }
+
+
+        @Override
+        public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody().getName() == "Stone") {
+                this.redKnight.decrementLives(1f);
+            }
+        }
     }
 }

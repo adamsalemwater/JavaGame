@@ -27,11 +27,15 @@ public class Dragon extends Enemy implements StepListener {
 
         this.rightFacing = rightFacing;
         this.leftBorder = -3.5f;
-        this.rightBorder = 6;
+        this.rightBorder = 5.6f;
         this.move = 1.5f;
 
         this.setPosition(new Vec2(x, y));
         world.addStepListener(this);
+        this.setName("Dragon");
+
+        CollisionListener dragonHit = new DragonHit(this);
+        this.addCollisionListener(dragonHit);
     }
 
    public void setImage() {
@@ -52,13 +56,16 @@ public class Dragon extends Enemy implements StepListener {
         this.rightFacing = !rightFacing;
    }
 
-   public void dragonAttack() {
+   public void attackImage() {
         this.removeAllImages();
         if (this.rightFacing) {
             this.addImage(dragonAttackRight);
         } else {
             this.addImage(dragonAttackLeft);
         }
+
+
+
    }
 
 
@@ -79,6 +86,7 @@ public class Dragon extends Enemy implements StepListener {
             this.destroy();
         }
 
+
     }
 
     @Override
@@ -86,5 +94,21 @@ public class Dragon extends Enemy implements StepListener {
 
     }
 
+    public class DragonHit implements CollisionListener{
+
+        private Dragon dragon;
+
+        public DragonHit(Dragon dragon) {
+            this.dragon = dragon;
+        }
+
+
+        @Override
+        public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody().getName() == "Stone") {
+                    this.dragon.decrementLives(0.5f);
+            }
+        }
+    }
 
 }
