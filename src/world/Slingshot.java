@@ -22,7 +22,6 @@ public class Slingshot extends Walker implements StepListener{
     private int lives;
 
 
-
     public Slingshot(World w, float x, float y, boolean rightFacing) {
         super(w, slingshotBody);
         this.rightFacing = rightFacing;
@@ -34,9 +33,6 @@ public class Slingshot extends Walker implements StepListener{
 
         SlingshotHit slingshotHit = new SlingshotHit(this);
         this.addCollisionListener(slingshotHit);
-
-        FireballCollision fireballHit = new FireballCollision(this);
-        this.addCollisionListener(fireballHit);
 
         this.setPosition(new Vec2(x, y));
 
@@ -121,7 +117,9 @@ public class Slingshot extends Walker implements StepListener{
 
     @Override
     public void preStep(StepEvent stepEvent) {
-
+        if (this.lives <= 0) {
+            this.destroy();
+        }
     }
 
     @Override
@@ -130,9 +128,7 @@ public class Slingshot extends Walker implements StepListener{
             this.setPosition(new Vec2(0,-13));
         }
 
-        if (this.lives == 0) {
-            this.destroy();
-        }
+
 
 
 
@@ -141,9 +137,11 @@ public class Slingshot extends Walker implements StepListener{
     public class SlingshotHit implements CollisionListener {
 
         private Slingshot slingshotBoy;
+        private Sound sound;
 
         public SlingshotHit(Slingshot slingshotBoy) {
             this.slingshotBoy = slingshotBoy;
+            this.sound = new Sound();
         }
 
 
@@ -152,13 +150,15 @@ public class Slingshot extends Walker implements StepListener{
             if (collisionEvent.getOtherBody() instanceof Dragon) {
                 this.slingshotBoy.decrementLives(1);
             }
-            if ((collisionEvent.getOtherBody() instanceof BlueKnight) ||
-            collisionEvent.getOtherBody() instanceof RedKnight) {
+            if ((collisionEvent.getOtherBody().getName() ==  "BlueKnight") ||
+            collisionEvent.getOtherBody().getName() ==  "RedKnight") {
                 this.slingshotBoy.decrementLives(0.5f);
             }
             if (collisionEvent.getOtherBody().getName() ==  "Collectible") {
                 this.slingshotBoy.addScore(10);
                 collisionEvent.getOtherBody().destroy();
+                this.sound.setFile("Coin");
+                this.sound.play();
             }
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
                 this.slingshotBoy.decrementLives(1f);

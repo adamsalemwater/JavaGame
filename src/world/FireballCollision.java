@@ -13,9 +13,9 @@ public class FireballCollision implements CollisionListener {
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        if (collisionEvent.getOtherBody().getName() == "Fireball") {
+        if (collisionEvent.getOtherBody().getName() == "Slingshot") {
             this.slingshotBoy.decrementLives(0.5f);
-            collisionEvent.getOtherBody().destroy();
         }
+        collisionEvent.getReportingBody().destroy();
     }
 }

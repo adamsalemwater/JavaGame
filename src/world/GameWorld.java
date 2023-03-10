@@ -4,6 +4,9 @@ import city.cs.engine.*;
 import org.jbox2d.collision.Collision;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+import java.util.Random;
+
 public class GameWorld extends World {
 
     private World world;
@@ -37,7 +40,7 @@ public class GameWorld extends World {
 
         // create a dragon object
 
-        dragon = new Dragon(world, 4, -8, true);
+        dragon = new Dragon(world, 4, -8, true, slingshotBoy);
         dragon.setImage();
 
 
@@ -111,27 +114,21 @@ public class GameWorld extends World {
 
         // adding four portals which place the character on to the suspended platforms above
 
-        Portal redPortal = new Portal(world, -12, 6, true, new Vec2(12, -2.2f));
-        Portal redPortal2 = new Portal(world, 12, 6.3f, true, new Vec2(-12, -2.5f));
+        Portal redPortal = new Portal(world, -12, 6, true, new Vec2(10, -2.2f));
+        Portal bluePortal = new Portal(world, 12, 6.3f, false, new Vec2(-10, -2.5f));
 
-        Portal bluePortal = new Portal(world, -12, -2.5f,false, new Vec2(12, 6.3f));
-        Portal bluePortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-12, 6.3f));
+        Portal bluePortal2 = new Portal(world, -12, -2.5f,false, new Vec2(10,6.3f));
+        Portal redPortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-10, 6));
 
 
-        CollisionListener clRed = new PortalCollision(redPortal);
-        CollisionListener clRed2 = new PortalCollision(redPortal2);
-        CollisionListener clBlue = new PortalCollision(bluePortal);
-        CollisionListener clBlue2 = new PortalCollision(bluePortal2);
-
-        slingshotBoy.addCollisionListener(clRed);
-        slingshotBoy.addCollisionListener(clBlue);
-        slingshotBoy.addCollisionListener(clBlue2);
-        slingshotBoy.addCollisionListener(clRed2);
 
 
         // testing the collectible class
 
-        Collectible collectible = new Collectible(world);
+        Random random = new Random();
+        float randomX = random.nextFloat(-5, 5);
+
+        Collectible collectible = new Collectible(world, randomX, -8);
 
 
         this.world.start();

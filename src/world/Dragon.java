@@ -28,15 +28,17 @@ public class Dragon extends Enemy implements StepListener, ActionListener {
     private float leftBorder;
     private float rightBorder;
     private World world;
+    private Slingshot slingshotBoy;
 
 
-    public Dragon(World world, float x, float y, boolean rightFacing) {
+    public Dragon(World world, float x, float y, boolean rightFacing, Slingshot slingshotBoy) {
         super(world, dragonShape, 5);
 
         this.rightFacing = rightFacing;
         this.leftBorder = -3.5f;
         this.rightBorder = 5.6f;
         this.move = 1.5f;
+        this.slingshotBoy = slingshotBoy;
 
         this.setPosition(new Vec2(x, y));
         world.addStepListener(this);
@@ -46,8 +48,10 @@ public class Dragon extends Enemy implements StepListener, ActionListener {
         this.addCollisionListener(dragonHit);
         this.world = world;
 
-        Timer timer = new Timer(10000, this);
+        Timer timer = new Timer(3000, this);
+        timer.setDelay(5000);
         timer.start();
+
     }
 
    public void setImage() {
@@ -85,14 +89,19 @@ public class Dragon extends Enemy implements StepListener, ActionListener {
         DynamicBody fireball = new DynamicBody(world, fireballShape);
         fireball.setName("Fireball");
 
+        CollisionListener fireballHit = new FireballCollision(slingshotBoy);
+        fireball.addCollisionListener(fireballHit);
+
+
+
        if (this.rightFacing) {
-           fireball.setPosition(new Vec2(this.getPosition().x + 1, this.getPosition().y - 2));
+           fireball.setPosition(new Vec2(this.getPosition().x + 1, this.getPosition().y));
            fireball.addImage(fireballRight);
-           fireball.setLinearVelocity(new Vec2(3, 0));
+           fireball.setLinearVelocity(new Vec2(4, 1));
        } else {
-           fireball.setPosition(new Vec2(this.getPosition().x - 1, this.getPosition().y - 2));
+           fireball.setPosition(new Vec2(this.getPosition().x - 5, this.getPosition().y));
            fireball.addImage(fireballLeft);
-           fireball.setLinearVelocity(new Vec2(-3, 0));
+           fireball.setLinearVelocity(new Vec2(-4, 1));
        }
    }
 
@@ -124,8 +133,7 @@ public class Dragon extends Enemy implements StepListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        this.attackImage();
-        this.fireball();
+       this.fireball();
     }
 
     public class DragonHit implements CollisionListener{

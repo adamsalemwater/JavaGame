@@ -13,9 +13,12 @@ public class SlingController implements KeyListener, ActionListener {
     private Slingshot slingshotBoy;
     private World world;
 
+    private Sound sound;
+
     public SlingController(World world, Slingshot slingshotBoy) {
         this.slingshotBoy = slingshotBoy;
         this.world = world;
+        this.sound = new Sound();
     }
 
     // override methods for the KeyListener interface
@@ -47,6 +50,8 @@ public class SlingController implements KeyListener, ActionListener {
         }
         if (code == KeyEvent.VK_UP) {
             slingshotBoy.jump(7);
+            this.sound.setFile("Jump");
+            this.sound.play();
         }
 
         // when the space bar key is pressed, remove the image and add the shooting image followed by a return to the original image using a timer handler

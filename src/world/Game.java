@@ -1,7 +1,15 @@
 package world;
 
 
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
+import java.applet.AudioClip;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 /**
@@ -77,10 +85,23 @@ public class Game {
 
         // add background music to the game
 
-//        Sound sound = new Sound();
-//        sound.setFile("Background");
-//        sound.play();
-//        sound.loop();
+        Sound sound = new Sound();
+        sound.setFile("Background");
+        sound.play();
+        sound.loop();
+
+
+        try {
+
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sound/Background.wav"));
+            Clip clip = AudioSystem.getClip();
+            clip.open(ais);
+            System.out.println(clip);
+            clip.start();
+            clip.loop(Clip.LOOP_CONTINUOUSLY);
+
+        } catch (Exception e) {
+        }
 
 
         // start our game world simulation

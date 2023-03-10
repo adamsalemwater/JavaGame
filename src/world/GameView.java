@@ -38,39 +38,34 @@ public class GameView extends UserView {
 
         float slingshotLives = slingshotBoy.getLives();
 
-        switch ((int)slingshotLives) {
-            case 3:
-                for (int i=0; i<3; i++) {
-                    g.drawImage(this.heart, 20*i+100, 0, this);
-                }
-                break;
-            case 2:
-                for (int i=0; i<2; i++) {
-                    g.drawImage(this.heart, 20*i+100, 0, this);
-                }
-                break;
-            case 1:
-                g.drawImage(this.heart, 100, 0, this);
-            default:
-                this.heart = null;
-                this.halfHeart = null;
-        }
+      if (slingshotLives == 3) {
+          for (int i=0; i<3; i++) {
+              g.drawImage(this.heart, 30*i+400, 0, this);
+          }
+      } else if (slingshotLives == 2) {
+          for (int i=0; i<2; i++) {
+              g.drawImage(this.heart, 30*i+400, 0, this);
+          }
+      } else if (slingshotLives == 2.5f) {
+          for (int i=0; i<2; i++) {
+              g.drawImage(this.heart, 30*i+400, 0, this);
+          }
+          g.drawImage(this.halfHeart, 460, 0, this);
+      } else if (slingshotLives == 1.5f) {
+          g.drawImage(this.heart, 400, 0, this);
+          g.drawImage(this.halfHeart, 430, 0, this);
+      } else if (slingshotLives == 0.5f) {
+          g.drawImage(this.halfHeart, 400, 0, this);
+      } else {
+          this.heart = null;
+          this.halfHeart = null;
+      }
 
-        if (slingshotLives == 2.5f) {
-            for (int i=0; i<2; i++) {
-                g.drawImage(this.heart, 20*i+100, 0, this);
-            }
-            g.drawImage(this.halfHeart, 140, 0, this);
-        }
 
-        if (slingshotLives == 1.5f) {
-            g.drawImage(this.heart, 100, 0, this);
-            g.drawImage(this.halfHeart, 120, 0, this);
-        }
 
-        if (slingshotLives == 0.5f) {
-            g.drawImage(this.halfHeart, 100, 0, this);
-        }
+
+
+
 
     }
 }
