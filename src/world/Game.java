@@ -83,14 +83,6 @@ public class Game {
         Tracker slingshotTracker = new Tracker(view, slingshotBoy);
         world.addStepListener(slingshotTracker);
 
-        // add background music to the game
-
-        Sound sound = new Sound();
-        sound.setFile("Background");
-        sound.play();
-        sound.loop();
-
-
         try {
 
             AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sound/Background.wav"));

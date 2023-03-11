@@ -1,25 +1,23 @@
 package world;
 
 import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 import java.util.HashMap;
 
-public class Sound {
+public class Sound implements ActionListener {
 
     private Clip clip;
     private HashMap<String, File> urlSound = new HashMap<>();
 
-    private URL soundURL[] = new URL[30];
 
     public Sound() {
         this.urlSound.put("Jump", new File("sound/Jump.wav"));
         this.urlSound.put("Coin", new File("sound/Coin.wav"));
-        this.urlSound.put("Background", new File("sound/Background.wav"));
-        this.urlSound.put("Roar", new File("sound/LionRoar.wav"));
-
-
+//        this.urlSound.put("Background", new File("sound/Background.wav"));
+        this.urlSound.put("Throw", new File("sound/Throw.wav"));
 
     }
 
@@ -29,7 +27,6 @@ public class Sound {
             AudioInputStream ais = AudioSystem.getAudioInputStream(this.urlSound.get(url));
             this.clip = AudioSystem.getClip();
             this.clip.open(ais);
-            System.out.println(clip);
 
         } catch (Exception e) {
         }
@@ -42,9 +39,17 @@ public class Sound {
 
     public void play() {
         this.clip.start();
+        Timer timer = new Timer(100, this);
+        timer.setRepeats(false);
+        timer.start();
     }
 
     public void stop() {
         this.clip.stop();
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        this.stop();
     }
 }

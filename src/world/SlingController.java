@@ -59,6 +59,8 @@ public class SlingController implements KeyListener, ActionListener {
         if (code  == KeyEvent.VK_SPACE) {
             slingshotBoy.shootingImage();
             slingshotBoy.shoot();
+            this.sound.setFile("Throw");
+            this.sound.play();
             Timer timer = new Timer(500, this);
             timer.setRepeats(false);
             timer.start();

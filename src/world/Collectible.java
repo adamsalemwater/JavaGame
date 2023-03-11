@@ -3,9 +3,8 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import java.util.Random;
 
-public class Collectible  {
+public class Collectible {
 
     private World world;
     private static final Shape collectibleShape = new PolygonShape(-0.076f,0.489f, 0.13f,0.014f, -0.022f,-0.386f, -0.151f,0.036f

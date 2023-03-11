@@ -121,14 +121,9 @@ public class GameWorld extends World {
         Portal redPortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-10, 6));
 
 
+        // add coins on some platforms
 
-
-        // testing the collectible class
-
-        Random random = new Random();
-        float randomX = random.nextFloat(-5, 5);
-
-        Collectible collectible = new Collectible(world, randomX, -8);
+        Collectible coin = new Collectible(world,-6,9);
 
 
         this.world.start();
