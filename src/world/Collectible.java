@@ -3,6 +3,8 @@ package world;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import java.util.Random;
+
 
 public class Collectible {
 
@@ -13,10 +15,17 @@ public class Collectible {
     private float x,y;
 
 
-    public Collectible(World world, float x, float y) {
+    public Collectible(World world) {
         this.world = world;
-        this.x = x;
-        this.y = y;
+        Random random = new Random();
+        float randomY = random.nextFloat(-5,5);
+        int switching = random.nextInt();
+        if (switching == 0) {
+            this.x = -4;
+        } else {
+            this.x = 4;
+        }
+        this.y = randomY;
 
         StaticBody collectibleBody = new StaticBody(world, collectibleShape);
         collectibleBody.setPosition(new Vec2(x, y));

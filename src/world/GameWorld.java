@@ -5,9 +5,11 @@ import org.jbox2d.collision.Collision;
 import org.jbox2d.common.Vec2;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Random;
 
-public class GameWorld extends World {
+public class GameWorld extends World implements ActionListener {
 
     private World world;
 
@@ -122,10 +124,9 @@ public class GameWorld extends World {
         Portal redPortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-10, 6));
 
 
-        // add coins on some platforms
-
-        Collectible coin = new Collectible(world,-4,7);
-        Collectible coin2 = new Collectible(world, 6, 7);
+        Timer timer = new Timer(100, this);
+        timer.setDelay(15000);
+        timer.start();
 
 
         this.world.start();
@@ -169,5 +170,10 @@ public class GameWorld extends World {
 
     public void setRedKnight(RedKnight redKnight) {
         this.redKnight = redKnight;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        Collectible coin = new Collectible(world);
     }
 }
