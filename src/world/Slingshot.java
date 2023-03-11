@@ -163,6 +163,10 @@ public class Slingshot extends Walker implements StepListener{
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
                 this.slingshotBoy.decrementLives(1f);
             }
+            if (collisionEvent.getOtherBody().getName() == "Mushroom") {
+                this.sound.setFile("Spring");
+                this.sound.play();
+            }
         }
     }
 }

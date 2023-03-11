@@ -98,6 +98,7 @@ public class GameWorld extends World {
             mushroomBody.addImage(mushroomImage);
             SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
             mushroomBounce.setRestitution(2);
+            mushroomBody.setName("Mushroom");
         }
 
 
@@ -123,7 +124,8 @@ public class GameWorld extends World {
 
         // add coins on some platforms
 
-        Collectible coin = new Collectible(world,-6,9);
+        Collectible coin = new Collectible(world,-4,7);
+        Collectible coin2 = new Collectible(world, 6, 7);
 
 
         this.world.start();

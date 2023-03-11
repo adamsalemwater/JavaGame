@@ -18,6 +18,8 @@ public class Sound implements ActionListener {
         this.urlSound.put("Coin", new File("sound/Coin.wav"));
 //        this.urlSound.put("Background", new File("sound/Background.wav"));
         this.urlSound.put("Throw", new File("sound/Throw.wav"));
+        this.urlSound.put("Smash", new File("sound/Smash.wav"));
+        this.urlSound.put("Spring", new File("sound/Spring.wav"));
 
     }
 
