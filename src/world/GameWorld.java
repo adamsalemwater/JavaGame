@@ -18,6 +18,7 @@ public class GameWorld extends World implements ActionListener {
     private Dragon dragon;
     private BlueKnight blueKnight;
     private RedKnight redKnight;
+    private Fireball fireball;
 
 
     public GameWorld()  {
@@ -125,7 +126,7 @@ public class GameWorld extends World implements ActionListener {
 
 
         Timer timer = new Timer(100, this);
-        timer.setDelay(15000);
+        timer.setDelay(3000);
         timer.start();
 
 
@@ -174,6 +175,9 @@ public class GameWorld extends World implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Collectible coin = new Collectible(world);
+        if (this.getDragon().getLives() == 0) {
+            this.fireball.destroy();
+        }
+        this.fireball = new Fireball(world, dragon);
     }
 }

@@ -19,7 +19,7 @@ public class Slingshot extends Walker implements StepListener{
 
     private int score;
 
-    private int lives;
+    private int lives = 3;
 
 
     public Slingshot(World w, float x, float y, boolean rightFacing) {
@@ -29,9 +29,8 @@ public class Slingshot extends Walker implements StepListener{
         this.y = y;
         this.world = w;
         score = 0;
-        lives = 3;
 
-        SlingshotHit slingshotHit = new SlingshotHit(this);
+        SlingshotHit slingshotHit = new SlingshotHit();
         this.addCollisionListener(slingshotHit);
 
         this.setPosition(new Vec2(x, y));
@@ -47,6 +46,7 @@ public class Slingshot extends Walker implements StepListener{
     public void switchRightFacing() {
         this.rightFacing = !this.rightFacing;
     }
+
 
 
     public void setImage() {
@@ -136,11 +136,9 @@ public class Slingshot extends Walker implements StepListener{
 
     public class SlingshotHit implements CollisionListener {
 
-        private Slingshot slingshotBoy;
         private Sound sound;
 
-        public SlingshotHit(Slingshot slingshotBoy) {
-            this.slingshotBoy = slingshotBoy;
+        public SlingshotHit() {
             this.sound = new Sound();
         }
 
@@ -148,20 +146,20 @@ public class Slingshot extends Walker implements StepListener{
         @Override
         public void collide(CollisionEvent collisionEvent) {
             if (collisionEvent.getOtherBody() instanceof Dragon) {
-                this.slingshotBoy.decrementLives(1);
+                ((Slingshot)collisionEvent.getReportingBody()).decrementLives(1);
             }
-            if ((collisionEvent.getOtherBody().getName() ==  "BlueKnight") ||
-            collisionEvent.getOtherBody().getName() ==  "RedKnight") {
-                this.slingshotBoy.decrementLives(0.5f);
+            if ((collisionEvent.getOtherBody() instanceof BlueKnight) ||
+            collisionEvent.getOtherBody() instanceof RedKnight) {
+                ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }
-            if (collisionEvent.getOtherBody().getName() ==  "Collectible") {
-                this.slingshotBoy.addScore(10);
+            if (collisionEvent.getOtherBody() instanceof Collectible) {
+                ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
                 collisionEvent.getOtherBody().destroy();
                 this.sound.setFile("Coin");
                 this.sound.play();
             }
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
-                this.slingshotBoy.decrementLives(1f);
+                ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }
             if (collisionEvent.getOtherBody().getName() == "Mushroom") {
                 this.sound.setFile("Spring");

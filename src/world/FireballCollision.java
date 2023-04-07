@@ -5,16 +5,11 @@ import city.cs.engine.CollisionListener;
 
 public class FireballCollision implements CollisionListener {
 
-    private Slingshot slingshotBoy;
-
-    public FireballCollision(Slingshot slingshotBoy) {
-        this.slingshotBoy = slingshotBoy;
-    }
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        if (collisionEvent.getOtherBody().getName() == "Slingshot") {
-            this.slingshotBoy.decrementLives(0.5f);
+        if (collisionEvent.getOtherBody() instanceof Slingshot) {
+             ((Slingshot) collisionEvent.getOtherBody()).decrementLives(0.5f);
         }
         collisionEvent.getReportingBody().destroy();
     }

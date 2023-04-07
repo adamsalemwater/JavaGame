@@ -6,7 +6,7 @@ import org.jbox2d.common.Vec2;
 import java.util.Random;
 
 
-public class Collectible {
+public class Collectible extends StaticBody {
 
     private World world;
     private static final Shape collectibleShape = new PolygonShape(-0.076f,0.489f, 0.13f,0.014f, -0.022f,-0.386f, -0.151f,0.036f
@@ -16,6 +16,7 @@ public class Collectible {
 
 
     public Collectible(World world) {
+        super(world,collectibleShape);
         this.world = world;
         Random random = new Random();
         float randomY = random.nextFloat(-5,5);
@@ -27,12 +28,10 @@ public class Collectible {
         }
         this.y = randomY;
 
-        StaticBody collectibleBody = new StaticBody(world, collectibleShape);
-        collectibleBody.setPosition(new Vec2(x, y));
-        collectibleBody.addImage(collectibleImage);
-        GhostlyFixture collectible = new GhostlyFixture(collectibleBody, collectibleShape);
-        collectibleBody.setName("Collectible");
-        collectible.setDensity(0);
+        this.setPosition(new Vec2(x, y));
+        this.addImage(collectibleImage);
+        GhostlyFixture collectible = new GhostlyFixture(this, collectibleShape);
+        this.setName("Collectible");
     }
 
 

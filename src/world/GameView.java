@@ -59,6 +59,8 @@ public class GameView extends UserView {
       } else {
           this.heart = null;
           this.halfHeart = null;
+          g.setColor(Color.red);
+          g.drawString("GAME OVER", 200, 250);
       }
 
 
