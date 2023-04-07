@@ -175,9 +175,9 @@ public class GameWorld extends World implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (this.getDragon().getLives() == 0) {
-            this.fireball.destroy();
+        if (this.getDragon().getLives() > 0) {
+            this.fireball = new Fireball(world, dragon);
         }
-        this.fireball = new Fireball(world, dragon);
+
     }
 }
