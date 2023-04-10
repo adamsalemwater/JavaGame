@@ -1,15 +1,11 @@
-package world;
+package game;
 
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
-import java.applet.AudioClip;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 /**
@@ -20,35 +16,24 @@ public class Game {
     private SlingController slingController;
 
 
-    /** Initialise a new Game. */
+    /**
+     * Initialise a new Game.
+     */
     public Game() {
 
 
-        GameWorld world = new GameWorld();
+        Level1 firstLevel = new Level1();
 
 
-
-       Slingshot slingshotBoy = world.getSlingshotBoy();
-
-
-
+        Slingshot slingshotBoy = firstLevel.getSlingshotBoy();
 
 
 //        student.setLinearVelocity(new Vec2(0, 4));
 
 
-
-
-
-
-
         //3. make a view to look into the game world
 //        UserView view = new UserView(game.getWorld(), 500, 500);
-        GameView view = new GameView(world.getWorld(), 500, 500, slingshotBoy);
-
-
-
-
+        GameView view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy);
 
 
         //optional: draw a 1-metre grid over the view
@@ -74,14 +59,14 @@ public class Game {
         //optional: uncomment this to make a debugging view
 //         JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
 
-         slingController = new SlingController(world, slingshotBoy);
+        slingController = new SlingController(firstLevel, slingshotBoy);
 
         view.addKeyListener(slingController);
 
         view.requestFocus();
 
         Tracker slingshotTracker = new Tracker(view, slingshotBoy);
-        world.addStepListener(slingshotTracker);
+        firstLevel.addStepListener(slingshotTracker);
 
         try {
 
@@ -97,16 +82,18 @@ public class Game {
 
 
         // start our game world simulation
-        world.start();
+        firstLevel.start();
 
-        
+
     }
 
     public SlingController getSlingController() {
         return slingController;
     }
 
-    /** Run the game. */
+    /**
+     * Run the game.
+     */
     public static void main(String[] args) {
 
         new Game();

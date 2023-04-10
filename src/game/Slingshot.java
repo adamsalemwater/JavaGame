@@ -1,4 +1,4 @@
-package world;
+package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
@@ -19,7 +19,7 @@ public class Slingshot extends Walker implements StepListener{
 
     private int score;
 
-    private int lives = 3;
+    private float lives = 3;
 
 
     public Slingshot(World w, float x, float y, boolean rightFacing) {

@@ -1,6 +1,5 @@
-package world;
+package game;
 
-import city.cs.engine.BodyImage;
 import city.cs.engine.UserView;
 import city.cs.engine.World;
 
@@ -56,7 +55,7 @@ public class GameView extends UserView {
           g.drawImage(this.halfHeart, 430, 0, this);
       } else if (slingshotLives == 0.5f) {
           g.drawImage(this.halfHeart, 400, 0, this);
-      } else {
+      } else if (slingshotLives == 0){
           this.heart = null;
           this.halfHeart = null;
           g.setColor(Color.red);

@@ -1,4 +1,4 @@
-package world;
+package game;
 
 import javax.sound.sampled.*;
 import javax.swing.*;

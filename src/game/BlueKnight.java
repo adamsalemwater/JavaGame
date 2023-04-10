@@ -1,39 +1,36 @@
-package world;
+package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-public class RedKnight extends Enemy implements StepListener {
+public class BlueKnight extends Enemy implements StepListener {
 
-    private static Shape knightShape = new PolygonShape(-0.21f,1.65f, -1.66f,1.74f, -1.71f,0.16f, -0.34f,0.16f
+    private static final Shape knightShape = new PolygonShape(-1.54f,0.93f, -0.09f,0.93f, -0.09f,-0.82f, -1.54f,-0.74f
     );
 
-    private static final BodyImage redKnightLeft = new BodyImage("data/RedKnightLeft.png", 12f);
-    private static final BodyImage redKnightRight = new BodyImage("data/RedKnightRight.png", 12f);
-    private static final BodyImage redKnightAttackRight = new BodyImage("data/RedKnightAttackRight.png", 12f);
-    private static final BodyImage redKnightAttackLeft = new BodyImage("data/RedKnightAttackLeft.png", 12f);
-
+    private static final BodyImage blueKnightRight = new BodyImage("data/BlueKnightRight.png", 12f);
+    private static final BodyImage blueKnightLeft = new BodyImage("data/BlueKnightLeft.png", 12f);
+    private static final BodyImage blueKnightAttackRight = new BodyImage("data/BlueKnightAttackRight.png", 12f);
+    private static final BodyImage blueKnightAttackLeft = new BodyImage("data/BlueKnightAttackLeft.png", 12f);
 
     private boolean rightFacing;
-
     private float move, rightBorder, leftBorder;
 
-
-    public RedKnight(World world, float x, float y, boolean rightFacing) {
+    public BlueKnight(World world, float x, float y, boolean rightFacing) {
         super(world, knightShape, 2);
         this.rightFacing = rightFacing;
-        this.leftBorder = 3f;
-        this.rightBorder = 7.5f;
-        this.move = 1.2f;
+
+        this.rightBorder = -2.5f;
+        this.leftBorder = -7.0f;
+        this.move = 1.3f;
 
         this.setPosition(new Vec2(x, y));
         world.addStepListener(this);
-        this.setName("RedKnight");
+        this.setName("BlueKnight");
 
-        RedKnightHit redKnightHit = new RedKnightHit(this);
-        this.addCollisionListener(redKnightHit);
+        BlueKnightHit blueKnightHit = new BlueKnightHit(this);
+        this.addCollisionListener(blueKnightHit);
     }
-
 
     public void switchDirection() {
         this.rightFacing = !this.rightFacing;
@@ -42,20 +39,20 @@ public class RedKnight extends Enemy implements StepListener {
     public void setImage() {
         this.removeAllImages();
         if (this.rightFacing) {
+            this.addImage(blueKnightRight);
             this.startWalking(move);
-            this.addImage(redKnightRight);
         } else {
+            this.addImage(blueKnightLeft);
             this.startWalking(-move);
-            this.addImage(redKnightLeft);
         }
     }
 
     public void attack() {
         this.removeAllImages();
         if (this.rightFacing) {
-            this.addImage(redKnightAttackRight);
+            this.addImage(blueKnightAttackRight);
         } else {
-            this.addImage(redKnightAttackLeft);
+            this.addImage(blueKnightAttackLeft);
         }
     }
 
@@ -82,19 +79,19 @@ public class RedKnight extends Enemy implements StepListener {
 
     }
 
-    public class RedKnightHit implements CollisionListener {
+    public class BlueKnightHit implements CollisionListener {
 
-        private RedKnight redKnight;
+        private BlueKnight blueKnight;
 
-        public RedKnightHit(RedKnight redKnight) {
-            this.redKnight = redKnight;
+        public BlueKnightHit(BlueKnight blueKnight) {
+            this.blueKnight = blueKnight;
         }
 
 
         @Override
         public void collide(CollisionEvent collisionEvent) {
             if (collisionEvent.getOtherBody().getName() == "Stone") {
-                this.redKnight.decrementLives(1f);
+                this.blueKnight.decrementLives(1f);
             }
         }
     }

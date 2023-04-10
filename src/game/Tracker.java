@@ -1,4 +1,4 @@
-package world;
+package game;
 
 
 import city.cs.engine.StepEvent;

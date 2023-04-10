@@ -1,4 +1,4 @@
-package world;
+package game;
 import javax.swing.JPanel;
 import javax.swing.JFrame;
 import javax.swing.ImageIcon;

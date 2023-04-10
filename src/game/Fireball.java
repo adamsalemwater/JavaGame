@@ -1,11 +1,7 @@
-package world;
+package game;
 
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 public class Fireball extends DynamicBody {
 

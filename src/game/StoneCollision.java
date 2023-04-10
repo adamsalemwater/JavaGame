@@ -1,8 +1,7 @@
-package world;
+package game;
 
 import city.cs.engine.CollisionEvent;
 import city.cs.engine.CollisionListener;
-import city.cs.engine.World;
 
 public class StoneCollision implements CollisionListener {
 
@@ -29,6 +28,12 @@ public class StoneCollision implements CollisionListener {
            collisionEvent.getOtherBody() instanceof RedKnight) {
                this.slingshotBoy.addScore(10);
            }
+        if (collisionEvent.getOtherBody() instanceof Collectible) {
+            ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
+            collisionEvent.getOtherBody().destroy();
+            this.sound.setFile("Coin");
+            this.sound.play();
+        }
            collisionEvent.getReportingBody().destroy();
     }
 }
