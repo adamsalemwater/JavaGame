@@ -5,6 +5,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
+import GameOver.*;
 import java.io.File;
 
 
@@ -13,7 +14,13 @@ import java.io.File;
  */
 public class Game {
 
+
     private SlingController slingController;
+
+    private Level1 firstLevel;
+    private Level2 secondLevel;
+    private GameView view;
+    private JFrame frame;
 
 
     /**
@@ -22,7 +29,7 @@ public class Game {
     public Game() {
 
 
-        Level1 firstLevel = new Level1();
+        firstLevel = new Level1();
 
 
         Slingshot slingshotBoy = firstLevel.getSlingshotBoy();
@@ -33,7 +40,7 @@ public class Game {
 
         //3. make a view to look into the game world
 //        UserView view = new UserView(game.getWorld(), 500, 500);
-        GameView view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy);
+         this.view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy, "Background", this);
 
 
         //optional: draw a 1-metre grid over the view
@@ -42,7 +49,7 @@ public class Game {
 
         //4. create a Java window (frame) and add the game
         //   view to it
-        final JFrame frame = new JFrame("Slingshot Boy");
+        this.frame = new JFrame("Slingshot Boy");
         frame.add(view);
 
         // enable the frame to quit the application
@@ -85,11 +92,24 @@ public class Game {
         firstLevel.start();
 
 
+
+
     }
+
+    public void gameEnded() {
+        frame.remove(view);
+        GameOver gameOver = new GameOver();
+        frame.add(gameOver.getPanel1());
+        frame.pack();
+    }
+
+
 
     public SlingController getSlingController() {
         return slingController;
     }
+
+
 
     /**
      * Run the game.
@@ -98,4 +118,6 @@ public class Game {
 
         new Game();
     }
+
+
 }

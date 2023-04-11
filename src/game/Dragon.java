@@ -96,7 +96,7 @@ public class Dragon extends Enemy implements StepListener {
             this.setImage();
         }
 
-        if (this.getLives() == 0) {
+        if (this.getLives() <= 0) {
             this.destroy();
         }
 

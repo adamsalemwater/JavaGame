@@ -26,7 +26,7 @@ public class Portal extends StaticBody{
         this.setPosition(new Vec2(x, y));
         this.addImage(portalImage);
 
-        CollisionListener portalHit = new PortalCollision(this);
+        CollisionListener portalHit = new PortalCollision();
         this.addCollisionListener(portalHit);
     }
 
@@ -47,16 +47,11 @@ public class Portal extends StaticBody{
 
     public class PortalCollision implements CollisionListener {
 
-        private Portal portal;
-
-        public PortalCollision(Portal portal) {
-            this.portal = portal;
-        }
-
         @Override
         public void collide(CollisionEvent collisionEvent) {
             if (collisionEvent.getOtherBody() instanceof Slingshot) {
-                collisionEvent.getOtherBody().setPosition(this.portal.getFinalDestination());
+
+                collisionEvent.getOtherBody().setPosition(((Portal)collisionEvent.getReportingBody()).getFinalDestination());
             }
         }
     }

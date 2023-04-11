@@ -14,14 +14,16 @@ public class GameView extends UserView {
 
     private Image heart;
     private Image halfHeart;
+    private Game game;
 
-    public GameView(World world, int width, int height, Slingshot slingshotBoy) {
+    public GameView(World world, int width, int height, Slingshot slingshotBoy, String backgroundString, Game game) {
         super(world, width, height);
-        background = new ImageIcon("data/Background.png").getImage();
+        background = new ImageIcon("data/" + backgroundString + ".png").getImage();
         scoreBoard = new ImageIcon("data/Score.png").getImage();
         this.heart = new ImageIcon("data/Heart.png").getImage();
         this.halfHeart = new ImageIcon("data/HalfHeart.png").getImage();
         this.slingshotBoy = slingshotBoy;
+        this.game = game;
     }
 
     @Override
@@ -55,11 +57,12 @@ public class GameView extends UserView {
           g.drawImage(this.halfHeart, 430, 0, this);
       } else if (slingshotLives == 0.5f) {
           g.drawImage(this.halfHeart, 400, 0, this);
-      } else if (slingshotLives == 0){
+      } else if (slingshotLives <= 0){
           this.heart = null;
           this.halfHeart = null;
           g.setColor(Color.red);
           g.drawString("GAME OVER", 200, 250);
+          this.game.gameEnded();
       }
 
 

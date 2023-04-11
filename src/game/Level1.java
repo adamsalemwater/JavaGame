@@ -7,7 +7,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Level1 extends World implements ActionListener {
+public class Level1 extends GameLevel implements ActionListener {
 
 
         private World world;
@@ -21,7 +21,11 @@ public class Level1 extends World implements ActionListener {
 
 
         public Level1()  {
-            super();
+            super(1);
+
+            addEnemies(getDragon());
+            addEnemies(getBlueKnight());
+            addEnemies(getRedKnight());
 
             this.world = new World();
 
@@ -44,6 +48,7 @@ public class Level1 extends World implements ActionListener {
 
             dragon = new Dragon(world, 4, -8, true, slingshotBoy);
             dragon.setImage();
+
 
 
             // add everything that makes the world such as platforms and other objects
@@ -74,6 +79,7 @@ public class Level1 extends World implements ActionListener {
 
             redKnight = new RedKnight(world, 5,0,false);
             redKnight.setImage();
+
 
             // create a two small platform which are near the edges of the screen
 
@@ -124,6 +130,7 @@ public class Level1 extends World implements ActionListener {
             Portal redPortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-10, 6));
 
 
+
             Timer timer = new Timer(100, this);
             timer.setDelay(3000);
             timer.start();
@@ -172,12 +179,12 @@ public class Level1 extends World implements ActionListener {
             this.redKnight = redKnight;
         }
 
+
         @Override
         public void actionPerformed(ActionEvent e) {
             if (this.getDragon().getLives() > 0) {
                 this.fireball = new Fireball(world, dragon);
             }
-
         }
     }
 
