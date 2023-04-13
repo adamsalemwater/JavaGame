@@ -32,10 +32,10 @@ public class HighScoreReader {
                 float lives = Float.parseFloat(tokens[1]);
                 line = reader.readLine();
                 totalScore += score;
-                totalLives += lives;
+                totalLives = lives;
             }
-            System.out.println("Score: " + totalScore);
-            System.out.println("Lives: " + totalLives);
+            readScore = totalScore;
+            readLives = totalLives;
         } finally {
             if (reader != null) {
                 reader.close();

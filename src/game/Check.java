@@ -19,20 +19,20 @@ public class Check implements StepListener{
         if(this.slingshotBoy.getLives() <= 0) {
             this.game.gameEnded();
         }
-        if (allEnemiesDeadLevelOne() == true) {
-            try {
-                this.game.switchLevelOne();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-//        if (this.slingshotBoy.getScore() == 0) {
+//        if (allEnemiesDeadLevelOne() == true) {
 //            try {
 //                this.game.switchLevelOne();
 //            } catch (IOException e) {
 //                throw new RuntimeException(e);
 //            }
 //        }
+        if (this.slingshotBoy.getScore() == 40) {
+            try {
+                this.game.switchLevelOne();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public boolean allEnemiesDeadLevelOne() {

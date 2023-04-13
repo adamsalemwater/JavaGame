@@ -121,6 +121,8 @@ public class Game {
         firstLevel.stop();
         secondLevel = new Level2();
         Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
+        secondSlingshotBoy.setScore(scoreReader.getReadScore());
+        secondSlingshotBoy.setLives(scoreReader.getReadLives());
         GameView secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
         frame.remove(view);
         frame.add(secondView);
@@ -128,7 +130,6 @@ public class Game {
         SlingController secondSlingController = new SlingController(secondLevel, secondSlingshotBoy);
         secondView.addKeyListener(secondSlingController);
         secondView.requestFocus();
-        DebugViewer secondLevelDebugViewer = new DebugViewer(secondLevel, 700, 700);
         secondLevel.start();
     }
 

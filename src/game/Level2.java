@@ -33,7 +33,7 @@ public class Level2 extends GameLevel implements ActionListener {
 
         // Add the dragon to the platform which can jump and moves faster
 
-        dragon = new Dragon(this, 4, -7, false, slingshotBoy, -5, 7);
+        dragon = new Dragon(this, 6, -7, false, slingshotBoy, -5, 7);
         dragon.setMove(2.5f);
         dragon.setImage();
 
