@@ -16,6 +16,7 @@ public class GameView extends UserView {
     private Image halfHeart;
     private Game game;
 
+
     public GameView(World world, int width, int height, Slingshot slingshotBoy, String backgroundString, Game game) {
         super(world, width, height);
         background = new ImageIcon("data/" + backgroundString + ".png").getImage();
@@ -43,26 +44,26 @@ public class GameView extends UserView {
           for (int i=0; i<3; i++) {
               g.drawImage(this.heart, 30*i+400, 0, this);
           }
-      } else if (slingshotLives == 2) {
-          for (int i=0; i<2; i++) {
-              g.drawImage(this.heart, 30*i+400, 0, this);
-          }
       } else if (slingshotLives == 2.5f) {
           for (int i=0; i<2; i++) {
               g.drawImage(this.heart, 30*i+400, 0, this);
           }
           g.drawImage(this.halfHeart, 460, 0, this);
-      } else if (slingshotLives == 1.5f) {
+      } else if (slingshotLives == 2) {
+          for (int i=0; i<2; i++) {
+              g.drawImage(this.heart, 30*i+400, 0, this);
+          }
+      }  else if (slingshotLives == 1.5f) {
           g.drawImage(this.heart, 400, 0, this);
           g.drawImage(this.halfHeart, 430, 0, this);
+      } else if (slingshotLives == 1) {
+        g.drawImage(this.heart, 400, 0, this);
       } else if (slingshotLives == 0.5f) {
           g.drawImage(this.halfHeart, 400, 0, this);
       } else if (slingshotLives <= 0){
           this.heart = null;
           this.halfHeart = null;
           g.setColor(Color.red);
-          g.drawString("GAME OVER", 200, 250);
-          this.game.gameEnded();
       }
 
 

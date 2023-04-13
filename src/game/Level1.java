@@ -19,13 +19,8 @@ public class Level1 extends GameLevel implements ActionListener {
         private RedKnight redKnight;
         private Fireball fireball;
 
-
         public Level1()  {
             super(1);
-
-            addEnemies(getDragon());
-            addEnemies(getBlueKnight());
-            addEnemies(getRedKnight());
 
             this.world = new World();
 
@@ -46,7 +41,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // create a dragon object
 
-            dragon = new Dragon(world, 4, -8, true, slingshotBoy);
+            dragon = new Dragon(world, 4, -8, true, slingshotBoy, -3.5f, 5.6f);
             dragon.setImage();
 
 
@@ -76,6 +71,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
             blueKnight = new BlueKnight(world, -5, 3, true);
             blueKnight.setImage();
+
 
             redKnight = new RedKnight(world, 5,0,false);
             redKnight.setImage();

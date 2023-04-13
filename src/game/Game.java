@@ -5,8 +5,14 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
+
 import GameOver.*;
+import city.cs.engine.DebugViewer;
+
+import java.awt.*;
+
 import java.io.File;
+import java.io.IOException;
 
 
 /**
@@ -21,6 +27,7 @@ public class Game {
     private Level2 secondLevel;
     private GameView view;
     private JFrame frame;
+    private Slingshot slingshotBoy;
 
 
     /**
@@ -32,7 +39,7 @@ public class Game {
         firstLevel = new Level1();
 
 
-        Slingshot slingshotBoy = firstLevel.getSlingshotBoy();
+        this.slingshotBoy = firstLevel.getSlingshotBoy();
 
 
 //        student.setLinearVelocity(new Vec2(0, 4));
@@ -40,7 +47,7 @@ public class Game {
 
         //3. make a view to look into the game world
 //        UserView view = new UserView(game.getWorld(), 500, 500);
-         this.view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy, "Background", this);
+        this.view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy, "Background", this);
 
 
         //optional: draw a 1-metre grid over the view
@@ -63,8 +70,8 @@ public class Game {
         // finally, make the frame visible
         frame.setVisible(true);
 
-        //optional: uncomment this to make a debugging view
-//         JFrame debugView = new DebugViewer(world.getWorld(), 500, 500);
+//        optional: uncomment this to make a debugging view
+//         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
 
         slingController = new SlingController(firstLevel, slingshotBoy);
 
@@ -91,24 +98,51 @@ public class Game {
         // start our game world simulation
         firstLevel.start();
 
-
+        Check checking = new Check(this, this.slingshotBoy);
+        firstLevel.addStepListener(checking);
 
 
     }
 
     public void gameEnded() {
+        firstLevel.stop();
         frame.remove(view);
         GameOver gameOver = new GameOver();
+        gameOver.getPanel1().setSize(new Dimension(500, 500));
         frame.add(gameOver.getPanel1());
         frame.pack();
     }
 
+    public void switchLevelOne() throws IOException {
+        HighScoreWriter scoreWriter = new HighScoreWriter("FirstLevel");
+        scoreWriter.writeHighScore(firstLevel.getSlingshotBoy().getScore(), firstLevel.getSlingshotBoy().getLives());
+        HighScoreReader scoreReader = new HighScoreReader("FirstLevel");
+        scoreReader.readHighScore();
+        firstLevel.stop();
+        secondLevel = new Level2();
+        Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
+        GameView secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
+        frame.remove(view);
+        frame.add(secondView);
+        frame.pack();
+        SlingController secondSlingController = new SlingController(secondLevel, secondSlingshotBoy);
+        secondView.addKeyListener(secondSlingController);
+        secondView.requestFocus();
+        DebugViewer secondLevelDebugViewer = new DebugViewer(secondLevel, 700, 700);
+        secondLevel.start();
+    }
 
+    public Level1 getFirstLevel() {
+        return firstLevel;
+    }
+
+    public Level2 getSecondLevel() {
+        return secondLevel;
+    }
 
     public SlingController getSlingController() {
         return slingController;
     }
-
 
 
     /**
@@ -118,6 +152,5 @@ public class Game {
 
         new Game();
     }
-
 
 }

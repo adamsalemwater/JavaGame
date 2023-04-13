@@ -3,6 +3,10 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 
 public class Dragon extends Enemy implements StepListener {
 
@@ -14,8 +18,6 @@ public class Dragon extends Enemy implements StepListener {
     private static final BodyImage dragonImageRight = new BodyImage("data/DragonRight.png", 25f);
     private static final BodyImage dragonAttackRight = new BodyImage("data/DragonAttackRight.png", 25f);
     private static final BodyImage dragonAttackLeft = new BodyImage("data/DragonAttackLeft.png", 25f);
-    private static final BodyImage fireballRight = new BodyImage("data/FireballRight.png", 0.75f);
-    private static final BodyImage fireballLeft = new BodyImage("data/FireballLeft.png", 0.75f);
     private boolean rightFacing;
 
     // instance field for moving the dragon on the platform
@@ -31,12 +33,12 @@ public class Dragon extends Enemy implements StepListener {
     private DynamicBody fireball;
 
 
-    public Dragon(World world, float x, float y, boolean rightFacing, Slingshot slingshotBoy) {
+    public Dragon(World world, float x, float y, boolean rightFacing, Slingshot slingshotBoy, float leftBorder, float rightBorder) {
         super(world, dragonShape, 5);
 
         this.rightFacing = rightFacing;
-        this.leftBorder = -3.5f;
-        this.rightBorder = 5.6f;
+        this.leftBorder = leftBorder;
+        this.rightBorder = rightBorder;
         this.move = 1.5f;
         this.slingshotBoy = slingshotBoy;
 
@@ -51,6 +53,15 @@ public class Dragon extends Enemy implements StepListener {
 
     }
 
+
+    public void setLeftBorder(float x) {
+        this.leftBorder = x;
+    }
+
+    public void setRightBorder(float x) {
+        this.rightBorder = x;
+    }
+
    public void setImage() {
         if (this.rightFacing) {
             this.addImage(dragonImageRight);
@@ -61,7 +72,7 @@ public class Dragon extends Enemy implements StepListener {
         }
    }
 
-   public void setMove(float move) {
+    public void setMove(float move) {
         this.move = move;
    }
 
@@ -72,7 +83,6 @@ public class Dragon extends Enemy implements StepListener {
    public boolean getRightFacing() {
         return this.rightFacing;
    }
-
 
    public void attackImage() {
         this.removeAllImages();
@@ -98,6 +108,7 @@ public class Dragon extends Enemy implements StepListener {
 
         if (this.getLives() <= 0) {
             this.destroy();
+            this.removeEnemies(this);
         }
 
 
@@ -105,9 +116,7 @@ public class Dragon extends Enemy implements StepListener {
 
     @Override
     public void postStep(StepEvent stepEvent) {
-
-    }
-
+        }
 
     public class DragonHit implements CollisionListener{
 
@@ -127,3 +136,4 @@ public class Dragon extends Enemy implements StepListener {
     }
 
 }
+

@@ -11,6 +11,6 @@ public class FireballCollision implements CollisionListener {
         if (collisionEvent.getOtherBody() instanceof Slingshot) {
              ((Slingshot) collisionEvent.getOtherBody()).decrementLives(0.5f);
         }
-        collisionEvent.getReportingBody().destroy();
+            collisionEvent.getReportingBody().destroy();
     }
 }

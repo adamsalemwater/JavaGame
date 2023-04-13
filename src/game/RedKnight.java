@@ -74,6 +74,7 @@ public class RedKnight extends Enemy implements StepListener {
 
         if (this.getLives() == 0) {
             this.destroy();
+            this.removeEnemies(this);
         }
     }
 

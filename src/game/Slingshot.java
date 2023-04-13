@@ -124,14 +124,6 @@ public class Slingshot extends Walker implements StepListener{
 
     @Override
     public void postStep(StepEvent stepEvent) {
-        if (this.getPosition().y < -20) {
-            this.setPosition(new Vec2(0,-13));
-        }
-
-
-
-
-
     }
 
     public class SlingshotHit implements CollisionListener {
