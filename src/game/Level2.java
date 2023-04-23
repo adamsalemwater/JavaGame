@@ -16,9 +16,12 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
     private Slingshot slingshotBoy;
     private Dragon dragon;
+    private MachineGun machineGun;
 
     public Level2()  {
         super(2);
+
+        this.addStepListener(this);
 
         // adding the background music
         try {
@@ -111,7 +114,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         blueKnight.setMove(2.2f);
         blueKnight.setImage();
 
-        MachineGun machineGun = new MachineGun(this, -10,15, true, slingshotBoy);
+        machineGun = new MachineGun(this, -10,15, true, slingshotBoy);
 
 
 
@@ -145,15 +148,12 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
     @Override
     public void preStep(StepEvent stepEvent) {
         if (slingshotBoy.getPosition().y < -20) {
-            slingshotBoy.setPosition(new Vec2(10,0));
-        }
-        if (slingshotBoy.getPosition().x > 350) {
-            System.out.println("Greater than 350");
+            slingshotBoy.setPosition(new Vec2(10,10));
         }
     }
 
     @Override
     public void postStep(StepEvent stepEvent) {
-
+        MachineGun.Bullet bullet = machineGun.new Bullet(this, machineGun, this.slingshotBoy);
     }
 }

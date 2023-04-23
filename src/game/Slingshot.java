@@ -180,6 +180,10 @@ public class Slingshot extends Walker implements StepListener{
                 this.sound.play();
                 this.sound.stop();
             }
+
+            if (collisionEvent.getOtherBody() instanceof MachineGun.Bullet) {
+                ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
+            }
         }
     }
 }
