@@ -7,7 +7,6 @@ import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import GameOver.*;
-import city.cs.engine.DebugViewer;
 
 import java.awt.*;
 
@@ -98,7 +97,7 @@ public class Game {
         // start our game world simulation
         firstLevel.start();
 
-        Check checking = new Check(this, this.slingshotBoy);
+        Switch checking = new Switch(this, this.slingshotBoy);
         firstLevel.addStepListener(checking);
 
 

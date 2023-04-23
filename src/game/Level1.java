@@ -35,8 +35,10 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // make the boy with the slingshot character
 
-            slingshotBoy = new Slingshot(world, -5, -9f, true);
+            slingshotBoy = new Slingshot(world, -5, -9f, true, -10, -2.5f);
             slingshotBoy.setImage();
+
+
 
 
             // create a dragon object
@@ -66,6 +68,8 @@ public class Level1 extends GameLevel implements ActionListener {
                 platform.addImage(platformImage2);
 
             }
+
+
 
             // create a blue knight on one platform and a red knight on the other
 
@@ -127,6 +131,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
 
 
+
             Timer timer = new Timer(100, this);
             timer.setDelay(3000);
             timer.start();
@@ -182,5 +187,6 @@ public class Level1 extends GameLevel implements ActionListener {
                 this.fireball = new Fireball(world, dragon);
             }
         }
-    }
+
+}
 

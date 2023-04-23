@@ -17,6 +17,11 @@ public class Enemy extends Walker {
         addEnemies(this);
     }
 
+    public Enemy(World world, float lives) {
+        super(world);
+        this.lives = lives;
+    }
+
     public float getLives() {
         return lives;
     }

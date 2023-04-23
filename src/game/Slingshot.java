@@ -3,6 +3,10 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+/**
+ * @author Adam Rezzag Salem
+ * A class which creates the main character of the game
+ */
 
 public class Slingshot extends Walker implements StepListener{
 
@@ -21,12 +25,16 @@ public class Slingshot extends Walker implements StepListener{
 
     private float lives = 3;
 
+    private float resetX, resetY;
 
-    public Slingshot(World w, float x, float y, boolean rightFacing) {
+
+    public Slingshot(World w, float x, float y, boolean rightFacing, float resetX, float resetY) {
         super(w, slingshotBody);
         this.rightFacing = rightFacing;
         this.x = x;
         this.y = y;
+        this.resetX = resetX;
+        this.resetY = resetY;
         this.world = w;
         score = 0;
 
@@ -37,6 +45,8 @@ public class Slingshot extends Walker implements StepListener{
 
         world.addStepListener(this);
         this.setName("Slingshot");
+
+
     }
 
     public boolean isRightFacing() {
@@ -102,6 +112,10 @@ public class Slingshot extends Walker implements StepListener{
         this.lives = lives;
     }
 
+    /**
+     *
+     * @return A score of the slingshot character of type int.
+     */
     public int getScore() {
         return score;
     }
@@ -127,6 +141,10 @@ public class Slingshot extends Walker implements StepListener{
 
     @Override
     public void postStep(StepEvent stepEvent) {
+        if (this.getPosition().y < -20) {
+            this.decrementLives(1);
+            this.setPosition(new Vec2(resetX, resetY));
+        }
     }
 
     public class SlingshotHit implements CollisionListener {
@@ -152,6 +170,7 @@ public class Slingshot extends Walker implements StepListener{
                 collisionEvent.getOtherBody().destroy();
                 this.sound.setFile("Coin");
                 this.sound.play();
+                this.sound.stop();
             }
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
@@ -159,6 +178,7 @@ public class Slingshot extends Walker implements StepListener{
             if (collisionEvent.getOtherBody().getName() == "Mushroom") {
                 this.sound.setFile("Spring");
                 this.sound.play();
+                this.sound.stop();
             }
         }
     }

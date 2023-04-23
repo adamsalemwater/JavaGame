@@ -3,9 +3,6 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 
 public class Dragon extends Enemy implements StepListener {
@@ -28,9 +25,14 @@ public class Dragon extends Enemy implements StepListener {
     private World world;
     private Slingshot slingshotBoy;
 
-    private static final Shape fireballShape = new PolygonShape(0.572f,0.032f, -0.059f,-0.135f, -0.482f,0.042f, -0.028f,0.184f
-    );
-    private DynamicBody fireball;
+    // different states for dragon if hurt or the slingshot character is in range
+
+    private enum State {
+            STILL, RIGHT, LEFT
+    }
+
+    private State state;
+
 
 
     public Dragon(World world, float x, float y, boolean rightFacing, Slingshot slingshotBoy, float leftBorder, float rightBorder) {
@@ -46,11 +48,38 @@ public class Dragon extends Enemy implements StepListener {
         world.addStepListener(this);
         this.setName("Dragon");
 
-        CollisionListener dragonHit = new DragonHit(this);
+        CollisionListener dragonHit = new DragonHit();
         this.addCollisionListener(dragonHit);
         this.world = world;
 
+        this.state = State.STILL;
 
+    }
+
+    public boolean inRangeLeft() {
+        if (slingshotBoy.getPosition().x - this.getPosition().x > -2) {
+            return true;
+        }
+        return false;
+    }
+
+
+    public boolean inRangeRight() {
+        if (slingshotBoy.getPosition().x - this.getPosition().x < 2) {
+            return true;
+        }
+        return false;
+    }
+
+    public void setRightFacing(boolean rightFacing) {
+        this.rightFacing = rightFacing;
+    }
+
+    @Override
+    public void jump(float x) {
+        super.jump(x);
+        this.removeAllImages();
+        this.attackImage();
     }
 
 
@@ -93,18 +122,58 @@ public class Dragon extends Enemy implements StepListener {
         }
    }
 
+   public void walk() {
+        switch(state) {
+            case LEFT :
+                this.setRightFacing(false);
+                this.removeAllImages();
+                this.setImage();
+                this.startWalking(-move);
+                break;
+            case RIGHT :
+                this.setRightFacing(true);
+                this.removeAllImages();
+                this.setImage();
+                this.startWalking(move);
+                break;
+            default:
+        }
+   }
+
     @Override
     public void preStep(StepEvent stepEvent) {
-        if ((this.getPosition().x > rightBorder)) {
-            this.removeAllImages();
-            this.switchImage();
-            this.setImage();
-        }
-        if (this.getPosition().x < leftBorder) {
-            this.removeAllImages();
-            this.switchImage();
-            this.setImage();
-        }
+//        if (inRangeLeft()) {
+//            if (state != State.LEFT) {
+//                this.removeAllImages();
+//                this.switchImage();
+//                this.setImage();
+//                this.startWalking(-move);
+//                state = State.LEFT;
+//            }
+//        } else if (inRangeRight()) {
+//            if (state != State.RIGHT) {
+//                this.removeAllImages();
+//                this.switchImage();
+//                this.setImage();
+//                this.startWalking(move);
+//                state = State.RIGHT;
+//            }
+//        } else {
+//            if (state != State.STILL) {
+//                this.stopWalking();
+//            }
+//        }
+//        walk();
+//        if ((this.getPosition().x > rightBorder)) {
+//            this.removeAllImages();
+//            this.switchImage();
+//            this.setImage();
+//        }
+//        if (this.getPosition().x < leftBorder) {
+//            this.removeAllImages();
+//            this.switchImage();
+//            this.setImage();
+//        }
 
         if (this.getLives() <= 0) {
             this.destroy();
@@ -120,17 +189,22 @@ public class Dragon extends Enemy implements StepListener {
 
     public class DragonHit implements CollisionListener{
 
-        private Dragon dragon;
 
-        public DragonHit(Dragon dragon) {
-            this.dragon = dragon;
-        }
 
 
         @Override
         public void collide(CollisionEvent collisionEvent) {
+            if (collisionEvent.getOtherBody() instanceof Tree) {
+                ((Dragon)collisionEvent.getReportingBody()).removeAllImages();
+                ((Dragon)collisionEvent.getReportingBody()).switchImage();
+                ((Dragon)collisionEvent.getReportingBody()).setImage();
+            }
             if (collisionEvent.getOtherBody().getName() == "Stone") {
-                    this.dragon.decrementLives(0.5f);
+                ((Dragon)collisionEvent.getReportingBody()).decrementLives(0.5f);
+            }
+            if (collisionEvent.getOtherBody() instanceof StaticBody) {
+                collisionEvent.getReportingBody().removeAllImages();
+                ((Dragon)collisionEvent.getReportingBody()).setImage();
             }
         }
     }

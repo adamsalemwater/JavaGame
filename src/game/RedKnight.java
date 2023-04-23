@@ -34,6 +34,10 @@ public class RedKnight extends Enemy implements StepListener {
         this.addCollisionListener(redKnightHit);
     }
 
+    public void setMove(float move) {
+        this.move = move;
+    }
+
 
     public void switchDirection() {
         this.rightFacing = !this.rightFacing;
@@ -76,6 +80,14 @@ public class RedKnight extends Enemy implements StepListener {
             this.destroy();
             this.removeEnemies(this);
         }
+    }
+
+    public void setRightBorder(float rightBorder) {
+        this.rightBorder = rightBorder;
+    }
+
+    public void setLeftBorder(float leftBorder) {
+        this.leftBorder = leftBorder;
     }
 
     @Override

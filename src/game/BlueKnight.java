@@ -32,6 +32,10 @@ public class BlueKnight extends Enemy implements StepListener {
         this.addCollisionListener(blueKnightHit);
     }
 
+    public void setMove(float move) {
+        this.move = move;
+    }
+
     public void switchDirection() {
         this.rightFacing = !this.rightFacing;
     }
@@ -73,6 +77,14 @@ public class BlueKnight extends Enemy implements StepListener {
             this.destroy();
             this.removeEnemies(this);
         }
+    }
+
+    public void setRightBorder(float rightBorder) {
+        this.rightBorder = rightBorder;
+    }
+
+    public void setLeftBorder(float leftBorder) {
+        this.leftBorder = leftBorder;
     }
 
     @Override

@@ -49,7 +49,7 @@ public class SlingController implements KeyListener, ActionListener {
                 slingshotBoy.startWalking(4);
             }
             if (code == KeyEvent.VK_UP) {
-                slingshotBoy.jump(7);
+                slingshotBoy.jump(10);
                 this.sound.setFile("Jump");
                 this.sound.play();
             }
