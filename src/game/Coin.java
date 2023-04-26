@@ -3,10 +3,8 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
-import java.util.Random;
 
-
-public class Collectible extends StaticBody {
+public class Coin extends StaticBody {
 
     private World world;
     private static final Shape collectibleShape = new PolygonShape(-0.076f,0.489f, 0.13f,0.014f, -0.022f,-0.386f, -0.151f,0.036f
@@ -15,7 +13,7 @@ public class Collectible extends StaticBody {
     private float x,y;
 
 
-    public Collectible(World world, int x, int y) {
+    public Coin(World world, float x, float y) {
         super(world,collectibleShape);
         this.world = world;
         this.x = x;

@@ -28,7 +28,7 @@ public class StoneCollision implements CollisionListener {
            collisionEvent.getOtherBody() instanceof RedKnight) {
                this.slingshotBoy.addScore(10);
            }
-        if (collisionEvent.getOtherBody() instanceof Collectible) {
+        if (collisionEvent.getOtherBody() instanceof Coin) {
             ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
             collisionEvent.getOtherBody().destroy();
             this.sound.setFile("Coin");

@@ -27,6 +27,11 @@ public class Game {
     private GameView view;
     private JFrame frame;
     private Slingshot slingshotBoy;
+    private HighScoreWriter highScoreWriter;
+    private HighScoreReader highScoreReader;
+    private GameView menuView;
+    private GameView firstView;
+    private GameView secondView;
 
 
     /**
@@ -35,28 +40,49 @@ public class Game {
     public Game() {
 
 
-        firstLevel = new Level1();
 
-
-        this.slingshotBoy = firstLevel.getSlingshotBoy();
-
-
-//        student.setLinearVelocity(new Vec2(0, 4));
-
-
-        //3. make a view to look into the game world
-//        UserView view = new UserView(game.getWorld(), 500, 500);
-        this.view = new GameView(firstLevel.getWorld(), 500, 500, slingshotBoy, "Background", this);
-
-
-        //optional: draw a 1-metre grid over the view
-        // view.setGridResolution(1);
 
 
         //4. create a Java window (frame) and add the game
         //   view to it
         this.frame = new JFrame("Slingshot Boy");
-        frame.add(view);
+        frame.add(menuView);
+
+//        optional: uncomment this to make a debugging view
+//         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
+
+
+
+
+
+    }
+
+    public void gameEndedOne() {
+        firstLevel.stop();
+        frame.remove(view);
+        GameOver gameOver = new GameOver();
+        gameOver.getPanel1().setSize(new Dimension(500, 500));
+        frame.add(gameOver.getPanel1());
+        frame.pack();
+    }
+
+    public void gameEndedTwo() {
+        secondLevel.stop();
+        frame.remove(view);
+        GameOver gameOver = new GameOver();
+        gameOver.getPanel1().setSize(new Dimension(500, 500));
+        frame.add(gameOver.getPanel1());
+        frame.pack();
+    }
+
+
+    public void switchLevelTwo() throws IOException {
+        highScoreWriter = new HighScoreWriter("level");
+        highScoreWriter.writeHighScore(firstLevel.getSlingshotBoy().getScore(), firstLevel.getSlingshotBoy().getLives());
+        highScoreReader = new HighScoreReader("level");
+        highScoreReader.readHighScore();
+        firstLevel.stop();
+        secondLevel = new Level2(this);
 
         // enable the frame to quit the application
         // when the x button is pressed
@@ -69,59 +95,9 @@ public class Game {
         // finally, make the frame visible
         frame.setVisible(true);
 
-//        optional: uncomment this to make a debugging view
-//         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
-
-        slingController = new SlingController(firstLevel, slingshotBoy);
-
-        view.addKeyListener(slingController);
-
-        view.requestFocus();
-
-        Tracker slingshotTracker = new Tracker(view, slingshotBoy);
-        firstLevel.addStepListener(slingshotTracker);
-
-        try {
-
-            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("sound/Background.wav"));
-            Clip clip = AudioSystem.getClip();
-            clip.open(ais);
-            System.out.println(clip);
-            clip.start();
-            clip.loop(Clip.LOOP_CONTINUOUSLY);
-
-        } catch (Exception e) {
-        }
-
-
-        // start our game world simulation
-        firstLevel.start();
-
-        Switch checking = new Switch(this, this.slingshotBoy);
-        firstLevel.addStepListener(checking);
-
-
-    }
-
-    public void gameEnded() {
-        firstLevel.stop();
-        frame.remove(view);
-        GameOver gameOver = new GameOver();
-        gameOver.getPanel1().setSize(new Dimension(500, 500));
-        frame.add(gameOver.getPanel1());
-        frame.pack();
-    }
-
-    public void switchLevelOne() throws IOException {
-        HighScoreWriter scoreWriter = new HighScoreWriter("FirstLevel");
-        scoreWriter.writeHighScore(firstLevel.getSlingshotBoy().getScore(), firstLevel.getSlingshotBoy().getLives());
-        HighScoreReader scoreReader = new HighScoreReader("FirstLevel");
-        scoreReader.readHighScore();
-        firstLevel.stop();
-        secondLevel = new Level2();
         Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
-        secondSlingshotBoy.setScore(scoreReader.getReadScore());
-        secondSlingshotBoy.setLives(scoreReader.getReadLives());
+        secondSlingshotBoy.setScore(highScoreReader.getReadScore());
+        secondSlingshotBoy.setLives(highScoreReader.getReadLives());
         GameView secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
         frame.remove(view);
         frame.add(secondView);
@@ -130,6 +106,38 @@ public class Game {
         secondView.addKeyListener(secondSlingController);
         secondView.requestFocus();
         secondLevel.start();
+
+        Switch checking = new Switch(this, secondSlingshotBoy);
+        secondLevel.addStepListener(checking);
+    }
+
+
+    public void switchLevelOne() throws IOException {
+        firstLevel = new Level1();
+
+        // enable the frame to quit the application
+        // when the x button is pressed
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        // don't let the frame be resized
+        frame.setResizable(false);
+        // size the frame to fit the world view
+        frame.pack();
+        // finally, make the frame visible
+        frame.setVisible(true);
+
+        this.slingshotBoy = firstLevel.getSlingshotBoy();
+        GameView firstView = new GameView(firstLevel, 700, 700, slingshotBoy, "Background", this);
+        frame.remove(menuView);
+        frame.add(firstView);
+        frame.pack();
+        SlingController firstSlingController = new SlingController(firstLevel, slingshotBoy);
+        firstView.addKeyListener(firstSlingController);
+        firstView.requestFocus();
+        firstLevel.start();
+
+        Switch checking = new Switch(this, slingshotBoy);
+        firstLevel.addStepListener(checking);
     }
 
     public Level1 getFirstLevel() {

@@ -9,7 +9,9 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
 
 public class Level2 extends GameLevel implements ActionListener, StepListener {
@@ -17,9 +19,13 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
     private Slingshot slingshotBoy;
     private Dragon dragon;
     private MachineGun machineGun;
+    private ArrayList<Key> keyList = new ArrayList<>();
+    private Game game;
 
-    public Level2()  {
+    public Level2(Game game)  {
         super(2);
+
+        this.game = game;
 
         this.addStepListener(this);
 
@@ -48,10 +54,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // Add the dragon to the platform which can jump and moves faster
 
-        dragon = new Dragon(this, 6, -7, false, slingshotBoy, -5, 7);
-        dragon.setMove(2.5f);
-        dragon.setImage();
-        dragon.setLives(8);
+        dragon = new Dragon(this, 6, -7, false, slingshotBoy);
 
 
         // adding all platforms to the level
@@ -75,14 +78,14 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         BodyImage mediumPlatformImage2 = new BodyImage("data/RockPlatform.png", 11);
         Shape mediumPlatformShape2 = new PolygonShape(-4.64f,2.24f, 4.78f,2.28f, 4.89f,-1.3f, -4.68f,-1.21f);
         StaticBody mediumPlatform2 = new StaticBody(this, mediumPlatformShape2);
-        mediumPlatform2.setPosition(new Vec2(0, -2));
+        mediumPlatform2.setPosition(new Vec2(0, -7));
         mediumPlatform2.addImage(mediumPlatformImage2);
 
 
         // adding portals
 
-        Portal portal = new Portal(this, -17, -6.25f, true, new Vec2(-14, 0));
-        Portal portal2 = new Portal(this, -16, 12.75f, true, new Vec2(-15, -6.25f));
+        Portal portal = new Portal(this, -17, -6.25f, true, new Vec2(-12, 12));
+        Portal portal2 = new Portal(this, -16, 12.75f, true, new Vec2(-13, -6.25f));
 
         Portal portal3 = new Portal(this, 17, -7, false, new Vec2(13, 12.5f));
         Portal portal4 = new Portal(this, 15, 13, false, new Vec2(16, -7.5f));
@@ -94,9 +97,10 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // add small rocks which slowly fall if the main character stays on for too long
 
-        SmallRock smallRock = new SmallRock(this, -13, -11);
-        SmallRock smallRock2 = new SmallRock(this, -14, -10);
-        SmallRock smallRock3 = new SmallRock(this, -15, -9);
+
+        SmallRock smallRock2 = new SmallRock(this, -12, -10);
+        SmallRock smallRock3 = new SmallRock(this, -15, -10);
+        SmallRock smallRock = new SmallRock(this, -8, -7);
 
 
 
@@ -114,7 +118,32 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         blueKnight.setMove(2.2f);
         blueKnight.setImage();
 
+        // add machine gun which follows the main character
+
         machineGun = new MachineGun(this, -10,15, true, slingshotBoy);
+
+
+        // add keys for the slingshot character to collect
+
+        Key key = new Key(this, 0, 11);
+        Key key2 = new Key(this, 10, 15);
+        Key key3 = new Key(this, 10, -10);
+
+        keyList.add(key);
+        keyList.add(key2);
+        keyList.add(key3);
+
+        // add collectibles for extra points for the player to collect
+
+        Coin coin = new Coin(this, 0, -1);
+        Coin coin2 = new Coin(this, 4, -1);
+        Coin coin3 = new Coin(this, -4, -1);
+        Coin coin4 = new Coin(this, -12, -6 );
+        Coin coin5 = new Coin(this, 12, -5);
+        Coin coin6 = new Coin(this, 2, 16.5f);
+        Coin coin7 = new Coin(this, -2, 16.5f);
+
+
 
 
 
@@ -143,17 +172,24 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
             fireball.setxVel(15);
             fireball.setyVel(20);
         }
+
+        if (this.machineGun.getLives() > 0 && Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun.getPosition().x, machineGun.getPosition().y) < 7) {
+            MachineGun.Laser laser = machineGun.new Laser(this, machineGun, slingshotBoy);
+        }
+
     }
 
     @Override
     public void preStep(StepEvent stepEvent) {
         if (slingshotBoy.getPosition().y < -20) {
-            slingshotBoy.setPosition(new Vec2(10,10));
+            slingshotBoy.setPosition(new Vec2(6,10));
         }
     }
 
     @Override
     public void postStep(StepEvent stepEvent) {
-        MachineGun.Bullet bullet = machineGun.new Bullet(this, machineGun, this.slingshotBoy);
+        if (keyList.size() <= slingshotBoy.getKeys()) {
+            Door door = new Door(this, 0, -2, game);
+        }
     }
 }

@@ -2,7 +2,6 @@ package game;
 
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
-import org.jbox2d.common.Vec2;
 
 import java.io.IOException;
 
@@ -19,22 +18,12 @@ public class Switch implements StepListener{
     }
     @Override
     public void preStep(StepEvent stepEvent) {
-        if(this.slingshotBoy.getLives() <= 0) {
-            this.game.gameEnded();
+        if(this.slingshotBoy.getLives() <= 0 && game.getFirstLevel().isRunning()) {
+            this.game.gameEndedOne();
         }
-//        if (allEnemiesDeadLevelOne() == true) {
-//            try {
-//                this.game.switchLevelOne();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-        if (this.slingshotBoy.getScore() == 0) {
-            try {
-                this.game.switchLevelOne();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+
+        if (this.slingshotBoy.getLives() <= 0 && game.getSecondLevel().isRunning()) {
+            this.game.gameEndedTwo();
         }
     }
 

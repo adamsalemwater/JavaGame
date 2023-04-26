@@ -43,8 +43,9 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // create a dragon object
 
-            dragon = new Dragon(world, 4, -8, true, slingshotBoy, -3.5f, 5.6f);
+            dragon = new Dragon(world, 4, -8, true, slingshotBoy);
             dragon.setImage();
+
 
 
 
@@ -134,7 +135,10 @@ public class Level1 extends GameLevel implements ActionListener {
 
             Timer timer = new Timer(100, this);
             timer.setDelay(3000);
-            timer.start();
+
+
+
+
 
 
             this.world.start();

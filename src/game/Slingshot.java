@@ -22,6 +22,7 @@ public class Slingshot extends Walker implements StepListener{
     private World world;
 
     private int score;
+    private int keys;
 
     private float lives = 3;
 
@@ -37,6 +38,7 @@ public class Slingshot extends Walker implements StepListener{
         this.resetY = resetY;
         this.world = w;
         score = 0;
+        this.keys = 0;
 
         SlingshotHit slingshotHit = new SlingshotHit();
         this.addCollisionListener(slingshotHit);
@@ -55,6 +57,14 @@ public class Slingshot extends Walker implements StepListener{
 
     public void switchRightFacing() {
         this.rightFacing = !this.rightFacing;
+    }
+
+    public void addKey() {
+        this.keys ++;
+    }
+
+    public int getKeys() {
+        return this.keys;
     }
 
 
@@ -165,7 +175,7 @@ public class Slingshot extends Walker implements StepListener{
             collisionEvent.getOtherBody() instanceof RedKnight) {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }
-            if (collisionEvent.getOtherBody() instanceof Collectible) {
+            if (collisionEvent.getOtherBody() instanceof Coin) {
                 ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
                 collisionEvent.getOtherBody().destroy();
                 this.sound.setFile("Coin");
@@ -181,7 +191,7 @@ public class Slingshot extends Walker implements StepListener{
                 this.sound.stop();
             }
 
-            if (collisionEvent.getOtherBody() instanceof MachineGun.Bullet) {
+            if (collisionEvent.getOtherBody() instanceof MachineGun.Laser) {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }
         }
