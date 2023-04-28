@@ -3,10 +3,10 @@ package game;
 import city.cs.engine.StepEvent;
 import city.cs.engine.StepListener;
 
-import java.io.IOException;
 
 /**
- * A class which checks if conditions are met to progress to the next level
+ * A class which checks if conditions are met to progress to the next level or if the
+ * main character had lost all his lives, the frame is repacked to the game over menu.
  */
 public class Switch implements StepListener{
 
@@ -26,20 +26,6 @@ public class Switch implements StepListener{
             this.game.gameEndedTwo();
         }
     }
-
-    /**
-     *
-     * @return Returns a boolean expression to check whether all enemies within the first level are dead.
-     */
-    public boolean allEnemiesDeadLevelOne() {
-        if (this.game.getFirstLevel().getDragon().getEnemies().size() == 0
-                && this.game.getFirstLevel().getBlueKnight().getEnemies().size() == 0
-        && this.game.getFirstLevel().getRedKnight().getEnemies().size() == 0) {
-            return true;
-        }
-        return false;
-    }
-
 
     @Override
     public void postStep(StepEvent stepEvent) {

@@ -1,16 +1,13 @@
 package game;
 
 
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import javax.swing.JFrame;
 
 import GameOver.*;
+import StartMenu.StartMenu;
 
 import java.awt.*;
 
-import java.io.File;
 import java.io.IOException;
 
 
@@ -29,24 +26,42 @@ public class Game {
     private Slingshot slingshotBoy;
     private HighScoreWriter highScoreWriter;
     private HighScoreReader highScoreReader;
-    private GameView menuView;
+    private GameOver gameOver;
     private GameView firstView;
     private GameView secondView;
+    private StartMenu startMenu;
 
 
     /**
      * Initialise a new Game.
      */
-    public Game() {
+    public Game() throws IOException {
 
-
-
+        startMenu = new StartMenu(this);
 
 
         //4. create a Java window (frame) and add the game
         //   view to it
         this.frame = new JFrame("Slingshot Boy");
-        frame.add(menuView);
+//        frame.add(menuView);
+
+        // enable the frame to quit the application
+        // when the x button is pressed
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationByPlatform(true);
+        // don't let the frame be resized
+        frame.setResizable(false);
+        // resize the frame
+        startMenu.getMenuPanel().setPreferredSize(new Dimension(500, 500));
+        // size the frame to fit the world view
+//        frame.pack();
+        // finally, make the frame visible
+        frame.setVisible(true);
+
+
+        frame.add(startMenu.getMenuPanel());
+        frame.repaint();
+        frame.pack();
 
 //        optional: uncomment this to make a debugging view
 //         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
@@ -59,19 +74,31 @@ public class Game {
 
     public void gameEndedOne() {
         firstLevel.stop();
-        frame.remove(view);
-        GameOver gameOver = new GameOver();
-        gameOver.getPanel1().setSize(new Dimension(500, 500));
-        frame.add(gameOver.getPanel1());
+        frame.remove(firstView);
+        gameOver = new GameOver(this);
+        gameOver.getMainPanel().setSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setWon(false);
+        frame.add(gameOver.getMainPanel());
+        frame.repaint();
         frame.pack();
     }
 
     public void gameEndedTwo() {
         secondLevel.stop();
-        frame.remove(view);
-        GameOver gameOver = new GameOver();
-        gameOver.getPanel1().setSize(new Dimension(500, 500));
-        frame.add(gameOver.getPanel1());
+        frame.remove(secondView);
+        gameOver = new GameOver(this);
+        gameOver.getMainPanel().setSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setWon(false);
+        frame.add(gameOver.getMainPanel());
+        frame.repaint();
+        frame.pack();
+    }
+
+    public void switchStartMenu() {
+        startMenu = new StartMenu(this);
+        this.frame.remove(gameOver.getMainPanel());
+        this.frame.add(startMenu.getMenuPanel());
+        frame.repaint();
         frame.pack();
     }
 
@@ -98,9 +125,10 @@ public class Game {
         Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
         secondSlingshotBoy.setScore(highScoreReader.getReadScore());
         secondSlingshotBoy.setLives(highScoreReader.getReadLives());
-        GameView secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
-        frame.remove(view);
+        secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
+        frame.remove(firstView);
         frame.add(secondView);
+        frame.repaint();
         frame.pack();
         SlingController secondSlingController = new SlingController(secondLevel, secondSlingshotBoy);
         secondView.addKeyListener(secondSlingController);
@@ -127,9 +155,10 @@ public class Game {
         frame.setVisible(true);
 
         this.slingshotBoy = firstLevel.getSlingshotBoy();
-        GameView firstView = new GameView(firstLevel, 700, 700, slingshotBoy, "Background", this);
-        frame.remove(menuView);
+        firstView = new GameView(firstLevel, 700, 700, slingshotBoy, "Background", this);
+        frame.remove(startMenu.getMenuPanel());
         frame.add(firstView);
+        frame.repaint();
         frame.pack();
         SlingController firstSlingController = new SlingController(firstLevel, slingshotBoy);
         firstView.addKeyListener(firstSlingController);
@@ -156,7 +185,7 @@ public class Game {
     /**
      * Run the game.
      */
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
         new Game();
     }
