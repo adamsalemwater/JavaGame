@@ -10,24 +10,23 @@ import java.awt.event.ActionListener;
 public class Level1 extends GameLevel implements ActionListener {
 
 
-        private World world;
-
-
         private Slingshot slingshotBoy;
         private Dragon dragon;
         private BlueKnight blueKnight;
         private RedKnight redKnight;
         private Fireball fireball;
+        private Game game;
 
-        public Level1()  {
+        public Level1(Game game)  {
             super(1);
 
-            this.world = new World();
+            this.game = game;
+
 
             // make the ground
             BodyImage platformImage = new BodyImage("data/platform.png",18f);
             Shape shape = new PolygonShape(-10.97f,4.52f, 9.18f,4.38f, 9.18f,-1.35f, -10.9f,-1.69f);
-            StaticBody ground = new StaticBody(this.world, shape);
+            StaticBody ground = new StaticBody(this, shape);
             SolidFixture actualGround = new SolidFixture(ground, shape);
             actualGround.setFriction(1f);
             ground.setPosition(new Vec2(0f, -13.5f));
@@ -35,7 +34,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // make the boy with the slingshot character
 
-            slingshotBoy = new Slingshot(world, -5, -9f, true, -10, -2.5f);
+            slingshotBoy = new Slingshot(this, -5, -9f, true, -10, -2.5f);
             slingshotBoy.setImage();
 
 
@@ -43,7 +42,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // create a dragon object
 
-            dragon = new Dragon(world, 4, -8, true, slingshotBoy);
+            dragon = new Dragon(this, 4, -8, true, slingshotBoy);
             dragon.setImage();
 
 
@@ -64,7 +63,7 @@ public class Level1 extends GameLevel implements ActionListener {
                 BodyImage platformImage2 = new BodyImage("data/platform.png", 5f);
                 Shape platformShape = new PolygonShape(-3.01f,1.31f, 2.53f,1.33f, 2.57f,-0.51f, -3.03f,-0.53f
                 );
-                StaticBody platform = new StaticBody(world, platformShape);
+                StaticBody platform = new StaticBody(this, platformShape);
                 platform.setPosition(new Vec2(xCoord, yCoord));
                 platform.addImage(platformImage2);
 
@@ -74,11 +73,11 @@ public class Level1 extends GameLevel implements ActionListener {
 
             // create a blue knight on one platform and a red knight on the other
 
-            blueKnight = new BlueKnight(world, -5, 3, true);
+            blueKnight = new BlueKnight(this, -5, 3, true);
             blueKnight.setImage();
 
 
-            redKnight = new RedKnight(world, 5,0,false);
+            redKnight = new RedKnight(this, 5,0,false);
             redKnight.setImage();
 
 
@@ -89,7 +88,7 @@ public class Level1 extends GameLevel implements ActionListener {
                 float yCoord = -4.5f;
                 BodyImage platformImage3 = new BodyImage("data/platform.png", 3.5f);
                 Shape platformShape = new PolygonShape(-2.11f,0.88f, 1.8f,0.88f, 1.78f,-0.29f, -2.11f,-0.32f);
-                StaticBody platform = new StaticBody(world, platformShape);
+                StaticBody platform = new StaticBody(this, platformShape);
                 platform.setPosition(new Vec2(xCoord, yCoord));
                 platform.addImage(platformImage3);
             }
@@ -102,7 +101,7 @@ public class Level1 extends GameLevel implements ActionListener {
                 BodyImage mushroomImage = new BodyImage("data/Mushroom.png", 2.5f);
                 Shape mushroomShape = new PolygonShape(-0.067f,1.245f, 1.244f,0.206f, 0.175f,-1.131f, -1.265f,0.047f
                 );
-                StaticBody mushroomBody = new StaticBody(world, mushroomShape);
+                StaticBody mushroomBody = new StaticBody(this, mushroomShape);
                 mushroomBody.setPosition(new Vec2(xCoord, -8));
                 mushroomBody.addImage(mushroomImage);
                 SolidFixture mushroomBounce = new SolidFixture(mushroomBody, mushroomShape);
@@ -117,18 +116,18 @@ public class Level1 extends GameLevel implements ActionListener {
 
                 BodyImage platformImage3 = new BodyImage("data/platform.png", 4f);
                 Shape platformShape = new PolygonShape(-2.45f,1.05f, 2.07f,1.05f, 2.07f,-0.36f, -2.42f,-0.36f);
-                StaticBody platform = new StaticBody(world, platformShape);
+                StaticBody platform = new StaticBody(this, platformShape);
                 platform.setPosition(new Vec2(xCoord, 4));
                 platform.addImage(platformImage3);
             }
 
             // adding four portals which place the character on to the suspended platforms above
 
-            Portal redPortal = new Portal(world, -12, 6, true, new Vec2(10, -2.2f));
-            Portal bluePortal = new Portal(world, 12, 6.3f, false, new Vec2(-10, -2.5f));
+            Portal redPortal = new Portal(this, -12, 6, true, new Vec2(10, -2.2f));
+            Portal bluePortal = new Portal(this, 12, 6.3f, false, new Vec2(-10, -2.5f));
 
-            Portal bluePortal2 = new Portal(world, -12, -2.5f,false, new Vec2(10,6.3f));
-            Portal redPortal2 = new Portal(world, 12, -2.2f, true, new Vec2(-10, 6));
+            Portal bluePortal2 = new Portal(this, -12, -2.5f,false, new Vec2(10,6.3f));
+            Portal redPortal2 = new Portal(this, 12, -2.2f, true, new Vec2(-10, 6));
 
 
 
@@ -141,16 +140,10 @@ public class Level1 extends GameLevel implements ActionListener {
 
 
 
-            this.world.start();
+            this.start();
         }
 
-        public World getWorld() {
-            return world;
-        }
 
-        public void setWorld(World world) {
-            this.world = world;
-        }
 
         public Slingshot getSlingshotBoy() {
             return slingshotBoy;
@@ -188,7 +181,7 @@ public class Level1 extends GameLevel implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
             if (this.getDragon().getLives() > 0) {
-                this.fireball = new Fireball(world, dragon);
+                this.fireball = new Fireball(this, dragon);
             }
         }
 

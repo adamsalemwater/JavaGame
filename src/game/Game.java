@@ -22,7 +22,8 @@ public class Game {
     private Level1 firstLevel;
     private Level2 secondLevel;
     private GameView view;
-    private JFrame frame;
+    private JFrame menuFrame;
+    private JFrame firstLevelFrame;
     private Slingshot slingshotBoy;
     private HighScoreWriter highScoreWriter;
     private HighScoreReader highScoreReader;
@@ -38,33 +39,36 @@ public class Game {
     public Game() throws IOException {
 
         startMenu = new StartMenu(this);
-
+//        firstLevel = new Level1(this);
 
         //4. create a Java window (frame) and add the game
         //   view to it
-        this.frame = new JFrame("Slingshot Boy");
+        this.menuFrame = new JFrame("Slingshot Boy");
 //        frame.add(menuView);
 
         // enable the frame to quit the application
         // when the x button is pressed
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setLocationByPlatform(true);
         // don't let the frame be resized
-        frame.setResizable(false);
+        menuFrame.setResizable(false);
         // resize the frame
         startMenu.getMenuPanel().setPreferredSize(new Dimension(500, 500));
         // size the frame to fit the world view
 //        frame.pack();
         // finally, make the frame visible
-        frame.setVisible(true);
+        menuFrame.setVisible(true);
 
+//        view = new GameView(firstLevel, 500, 500, firstLevel.getSlingshotBoy(), "Background", this);
 
-        frame.add(startMenu.getMenuPanel());
-        frame.repaint();
-        frame.pack();
+        menuFrame.add(startMenu.getMenuPanel());
+//        frame.add(view);
+        menuFrame.repaint();
+        menuFrame.pack();
 
 //        optional: uncomment this to make a debugging view
 //         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
+
 
 
 
@@ -74,32 +78,32 @@ public class Game {
 
     public void gameEndedOne() {
         firstLevel.stop();
-        frame.remove(firstView);
+        menuFrame.remove(firstView);
         gameOver = new GameOver(this);
         gameOver.getMainPanel().setSize(new Dimension(500, 500));
         gameOver.getMainPanel().setWon(false);
-        frame.add(gameOver.getMainPanel());
-        frame.repaint();
-        frame.pack();
+        menuFrame.add(gameOver.getMainPanel());
+        menuFrame.repaint();
+        menuFrame.pack();
     }
 
     public void gameEndedTwo() {
         secondLevel.stop();
-        frame.remove(secondView);
+        menuFrame.remove(secondView);
         gameOver = new GameOver(this);
         gameOver.getMainPanel().setSize(new Dimension(500, 500));
         gameOver.getMainPanel().setWon(false);
-        frame.add(gameOver.getMainPanel());
-        frame.repaint();
-        frame.pack();
+        menuFrame.add(gameOver.getMainPanel());
+        menuFrame.repaint();
+        menuFrame.pack();
     }
 
     public void switchStartMenu() {
         startMenu = new StartMenu(this);
-        this.frame.remove(gameOver.getMainPanel());
-        this.frame.add(startMenu.getMenuPanel());
-        frame.repaint();
-        frame.pack();
+        this.menuFrame.remove(gameOver.getMainPanel());
+        this.menuFrame.add(startMenu.getMenuPanel());
+        menuFrame.repaint();
+        menuFrame.pack();
     }
 
 
@@ -113,23 +117,23 @@ public class Game {
 
         // enable the frame to quit the application
         // when the x button is pressed
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
+        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        menuFrame.setLocationByPlatform(true);
         // don't let the frame be resized
-        frame.setResizable(false);
+        menuFrame.setResizable(false);
         // size the frame to fit the world view
-        frame.pack();
+        menuFrame.pack();
         // finally, make the frame visible
-        frame.setVisible(true);
+        menuFrame.setVisible(true);
 
         Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
         secondSlingshotBoy.setScore(highScoreReader.getReadScore());
         secondSlingshotBoy.setLives(highScoreReader.getReadLives());
         secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
-        frame.remove(firstView);
-        frame.add(secondView);
-        frame.repaint();
-        frame.pack();
+        menuFrame.remove(firstView);
+        menuFrame.add(secondView);
+        menuFrame.repaint();
+        menuFrame.pack();
         SlingController secondSlingController = new SlingController(secondLevel, secondSlingshotBoy);
         secondView.addKeyListener(secondSlingController);
         secondView.requestFocus();
@@ -141,25 +145,30 @@ public class Game {
 
 
     public void switchLevelOne() throws IOException {
-        firstLevel = new Level1();
+        firstLevel = new Level1(this);
+
+        firstLevelFrame = new JFrame("Slingshot Adeventures");
 
         // enable the frame to quit the application
         // when the x button is pressed
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLocationByPlatform(true);
+        firstLevelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        firstLevelFrame.setLocationByPlatform(true);
         // don't let the frame be resized
-        frame.setResizable(false);
+        firstLevelFrame.setResizable(false);
         // size the frame to fit the world view
-        frame.pack();
+        firstLevelFrame.pack();
         // finally, make the frame visible
-        frame.setVisible(true);
+        firstLevelFrame.setVisible(true);
+
+        this.menuFrame.dispose();
 
         this.slingshotBoy = firstLevel.getSlingshotBoy();
         firstView = new GameView(firstLevel, 700, 700, slingshotBoy, "Background", this);
-        frame.remove(startMenu.getMenuPanel());
-        frame.add(firstView);
-        frame.repaint();
-        frame.pack();
+//        frame.remove(startMenu.getMenuPanel());
+        firstLevelFrame.add(firstView);
+        firstLevelFrame.repaint();
+        firstLevelFrame.pack();
+        firstLevelFrame.revalidate();
         SlingController firstSlingController = new SlingController(firstLevel, slingshotBoy);
         firstView.addKeyListener(firstSlingController);
         firstView.requestFocus();
