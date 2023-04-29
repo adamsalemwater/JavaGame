@@ -18,13 +18,18 @@ public class Switch implements StepListener{
     }
     @Override
     public void preStep(StepEvent stepEvent) {
-        if(this.slingshotBoy.getLives() <= 0 && game.getFirstLevel().isRunning()) {
-            this.game.gameEndedOne();
+        if (game.getFirstLevel() != null) {
+            if(this.slingshotBoy.getLives() <= 0 && game.getFirstLevel().isRunning()) {
+                this.game.gameEndedOne();
+            }
         }
 
-        if (this.slingshotBoy.getLives() <= 0 && game.getSecondLevel().isRunning()) {
-            this.game.gameEndedTwo();
+        if (game.getSecondLevel() != null) {
+            if (this.slingshotBoy.getLives() <= 0 && game.getSecondLevel().isRunning()) {
+                this.game.gameEndedTwo();
+            }
         }
+
     }
 
     @Override

@@ -180,7 +180,6 @@ public class Slingshot extends Walker implements StepListener{
                 collisionEvent.getOtherBody().destroy();
                 this.sound.setFile("Coin");
                 this.sound.play();
-                this.sound.stop();
             }
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
@@ -188,7 +187,6 @@ public class Slingshot extends Walker implements StepListener{
             if (collisionEvent.getOtherBody().getName() == "Mushroom") {
                 this.sound.setFile("Spring");
                 this.sound.play();
-                this.sound.stop();
             }
 
             if (collisionEvent.getOtherBody() instanceof MachineGun.Laser) {

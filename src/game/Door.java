@@ -17,30 +17,26 @@ public class Door extends StaticBody implements CollisionListener {
         this.setPosition(new Vec2(x,y));
         this.addImage(doorImage);
         this.game = game;
+        this.addCollisionListener(this);
     }
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
         System.out.println("Collided");
 
-        if (world instanceof Level1) {
-            try {
-                game.switchLevelTwo();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+        if (collisionEvent.getOtherBody() instanceof Slingshot) {
+            if (world instanceof Level1) {
+                try {
+                    game.switchLevelTwo();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+            if (world instanceof Level2) {
+                // switch to level 3
             }
         }
-
-        if (world instanceof Level2) {
-            // switch to level 3
-        }
-
-        if (world instanceof Level2) {
-//            try {
-//                game.switchLevel3();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
         }
     }
-}
+

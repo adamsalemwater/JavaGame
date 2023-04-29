@@ -21,9 +21,10 @@ public class Game {
 
     private Level1 firstLevel;
     private Level2 secondLevel;
-    private GameView view;
     private JFrame menuFrame;
+    private JFrame gameoverFrame;
     private JFrame firstLevelFrame;
+    private JFrame secondLevelFrame;
     private Slingshot slingshotBoy;
     private HighScoreWriter highScoreWriter;
     private HighScoreReader highScoreReader;
@@ -39,12 +40,10 @@ public class Game {
     public Game() throws IOException {
 
         startMenu = new StartMenu(this);
-//        firstLevel = new Level1(this);
 
         //4. create a Java window (frame) and add the game
         //   view to it
-        this.menuFrame = new JFrame("Slingshot Boy");
-//        frame.add(menuView);
+        this.menuFrame = new JFrame("Slingshot Adventures");
 
         // enable the frame to quit the application
         // when the x button is pressed
@@ -59,10 +58,8 @@ public class Game {
         // finally, make the frame visible
         menuFrame.setVisible(true);
 
-//        view = new GameView(firstLevel, 500, 500, firstLevel.getSlingshotBoy(), "Background", this);
 
         menuFrame.add(startMenu.getMenuPanel());
-//        frame.add(view);
         menuFrame.repaint();
         menuFrame.pack();
 
@@ -78,13 +75,25 @@ public class Game {
 
     public void gameEndedOne() {
         firstLevel.stop();
-        menuFrame.remove(firstView);
+        firstLevelFrame.remove(firstView);
+        firstLevelFrame.dispose();
         gameOver = new GameOver(this);
         gameOver.getMainPanel().setSize(new Dimension(500, 500));
         gameOver.getMainPanel().setWon(false);
-        menuFrame.add(gameOver.getMainPanel());
-        menuFrame.repaint();
-        menuFrame.pack();
+        gameoverFrame = new JFrame("Slingshot Fail");
+        gameoverFrame.add(gameOver.getMainPanel());
+
+        // enable the frame to quit the application
+        // when the x button is pressed
+        gameoverFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        gameoverFrame.setLocationByPlatform(true);
+        // don't let the frame be resized
+        gameoverFrame.setResizable(false);
+
+        gameoverFrame.setVisible(true);
+
+        gameoverFrame.repaint();
+        gameoverFrame.pack();
     }
 
     public void gameEndedTwo() {
@@ -115,25 +124,33 @@ public class Game {
         firstLevel.stop();
         secondLevel = new Level2(this);
 
+        // dispose of the first level's frame
+
+        firstLevelFrame.dispose();
+
+        // instantiate the second frame
+
+        secondLevelFrame = new JFrame("Slingshot Adventures");
+
         // enable the frame to quit the application
         // when the x button is pressed
-        menuFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        menuFrame.setLocationByPlatform(true);
+        secondLevelFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        secondLevelFrame.setLocationByPlatform(true);
         // don't let the frame be resized
-        menuFrame.setResizable(false);
+        secondLevelFrame.setResizable(false);
         // size the frame to fit the world view
-        menuFrame.pack();
+        secondLevelFrame.pack();
         // finally, make the frame visible
-        menuFrame.setVisible(true);
+        secondLevelFrame.setVisible(true);
 
         Slingshot secondSlingshotBoy = secondLevel.getSlingshotBoy();
         secondSlingshotBoy.setScore(highScoreReader.getReadScore());
         secondSlingshotBoy.setLives(highScoreReader.getReadLives());
         secondView = new GameView(secondLevel, 700, 700, secondSlingshotBoy, "VolcanoBackground", this);
-        menuFrame.remove(firstView);
-        menuFrame.add(secondView);
-        menuFrame.repaint();
-        menuFrame.pack();
+        firstLevelFrame.remove(firstView);
+        secondLevelFrame.add(secondView);
+        secondLevelFrame.repaint();
+        secondLevelFrame.pack();
         SlingController secondSlingController = new SlingController(secondLevel, secondSlingshotBoy);
         secondView.addKeyListener(secondSlingController);
         secondView.requestFocus();

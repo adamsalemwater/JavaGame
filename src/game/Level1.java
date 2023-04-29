@@ -6,8 +6,9 @@ import org.jbox2d.common.Vec2;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-public class Level1 extends GameLevel implements ActionListener {
+public class Level1 extends GameLevel implements ActionListener, StepListener {
 
 
         private Slingshot slingshotBoy;
@@ -16,11 +17,14 @@ public class Level1 extends GameLevel implements ActionListener {
         private RedKnight redKnight;
         private Fireball fireball;
         private Game game;
+        private ArrayList<Key> keyList = new ArrayList<>();
 
         public Level1(Game game)  {
             super(1);
 
             this.game = game;
+
+            this.addStepListener(this);
 
 
             // make the ground
@@ -53,7 +57,7 @@ public class Level1 extends GameLevel implements ActionListener {
 
 
 
-            // create two suspended platforms using a for loop on the same y-axis
+            // create three suspended platforms using a for loop on the same y-axis
 
 
 
@@ -68,6 +72,23 @@ public class Level1 extends GameLevel implements ActionListener {
                 platform.addImage(platformImage2);
 
             }
+
+            /*
+            Create another three platforms which are contain the most collectibles and where the
+            door will pop up.
+            * */
+
+            for (int xCoord=-15; xCoord < 20; xCoord+=15) {
+
+                int yCoord = 10;
+                BodyImage platformImage2 = new BodyImage("data/platform.png", 5f);
+                Shape platformShape = new PolygonShape(-3.01f,1.31f, 2.53f,1.33f, 2.57f,-0.51f, -3.03f,-0.53f
+                );
+                StaticBody platform = new StaticBody(this, platformShape);
+                platform.setPosition(new Vec2(xCoord, yCoord));
+                platform.addImage(platformImage2);
+            }
+
 
 
 
@@ -129,12 +150,13 @@ public class Level1 extends GameLevel implements ActionListener {
             Portal bluePortal2 = new Portal(this, -12, -2.5f,false, new Vec2(10,6.3f));
             Portal redPortal2 = new Portal(this, 12, -2.2f, true, new Vec2(-10, 6));
 
+            Portal bluePortal3 = new Portal(this, 10, 0, false, new Vec2());
+
 
 
 
             Timer timer = new Timer(100, this);
             timer.setDelay(3000);
-
 
 
 
@@ -185,5 +207,21 @@ public class Level1 extends GameLevel implements ActionListener {
             }
         }
 
+    @Override
+    public void preStep(StepEvent stepEvent) {
+        if (keyList.size() <= slingshotBoy.getKeys()) {
+            Door door = new Door(this, 3, 2, this.game);
+        }
+    }
+
+    @Override
+    public void postStep(StepEvent stepEvent) {
+        if (slingshotBoy.getPosition().x > 700 ) {
+            slingshotBoy.getPosition().x -= 700;
+        }
+        if (slingshotBoy.getPosition().x < 0) {
+            slingshotBoy.getPosition().x +=700;
+        }
+    }
 }
 
