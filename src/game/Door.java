@@ -22,11 +22,11 @@ public class Door extends StaticBody implements CollisionListener {
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        System.out.println("Collided");
 
         if (collisionEvent.getOtherBody() instanceof Slingshot) {
             if (world instanceof Level1) {
                 try {
+                    System.out.println("Trying to switch");
                     game.switchLevelTwo();
                 } catch (IOException e) {
                     throw new RuntimeException(e);

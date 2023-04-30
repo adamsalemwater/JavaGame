@@ -150,9 +150,18 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
             Portal bluePortal2 = new Portal(this, -12, -2.5f,false, new Vec2(10,6.3f));
             Portal redPortal2 = new Portal(this, 12, -2.2f, true, new Vec2(-10, 6));
 
-            Portal bluePortal3 = new Portal(this, 10, 0, false, new Vec2());
+            Portal bluePortal3 = new Portal(this, 0, 7.5f, false, new Vec2(2, 23));
+            Portal bluePortal4 = new Portal(this, 0, 14.5f, false, new Vec2(2, 5));
 
 
+            // Add keys to the game
+            Key key = new Key(this, 0, -2);
+            Key key2 = new Key(this, -15, 12.5f);
+            Key key3 = new Key(this, 15, 12.5f);
+
+            keyList.add(key);
+            keyList.add(key2);
+            keyList.add(key3);
 
 
             Timer timer = new Timer(100, this);
@@ -210,18 +219,12 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
     @Override
     public void preStep(StepEvent stepEvent) {
         if (keyList.size() <= slingshotBoy.getKeys()) {
-            Door door = new Door(this, 3, 2, this.game);
+            Door door = new Door(this, 17, 12, this.game);
         }
     }
 
     @Override
     public void postStep(StepEvent stepEvent) {
-        if (slingshotBoy.getPosition().x > 700 ) {
-            slingshotBoy.getPosition().x -= 700;
-        }
-        if (slingshotBoy.getPosition().x < 0) {
-            slingshotBoy.getPosition().x +=700;
-        }
     }
 }
 
