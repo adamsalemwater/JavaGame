@@ -21,7 +21,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
     private MachineGun machineGun;
     private ArrayList<Key> keyList = new ArrayList<>();
     private Game game;
-    private SoundClip backgroundMusic;
+    private SoundClip clip;
 
     public Level2(Game game)  {
         super(2);
@@ -32,9 +32,8 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // adding the background music
         try {
-            backgroundMusic = new SoundClip("sound/BackgroundLevel2.wav");
-            backgroundMusic.loop();
-            backgroundMusic.play();
+            clip = new SoundClip("sound/Level2.wav");
+            clip.loop();
         } catch (UnsupportedAudioFileException|IOException|LineUnavailableException e) {
             System.out.println(e);
         }
@@ -145,12 +144,6 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         Coin coin7 = new Coin(this, -2, 16.5f);
 
 
-
-
-
-
-        this.start();
-
         Timer timer = new Timer(30, this);
         timer.setDelay(2000);
         timer.setRepeats(true);
@@ -163,6 +156,10 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
     public Slingshot getSlingshotBoy() {
         return this.slingshotBoy;
+    }
+
+    public SoundClip getClip() {
+        return clip;
     }
 
     @Override
@@ -191,7 +188,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
     public void postStep(StepEvent stepEvent) {
         if (keyList.size() <= slingshotBoy.getKeys()) {
             Door door = new Door(this, 0, -2, game);
-            backgroundMusic.stop();
+            clip.stop();
         }
     }
 }

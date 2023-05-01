@@ -3,12 +3,24 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.IOException;
+
 public class Level3 extends GameLevel {
 
     private Slingshot slingshotBoy;
     private Game game;
+    private SoundClip clip;
     public Level3(Game game) {
         super(3);
+
+        try {
+            clip = new SoundClip("sound/Level3.wav");
+            clip.loop();
+        } catch ( UnsupportedAudioFileException|LineUnavailableException| IOException e) {
+            System.out.println(e);
+        }
 
         this.game = game;
 
@@ -53,16 +65,17 @@ public class Level3 extends GameLevel {
 
         // add main character
 
-        slingshotBoy = new Slingshot(this, 0, 10, true, 5, -14);
+        slingshotBoy = new Slingshot(this, 0, 10, true, 0, 10);
         slingshotBoy.setImage();
 
-        // start level
-
-        this.start();
 
     }
 
     public Slingshot getSlingshotBoy() {
         return this.slingshotBoy;
+    }
+
+    public SoundClip getClip() {
+        return clip;
     }
 }

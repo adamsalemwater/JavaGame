@@ -3,9 +3,12 @@ package game;
 import city.cs.engine.*;
 import org.jbox2d.common.Vec2;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class Level1 extends GameLevel implements ActionListener, StepListener {
@@ -18,9 +21,17 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
         private Fireball fireball;
         private Game game;
         private ArrayList<Key> keyList = new ArrayList<>();
+        private SoundClip clip;
 
         public Level1(Game game)  {
             super(1);
+
+            try {
+                clip = new SoundClip("sound/Level1.wav");
+                clip.loop();
+            } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                System.out.println(e);
+            }
 
             this.game = game;
 
@@ -150,7 +161,7 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
             Portal bluePortal2 = new Portal(this, -12, -2.5f,false, new Vec2(10,6.3f));
             Portal redPortal2 = new Portal(this, 12, -2.2f, true, new Vec2(-10, 6));
 
-            Portal bluePortal3 = new Portal(this, 0, 7.5f, false, new Vec2(2, 23));
+            Portal bluePortal3 = new Portal(this, 0, 7.5f, false, new Vec2(2, 15));
             Portal bluePortal4 = new Portal(this, 0, 14.5f, false, new Vec2(2, 5));
 
 
@@ -168,10 +179,10 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
             timer.setDelay(3000);
 
 
+        }
 
-
-
-            this.start();
+        public SoundClip getClip() {
+            return clip;
         }
 
 

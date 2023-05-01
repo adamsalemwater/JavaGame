@@ -14,17 +14,21 @@ public class GameView extends UserView {
 
     private Image heart;
     private Image halfHeart;
+    private Image key;
     private Game game;
+    private World world;
 
 
     public GameView(World world, int width, int height, Slingshot slingshotBoy, String backgroundString, Game game) {
         super(world, width, height);
         background = new ImageIcon("data/" + backgroundString + ".png").getImage();
         scoreBoard = new ImageIcon("data/Score.png").getImage();
+        key = new ImageIcon("data/Key.png").getImage();
         this.heart = new ImageIcon("data/Heart.png").getImage();
         this.halfHeart = new ImageIcon("data/HalfHeart.png").getImage();
         this.slingshotBoy = slingshotBoy;
         this.game = game;
+        this.world = world;
     }
 
     @Override
@@ -37,6 +41,18 @@ public class GameView extends UserView {
         g.setColor(Color.yellow);
         g.drawImage(scoreBoard, 0, 0,100, 100, this);
         g.drawString(Integer.toString(slingshotBoy.getScore()), 65, 55);
+
+
+        Font font = new Font("Aerial",Font.BOLD, 20);
+        g.setFont(font);
+        g.drawImage(key, 550, 0, 50, 50, this);
+        if (this.world instanceof Level1) {
+            g.drawString(slingshotBoy.getKeys()  +" / " + this.game.getKeysLevelOne(), 600, 30);
+        } else if (this.world instanceof Level2) {
+            g.drawString(slingshotBoy.getKeys() + " / " + this.game.getKeysLevelTwo(), 600, 30);
+        } else {
+            g.drawString(slingshotBoy.getKeys() + " / " + this.game.getKeysLevelThree(), 600, 30);
+        }
 
         float slingshotLives = slingshotBoy.getLives();
 

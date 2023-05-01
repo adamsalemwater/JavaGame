@@ -5,7 +5,6 @@ import javax.swing.JFrame;
 
 import GameOver.*;
 import StartMenu.StartMenu;
-import city.cs.engine.DebugViewer;
 
 import java.awt.*;
 
@@ -40,18 +39,18 @@ public class Game {
      */
     public Game() throws IOException {
 
-//        startMenu = new StartMenu(this);
-        thirdLevel = new Level3(this);
+        startMenu = new StartMenu(this);
+//        thirdLevel = new Level3(this);
 
         //4. create a Java window (frame) and add the game
         //   view to it
         this.frame = new JFrame("Slingshot Adventures");
 
-        thirdView = new GameView(thirdLevel, 700, 700, thirdLevel.getSlingshotBoy(), "CastleBackground", this);
+//        thirdView = new GameView(thirdLevel, 700, 700, thirdLevel.getSlingshotBoy(), "CastleBackground", this);
 
 
 
-        frame.add(thirdView);
+//        frame.add(thirdView);
 
         // enable the frame to quit the application
         // when the x button is pressed
@@ -60,24 +59,26 @@ public class Game {
         // don't let the frame be resized
         frame.setResizable(false);
         // resize the frame
-//        startMenu.getMenuPanel().setPreferredSize(new Dimension(500, 500));
+        startMenu.getMenuPanel().setPreferredSize(new Dimension(500, 500));
         // size the frame to fit the world view
 //        frame.pack();
         // finally, make the frame visible
+
+        frame.add(startMenu.getMenuPanel());
+
         frame.setVisible(true);
         frame.repaint();
         frame.pack();
         frame.revalidate();
 
 
-//        frame.add(startMenu.getMenuPanel());
-        SlingController thirdLevelController = new SlingController(thirdLevel, thirdLevel.getSlingshotBoy());
-        thirdView.addKeyListener(thirdLevelController);
-        thirdView.requestFocus();
-
-
-
-        thirdLevel.start();
+//        SlingController thirdLevelController = new SlingController(thirdLevel, thirdLevel.getSlingshotBoy());
+//        thirdView.addKeyListener(thirdLevelController);
+//        thirdView.requestFocus();
+//
+//
+//
+//        thirdLevel.start();
 
 
 
@@ -128,7 +129,7 @@ public class Game {
         frame.pack();
     }
 
-    public void switchLevel3() {
+    public void switchLevelThree() {
 
         thirdLevel = new Level3(this);
 
@@ -146,6 +147,7 @@ public class Game {
         secondLevel = new Level2(this);
 
         firstLevel.stop();
+        firstLevel.getClip().stop();
 
 
 
@@ -179,6 +181,8 @@ public class Game {
 
         this.frame.setVisible(false);
 
+        startMenu.getClip().stop();
+
         this.slingshotBoy = firstLevel.getSlingshotBoy();
         firstView = new GameView(firstLevel, 700, 700, slingshotBoy, "Background", this);
         frame.remove(startMenu.getMenuPanel());
@@ -202,6 +206,18 @@ public class Game {
 
     public Level2 getSecondLevel() {
         return secondLevel;
+    }
+
+    public int getKeysLevelOne() {
+        return 3;
+    }
+
+    public int getKeysLevelTwo() {
+        return 4;
+    }
+
+    public int getKeysLevelThree() {
+        return 5;
     }
 
 
