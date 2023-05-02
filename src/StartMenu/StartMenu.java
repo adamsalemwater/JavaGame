@@ -15,6 +15,7 @@ public class StartMenu {
     private JPanel menuPanel;
     private JButton startButton;
     private JButton exitButton;
+    private JButton help;
     private SoundClip clip;
 
     public StartBackground getMenuPanel() {
@@ -42,6 +43,12 @@ public class StartMenu {
         });
 
 
+        help.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
     }
 
     public SoundClip getClip() {

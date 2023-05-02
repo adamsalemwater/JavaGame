@@ -18,10 +18,14 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
     private Slingshot slingshotBoy;
     private Dragon dragon;
+    private BlueKnight blueKnight;
+    private RedKnight redKnight;
     private MachineGun machineGun;
     private ArrayList<Key> keyList = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
     private Game game;
     private SoundClip clip;
+    private boolean flag;
 
     public Level2(Game game)  {
         super(2);
@@ -54,7 +58,9 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // Add the dragon to the platform which can jump and moves faster
 
-        dragon = new Dragon(this, 6, -7, false, slingshotBoy);
+        dragon = new Dragon(this, 6, -7, false, slingshotBoy, 7, -1);
+        dragon.setImage();
+        dragon.setMove(5);
 
 
         // adding all platforms to the level
@@ -106,13 +112,13 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // add other enemies to the level
 
-        RedKnight redKnight = new RedKnight(this, 13, 2, true);
+        redKnight = new RedKnight(this, 13, 2, true);
         redKnight.setRightBorder(16);
         redKnight.setLeftBorder(10.5f);
         redKnight.setMove(2.2f);
         redKnight.setImage();
 
-        BlueKnight blueKnight = new BlueKnight(this, -13, 2, false);
+        blueKnight = new BlueKnight(this, -13, 2, false);
         blueKnight.setRightBorder(-10);
         blueKnight.setLeftBorder(-15.5f);
         blueKnight.setMove(2.2f);
@@ -148,6 +154,11 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         timer.setDelay(2000);
         timer.setRepeats(true);
         timer.start();
+
+        enemies.add(dragon);
+        enemies.add(blueKnight);
+        enemies.add(redKnight);
+        enemies.add(machineGun);
 
 
 
@@ -186,9 +197,31 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
     @Override
     public void postStep(StepEvent stepEvent) {
-        if (keyList.size() <= slingshotBoy.getKeys()) {
+        if (keyList.size() <= slingshotBoy.getKeys() && !this.flag) {
             Door door = new Door(this, 0, -2, game);
-            clip.stop();
+            this.flag = true;
         }
     }
+
+    public ArrayList<Enemy> getEnemies() {
+        return enemies;
+    }
+
+    public Dragon getDragon() {
+        return dragon;
+    }
+
+    public MachineGun getMachineGun() {
+        return machineGun;
+    }
+
+    public BlueKnight getBlueKnight() {
+        return blueKnight;
+    }
+
+    public RedKnight getRedKnight() {
+        return redKnight;
+    }
+
+
 }

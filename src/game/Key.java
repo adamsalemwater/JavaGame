@@ -20,9 +20,9 @@ public class Key extends StaticBody implements CollisionListener {
 
     @Override
     public void collide(CollisionEvent collisionEvent) {
-        collisionEvent.getReportingBody().destroy();
         if (collisionEvent.getOtherBody() instanceof Slingshot) {
             ((Slingshot)collisionEvent.getOtherBody()).addKey();
+            collisionEvent.getReportingBody().destroy();
         }
     }
 

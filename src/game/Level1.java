@@ -21,7 +21,9 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
         private Fireball fireball;
         private Game game;
         private ArrayList<Key> keyList = new ArrayList<>();
+        private ArrayList<Enemy> enemies = new ArrayList<>();
         private SoundClip clip;
+        boolean flag = false;
 
         public Level1(Game game)  {
             super(1);
@@ -54,10 +56,9 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
 
 
 
-
             // create a dragon object
 
-            dragon = new Dragon(this, 4, -8, true, slingshotBoy);
+            dragon = new Dragon(this, 4, -8, true, slingshotBoy, 6,-2.5f);
             dragon.setImage();
 
 
@@ -98,6 +99,18 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
                 StaticBody platform = new StaticBody(this, platformShape);
                 platform.setPosition(new Vec2(xCoord, yCoord));
                 platform.addImage(platformImage2);
+            }
+
+            // Another two platforms to be able to get onto the other three
+
+            for (float xCoord=-7.5f; xCoord<20; xCoord+=15) {
+
+                float yCoord = 12.5f;
+                BodyImage platformImage2 = new BodyImage("data/platform.png", 4);
+                Shape platformShape2 = new PolygonShape(2.04f,1.0f, 2.05f,-0.35f, -2.42f,-0.25f, -2.39f,1.0f);
+                StaticBody platform2 = new StaticBody(this, platformShape2);
+                platform2.setPosition(new Vec2(xCoord, yCoord));
+                platform2.addImage(platformImage2);
             }
 
 
@@ -178,6 +191,10 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
             Timer timer = new Timer(100, this);
             timer.setDelay(3000);
 
+            enemies.add(dragon);
+            enemies.add(redKnight);
+            enemies.add(blueKnight);
+
 
         }
 
@@ -185,7 +202,9 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
             return clip;
         }
 
-
+         public ArrayList<Enemy> getEnemies() {
+            return enemies;
+         }
 
         public Slingshot getSlingshotBoy() {
             return slingshotBoy;
@@ -229,8 +248,9 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
 
     @Override
     public void preStep(StepEvent stepEvent) {
-        if (keyList.size() <= slingshotBoy.getKeys()) {
+        if (keyList.size() <= slingshotBoy.getKeys() && !this.flag) {
             Door door = new Door(this, 17, 12, this.game);
+            this.flag = true;
         }
     }
 

@@ -94,6 +94,7 @@ public class Game {
 
     public void gameEndedOne() {
         firstLevel.stop();
+        firstLevel.getClip().stop();
         frame.setVisible(false);
         gameOver = new GameOver(this);
         gameOver.getMainPanel().setSize(new Dimension(500, 500));
@@ -108,6 +109,7 @@ public class Game {
 
     public void gameEndedTwo() {
         secondLevel.stop();
+        secondLevel.getClip().stop();
         frame.setVisible(false);
         frame.remove(secondView);
         gameOver = new GameOver(this);
@@ -121,6 +123,7 @@ public class Game {
 
     public void switchStartMenu() {
         frame.setVisible(false);
+        gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
         this.frame.remove(gameOver.getMainPanel());
         this.frame.add(startMenu.getMenuPanel());
         this.frame.setVisible(true);
@@ -156,7 +159,7 @@ public class Game {
 
         Slingshot secondLevelSlingshotBoy = secondLevel.getSlingshotBoy();
         secondView = new GameView(secondLevel, 700, 700, secondLevelSlingshotBoy, "VolcanoBackground", this);
-        frame.getContentPane().removeAll();
+        frame.remove(firstView);
 
 
 

@@ -24,12 +24,6 @@ public class GameOver {
             }
         });
 
-       restartButton.addActionListener(new ActionListener() {
-           @Override
-           public void actionPerformed(ActionEvent e) {
-
-           }
-       });
 
         restartButton.addActionListener(new ActionListener() {
             @Override

@@ -12,6 +12,7 @@ public class RedKnight extends Enemy implements StepListener {
     private static final BodyImage redKnightRight = new BodyImage("data/RedKnightRight.png", 12f);
     private static final BodyImage redKnightAttackRight = new BodyImage("data/RedKnightAttackRight.png", 12f);
     private static final BodyImage redKnightAttackLeft = new BodyImage("data/RedKnightAttackLeft.png", 12f);
+    private float fullLife;
 
 
     private boolean rightFacing;
@@ -32,6 +33,11 @@ public class RedKnight extends Enemy implements StepListener {
 
         RedKnightHit redKnightHit = new RedKnightHit(this);
         this.addCollisionListener(redKnightHit);
+        this.fullLife = 2;
+    }
+
+    public float getFullLife() {
+        return fullLife;
     }
 
     public void setMove(float move) {

@@ -15,6 +15,7 @@ public class BlueKnight extends Enemy implements StepListener {
 
     private boolean rightFacing;
     private float move, rightBorder, leftBorder;
+    private float fullLife;
 
     public BlueKnight(World world, float x, float y, boolean rightFacing) {
         super(world, knightShape, 2);
@@ -30,6 +31,11 @@ public class BlueKnight extends Enemy implements StepListener {
 
         BlueKnightHit blueKnightHit = new BlueKnightHit(this);
         this.addCollisionListener(blueKnightHit);
+        this.fullLife = 2;
+    }
+
+    public float getFullLife() {
+        return fullLife;
     }
 
     public void setMove(float move) {

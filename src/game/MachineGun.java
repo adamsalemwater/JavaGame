@@ -21,6 +21,7 @@ public class MachineGun extends Enemy implements StepListener {
     private World world;
     private int delay;
     private State state;
+    private float fullLife;
 
 
     private enum State {
@@ -38,6 +39,11 @@ public class MachineGun extends Enemy implements StepListener {
         this.world.addStepListener(this);
         this.delay = 2000;
         state = State.FAR;
+        this.fullLife = 5;
+    }
+
+    public float getFullLife() {
+        return fullLife;
     }
 
     public boolean closeBy() {
