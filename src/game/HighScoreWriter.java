@@ -7,12 +7,10 @@ public class HighScoreWriter {
 
     private String fileName;
 
-    public HighScoreWriter(String fileName) {
+    public HighScoreWriter(String fileName, int score, float lives, boolean append) throws IOException {
         this.fileName = fileName;
-    }
 
-    public void writeHighScore(int score, float lives) throws IOException {
-        boolean append = true;
+
         FileWriter writer = null;
         try {
             writer = new FileWriter(fileName, append);

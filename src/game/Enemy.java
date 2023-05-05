@@ -26,7 +26,7 @@ public class Enemy extends Walker {
         return lives;
     }
 
-    public void setLives(int lives) {
+    public void setLives(float lives) {
         this.lives = lives;
     }
 

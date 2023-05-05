@@ -25,14 +25,18 @@ public class Game {
     private JFrame gameoverFrame;
 
     private Slingshot slingshotBoy;
-    private HighScoreWriter highScoreWriter;
-    private HighScoreReader highScoreReader;
     private GameOver gameOver;
     private GameView firstView;
     private GameView secondView;
     private GameView thirdView;
     private StartMenu startMenu;
-
+    private int highScore;
+    private HighScoreWriter scoreWriterLevelOne;
+    private HighScoreReader scoreReaderLevelOne;
+    private HighScoreWriter scoreWriterLevelTwo;
+    private HighScoreReader scoreReaderLevelTwo;
+    private HighScoreWriter scoreWriterLevelThree;
+    private HighScoreReader scoreReaderLevelThree;
 
     /**
      * Initialise a new Game.
@@ -40,13 +44,13 @@ public class Game {
     public Game() throws IOException {
 
         startMenu = new StartMenu(this);
-//        thirdLevel = new Level3(this);
+        thirdLevel = new Level3(this);
 
         //4. create a Java window (frame) and add the game
         //   view to it
         this.frame = new JFrame("Slingshot Adventures");
 
-//        thirdView = new GameView(thirdLevel, 700, 700, thirdLevel.getSlingshotBoy(), "CastleBackground", this);
+        thirdView = new GameView(thirdLevel, 700, 700, thirdLevel.getSlingshotBoy(), "CastleBackground", this);
 
 
 
@@ -64,7 +68,7 @@ public class Game {
 //        frame.pack();
         // finally, make the frame visible
 
-        frame.add(startMenu.getMenuPanel());
+        frame.add(thirdView);
 
         frame.setVisible(true);
         frame.repaint();
@@ -72,9 +76,16 @@ public class Game {
         frame.revalidate();
 
 
-//        SlingController thirdLevelController = new SlingController(thirdLevel, thirdLevel.getSlingshotBoy());
-//        thirdView.addKeyListener(thirdLevelController);
-//        thirdView.requestFocus();
+
+
+        SlingController thirdLevelController = new SlingController(thirdLevel, thirdLevel.getSlingshotBoy());
+        thirdView.addKeyListener(thirdLevelController);
+        thirdView.requestFocus();
+
+        thirdLevel.start();
+
+        Switch check = new Switch(this, thirdLevel.getSlingshotBoy());
+        thirdLevel.addStepListener(check);
 //
 //
 //
@@ -92,12 +103,13 @@ public class Game {
 
     }
 
-    public void gameEndedOne() {
+    public void gameEndedOne() throws IOException {
         firstLevel.stop();
         firstLevel.getClip().stop();
+        checkHighScore(firstLevel.getSlingshotBoy().getScore(), (int) firstLevel.getSlingshotBoy().getLives());
         frame.setVisible(false);
         gameOver = new GameOver(this);
-        gameOver.getMainPanel().setSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
         gameOver.getMainPanel().setWon(false);
         gameoverFrame = new JFrame("Slingshot Fail");
         frame.remove(firstView);
@@ -107,19 +119,52 @@ public class Game {
         frame.pack();
     }
 
-    public void gameEndedTwo() {
+    public void gameEndedTwo() throws IOException {
         secondLevel.stop();
         secondLevel.getClip().stop();
+        checkHighScore(secondLevel.getSlingshotBoy().getScore(),(int) secondLevel.getSlingshotBoy().getLives());
         frame.setVisible(false);
         frame.remove(secondView);
         gameOver = new GameOver(this);
-        gameOver.getMainPanel().setSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
         gameOver.getMainPanel().setWon(false);
         frame.add(gameOver.getMainPanel());
         frame.setVisible(true);
         frame.repaint();
         frame.pack();
     }
+
+    public void gameEndedThree() throws IOException {
+        thirdLevel.stop();
+        thirdLevel.getClip().stop();
+        checkHighScore(thirdLevel.getSlingshotBoy().getScore(),(int) thirdLevel.getSlingshotBoy().getLives());
+        frame.setVisible(false);
+        frame.remove(thirdView);
+        gameOver = new GameOver(this);
+        gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setWon(false);
+        frame.add(gameOver.getMainPanel());
+        frame.setVisible(true);
+        frame.repaint();
+        frame.pack();
+    }
+
+    public void gameSuccess() throws IOException {
+        thirdLevel.stop();
+        thirdLevel.getClip().stop();
+        checkHighScore(thirdLevel.getSlingshotBoy().getScore(),(int) thirdLevel.getSlingshotBoy().getLives());
+        frame.setVisible(false);
+        frame.remove(thirdView);
+        gameOver = new GameOver(this);
+        gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
+        gameOver.getMainPanel().setWon(true);
+        frame.add(gameOver.getMainPanel());
+        frame.setVisible(true);
+        frame.repaint();
+        frame.pack();
+    }
+
+
 
     public void switchStartMenu() {
         frame.setVisible(false);
@@ -132,21 +177,46 @@ public class Game {
         frame.pack();
     }
 
-    public void switchLevelThree() {
+    public void switchLevelThree() throws IOException {
+        scoreWriterLevelTwo = new HighScoreWriter("File", secondLevel.getSlingshotBoy().getScore(), secondLevel.getSlingshotBoy().getLives(), true);
+        scoreReaderLevelThree = new HighScoreReader("File");
+
+        secondLevel.stop();
+        secondLevel.getClip().stop();
 
         thirdLevel = new Level3(this);
 
         this.frame.setVisible(false);
 
-//        thirdView = new GameView(thirdLevel, 700, 700, , "CastleBackground", this);
+        Slingshot thirdSlingshotBoy = thirdLevel.getSlingshotBoy();
+        slingshotBoy.setScore(scoreReaderLevelThree.getReadScore());
+        slingshotBoy.setLives(scoreReaderLevelThree.getReadLives());
+
+        thirdView = new GameView(thirdLevel, 700, 700, thirdSlingshotBoy , "CastleBackground", this);
+
+
+
+
+        frame.remove(secondView);
+
+        frame.add(thirdView);
+        frame.repaint();
+        frame.pack();
+        frame.revalidate();
+        SlingController thirdSlingController = new SlingController(thirdLevel, thirdSlingshotBoy);
+        thirdView.addKeyListener(thirdSlingController);
+        thirdView.requestFocus();
+        thirdLevel.start();
+        this.frame.setVisible(true);
+
+        Switch checking = new Switch(this, thirdSlingshotBoy);
+        thirdLevel.addStepListener(checking);
     }
 
 
     public void switchLevelTwo() throws IOException {
-//        highScoreWriter = new HighScoreWriter("level1");
-//        highScoreWriter.writeHighScore(firstLevel.getSlingshotBoy().getScore(), firstLevel.getSlingshotBoy().getLives());
-//        highScoreReader = new HighScoreReader("level1");
-//        highScoreReader.readHighScore();
+        scoreWriterLevelOne = new HighScoreWriter("Level", firstLevel.getSlingshotBoy().getScore(), firstLevel.getSlingshotBoy().getLives(), true);
+        scoreReaderLevelTwo = new HighScoreReader("Level");
         secondLevel = new Level2(this);
 
         firstLevel.stop();
@@ -158,6 +228,8 @@ public class Game {
         this.frame.setVisible(false);
 
         Slingshot secondLevelSlingshotBoy = secondLevel.getSlingshotBoy();
+        secondLevelSlingshotBoy.setLives(scoreReaderLevelTwo.getReadLives());
+        secondLevelSlingshotBoy.setScore(scoreReaderLevelTwo.getReadScore());
         secondView = new GameView(secondLevel, 700, 700, secondLevelSlingshotBoy, "VolcanoBackground", this);
         frame.remove(firstView);
 
@@ -167,8 +239,8 @@ public class Game {
         frame.repaint();
         frame.pack();
         frame.revalidate();
-        SlingController firstSlingController = new SlingController(secondLevel, secondLevelSlingshotBoy);
-        secondView.addKeyListener(firstSlingController);
+        SlingController secondSlingController = new SlingController(secondLevel, secondLevelSlingshotBoy);
+        secondView.addKeyListener(secondSlingController);
         secondView.requestFocus();
         secondLevel.start();
         this.frame.setVisible(true);
@@ -211,6 +283,8 @@ public class Game {
         return secondLevel;
     }
 
+    public Level3 getThirdLevel() { return thirdLevel; }
+
     public int getKeysLevelOne() {
         return 3;
     }
@@ -221,6 +295,13 @@ public class Game {
 
     public int getKeysLevelThree() {
         return 5;
+    }
+
+    public void checkHighScore(int currentScore, int currentLives) throws IOException {
+        if (currentScore > highScore) {
+            highScore = currentScore;
+            HighScoreWriter newHighScore = new HighScoreWriter("HighScore", highScore, currentLives, false);
+        }
     }
 
 

@@ -74,12 +74,13 @@ public class MachineGun extends Enemy implements StepListener {
         angle = (float) Math.acos(Math.abs((this.slingshotBoy.getPosition().x - this.x)) / distance);
         this.removeAllImages();
 
+            if (this.slingshotBoy.getPosition().x > this.x && this.rightFacing) {
+                this.setAngle(-angle);
+            } else if (this.slingshotBoy.getPosition().x < this.x && !this.rightFacing){
+                this.setAngle((float) (angle));
+            }
 
-        if (this.slingshotBoy.getPosition().x > this.x && this.rightFacing) {
-            this.setAngle(-angle);
-        } else if (this.slingshotBoy.getPosition().x < this.x && !this.rightFacing){
-            this.setAngle((float) (2*Math.PI - angle));
-        }
+
         this.setImage();
     }
 
@@ -89,9 +90,6 @@ public class MachineGun extends Enemy implements StepListener {
 
     public class Laser extends DynamicBody implements CollisionListener {
 
-        private static final Shape bulletShape = new PolygonShape(-0.016f,0.068f, -0.151f,0.064f, -0.151f,0.027f, -0.02f,0.023f);
-        private static final BodyImage rightLaserImage = new BodyImage("data/LaserRight.png",1);
-        private static final BodyImage leftLaserImage = new BodyImage("data/LaserLeft.png", 1);
 
         private static final BodyImage laserImage = new BodyImage("data/Laser.png", 4);
         private static final Shape laserShape = new PolygonShape(-0.83f,0.37f, -0.85f,0.09f, 0.71f,0.07f, 0.68f,0.41f
@@ -128,11 +126,6 @@ public class MachineGun extends Enemy implements StepListener {
             }
 
 
-//           if (machineGun.rightFacing) {
-//               this.addImage(rightLaserImage);
-//           } else {
-//               this.addImage(leftLaserImage);
-//           }
             this.addImage(laserImage);
         }
 

@@ -33,8 +33,23 @@ public class Door extends StaticBody implements CollisionListener {
             }
 
             if (world instanceof Level2) {
-                // switch to level 3
+                try {
+                    game.switchLevelThree();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
+
+            if (world instanceof Level3) {
+                try {
+                    game.gameSuccess();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+
+
         }
         }
     }

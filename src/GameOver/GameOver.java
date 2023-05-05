@@ -2,21 +2,27 @@ package GameOver;
 
 import game.Game;
 import game.GameOverBackground;
+import game.HighScoreReader;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
 
 public class GameOver {
 
 
     private JPanel mainPanel;
-    private JTextField highScoreTextField;
     private JButton restartButton;
     private JButton exitButton;
+    private JLabel highScore;
 
+    public GameOver(Game game) throws IOException {
 
-    public GameOver(Game game) {
+        highScore.setText("High Score : " + getHighScore());
+
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -37,7 +43,17 @@ public class GameOver {
         return (GameOverBackground) this.mainPanel;
     }
 
-    private void createUIComponents() {
+    public String getHighScore() throws IOException {
+        File file = new File("HighScore");
+        if (file.exists()) {
+            HighScoreReader highScoreReader = new HighScoreReader("HighScore");
+            return Integer.toString(highScoreReader.getReadScore());
+        }
+        return "0";
+    }
+
+    private void createUIComponents() throws IOException {
         mainPanel = new GameOverBackground();
+        highScore = new JLabel();
     }
 }

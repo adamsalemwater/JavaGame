@@ -23,7 +23,9 @@ public class Coin extends StaticBody {
         this.addImage(collectibleImage);
         GhostlyFixture collectible = new GhostlyFixture(this, collectibleShape);
         this.setName("Collectible");
+
     }
+
 
 
 

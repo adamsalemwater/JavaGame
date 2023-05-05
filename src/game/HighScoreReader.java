@@ -1,6 +1,7 @@
 package game;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
@@ -10,12 +11,9 @@ public class HighScoreReader {
     private int readScore;
     private float readLives;
 
-    public HighScoreReader(String fileName) {
+    public HighScoreReader(String fileName) throws IOException {
         this.fileName = fileName;
-    }
 
-
-    public void readHighScore() throws IOException {
         FileReader fr = null;
         BufferedReader reader = null;
         int totalScore = 0;
@@ -36,6 +34,8 @@ public class HighScoreReader {
             }
             readScore = totalScore;
             readLives = totalLives;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         } finally {
             if (reader != null) {
                 reader.close();
@@ -45,6 +45,8 @@ public class HighScoreReader {
             }
         }
     }
+
+
 
     public int getReadScore() {
         return readScore;

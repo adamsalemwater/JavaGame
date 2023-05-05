@@ -127,11 +127,6 @@ public class Dragon extends Enemy implements StepListener {
 
         @Override
         public void collide(CollisionEvent collisionEvent) {
-            if (collisionEvent.getOtherBody() instanceof Tree) {
-                ((Dragon)collisionEvent.getReportingBody()).removeAllImages();
-                ((Dragon)collisionEvent.getReportingBody()).switchImage();
-                ((Dragon)collisionEvent.getReportingBody()).setImage();
-            }
             if (collisionEvent.getOtherBody().getName() == "Stone") {
                 ((Dragon)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }

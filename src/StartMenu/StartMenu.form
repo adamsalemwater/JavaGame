@@ -37,6 +37,14 @@
           <verticalTextPosition value="1"/>
         </properties>
       </component>
+      <component id="eb1d1" class="javax.swing.JLabel" binding="highScore" custom-create="true">
+        <constraints>
+          <grid row="4" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Label"/>
+        </properties>
+      </component>
     </children>
   </grid>
 </form>

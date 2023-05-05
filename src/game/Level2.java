@@ -124,9 +124,9 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         blueKnight.setMove(2.2f);
         blueKnight.setImage();
 
-        // add machine gun which follows the main character
+        // add machine guns which track the main character
 
-        machineGun = new MachineGun(this, -10,15, true, slingshotBoy);
+        machineGun = new MachineGun(this, -10,14, true, slingshotBoy);
 
 
         // add keys for the slingshot character to collect
@@ -134,10 +134,12 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         Key key = new Key(this, 0, 11);
         Key key2 = new Key(this, 10, 15);
         Key key3 = new Key(this, 10, -10);
+        Key key4 = new Key(this, 0, -4);
 
         keyList.add(key);
         keyList.add(key2);
         keyList.add(key3);
+        keyList.add(key4);
 
         // add collectibles for extra points for the player to collect
 
@@ -160,8 +162,6 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
         enemies.add(redKnight);
         enemies.add(machineGun);
 
-
-
     }
 
 
@@ -182,7 +182,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
             fireball.setyVel(20);
         }
 
-        if (this.machineGun.getLives() > 0 && Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun.getPosition().x, machineGun.getPosition().y) < 7) {
+        if (this.machineGun.getLives() > 0 && Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun.getPosition().x, machineGun.getPosition().y) < 12) {
             MachineGun.Laser laser = machineGun.new Laser(this, machineGun, slingshotBoy);
         }
 

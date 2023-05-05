@@ -101,6 +101,15 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
                 platform.addImage(platformImage2);
             }
 
+            Coin coin = new Coin(this, -11, 15);
+            Coin coin2 = new Coin(this, -9, 15);
+            Coin coin3 = new Coin(this, -7, 15);
+            Coin coin4 = new Coin(this, -5, 15);
+            Coin coin5 = new Coin(this, 4, 15);
+            Coin coin6 = new Coin(this, 6, 15);
+            Coin coin7 = new Coin(this, 8, 15);
+            Coin coin8 = new Coin(this, 10, 15);
+
             // Another two platforms to be able to get onto the other three
 
             for (float xCoord=-7.5f; xCoord<20; xCoord+=15) {
@@ -124,6 +133,8 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
 
             redKnight = new RedKnight(this, 5,0,false);
             redKnight.setImage();
+
+
 
 
             // create a two small platform which are near the edges of the screen
@@ -176,6 +187,7 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
 
             Portal bluePortal3 = new Portal(this, 0, 7.5f, false, new Vec2(2, 15));
             Portal bluePortal4 = new Portal(this, 0, 14.5f, false, new Vec2(2, 5));
+
 
 
             // Add keys to the game

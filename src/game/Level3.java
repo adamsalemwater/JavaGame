@@ -1,17 +1,30 @@
 package game;
 
 import city.cs.engine.*;
+import city.cs.engine.Shape;
 import org.jbox2d.common.Vec2;
 
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.io.IOException;
+import java.util.ArrayList;
 
-public class Level3 extends GameLevel {
+public class Level3 extends GameLevel implements ActionListener {
 
     private Slingshot slingshotBoy;
     private Game game;
     private SoundClip clip;
+    private ArrayList<Key> keyList = new ArrayList<>();
+    private ArrayList<Enemy> enemies = new ArrayList<>();
+    private MachineGun machineGun, machineGun2;
+    private Dragon dragon, dragon2;
+    private RedKnight redKnight, redKnight2;
+    private BlueKnight blueKnight, blueKnight2;
     public Level3(Game game) {
         super(3);
 
@@ -24,26 +37,37 @@ public class Level3 extends GameLevel {
 
         this.game = game;
 
-        // platform addition
-        BodyImage platformImage = new BodyImage("data/CastlePlatform.png",7);
-        Shape shape = new PolygonShape(-3.43f,0.83f, -3.47f,-0.12f, 2.99f,-0.27f, 3.01f,0.79f);
-        StaticBody ground = new StaticBody(this, shape);
-        SolidFixture actualGround = new SolidFixture(ground, shape);
-        actualGround.setFriction(1f);
-        ground.setPosition(new Vec2(-9, 0));
-        ground.addImage(platformImage);
+
+        CastlePlatform platform = new CastlePlatform(this, -8.5f, -3);
 
 
         // add rotated platform
 
-        StaticBody ground2 = new StaticBody(this, shape);
-        ground2.rotate(new Vec2(-10, -2), (float)-Math.PI/4);
-        ground2.setPosition(new Vec2(-3, -2));
-        ground2.addImage(platformImage);
 
-        StaticBody ground3 = new StaticBody(this, shape);
-        ground3.setPosition(new Vec2(7.5f, -5));
-        ground3.addImage(platformImage);
+        CastlePlatform platform2 = new CastlePlatform(this, -2, 0);
+        platform2.rotate(new Vec2(-10,-2),(float)-Math.PI/4);
+
+
+        CastlePlatform platform3 = new CastlePlatform(this, 7.5f, -5);
+
+        CastlePlatform platform4 = new CastlePlatform(this, 14.5f, -5);
+
+        for (int i=-2; i<10; i+=5) {
+            CastlePlatform loopPlatform = new CastlePlatform(this, i, 5);
+        }
+
+
+        for (int i=-10; i<0; i+=5) {
+            CastlePlatform upperLeftPlatforms = new CastlePlatform(this, i, 13);
+        }
+
+        CastlePlatform platform9 = new CastlePlatform(this, 10, 14);
+
+        for (int i=-15; i<20; i+=10) {
+            CastlePlatform morePlatforms = new CastlePlatform(this, i, -13);
+        }
+
+
 
         // spikes to the end of the rotated platform
 
@@ -63,11 +87,73 @@ public class Level3 extends GameLevel {
         smallBody2.setPosition(new Vec2(3.5f, -6));
         smallBody2.addImage(smallPlatformImage);
 
+
         // add main character
 
-        slingshotBoy = new Slingshot(this, 0, 10, true, 0, 10);
+        slingshotBoy = new Slingshot(this, 10, -3, true, 0, 10);
         slingshotBoy.setImage();
 
+        // add knights
+
+        redKnight = new RedKnight(this, -4, -6, true);
+        redKnight.setRightBorder(-2);
+        redKnight.setLeftBorder(-7.5f);
+        redKnight.setImage();
+        redKnight.setLives(3.5f);
+
+        redKnight2 = new RedKnight(this, -6, 0, false);
+        redKnight2.setRightBorder(-4.5f);
+        redKnight2.setLeftBorder(-10);
+        redKnight2.setImage();
+        redKnight2.setLives(3.5f);
+
+        blueKnight = new BlueKnight(this, 12,17, true);
+        blueKnight.setRightBorder(13);
+        blueKnight.setLeftBorder(9);
+        blueKnight.setImage();
+        blueKnight.setLives(3.5f);
+
+        blueKnight2 = new BlueKnight(this, 5, -12, false);
+        blueKnight2.setRightBorder(7.5f);
+        blueKnight2.setLeftBorder(3);
+        blueKnight2.setImage();
+        blueKnight2.setLives(3.5f);
+
+        // add machinegun
+
+        machineGun = new MachineGun(this, -14, 11, true, slingshotBoy);
+        machineGun2 = new MachineGun(this, 16, 11, false, slingshotBoy);
+
+        // add dragons
+
+        dragon = new Dragon(this, 10, 10, true, slingshotBoy, 11, 0);
+        dragon.setImage();
+        dragon.setMove(4);
+        dragon.setLives(6.5f);
+
+        dragon2 = new Dragon(this, -5, 16, false, slingshotBoy, -2, -10);
+        dragon2.setImage();
+        dragon2.setMove(3);
+        dragon2.setLives(6.5f);
+
+        // test coin
+
+        Coin coin = new Coin(this, -8, 16);
+
+
+
+        enemies.add(machineGun);
+        enemies.add(machineGun2);
+        enemies.add(dragon);
+        enemies.add(dragon2);
+        enemies.add(blueKnight);
+        enemies.add(blueKnight2);
+        enemies.add(redKnight);
+        enemies.add(redKnight2);
+
+        Timer timer = new Timer(0, this);
+        timer.setDelay(1500);
+        timer.start();
 
     }
 
@@ -77,5 +163,42 @@ public class Level3 extends GameLevel {
 
     public SoundClip getClip() {
         return clip;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        double distanceFromMG1 = Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun.getPosition().x, machineGun.getPosition().y);
+        double distanceFromMG2 = Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun2.getPosition().x, machineGun2.getPosition().y);
+
+        if (machineGun.getLives() > 0 && distanceFromMG1 < 8) {
+            MachineGun.Laser laser = machineGun.new Laser(this, machineGun, slingshotBoy);
+        }
+
+        if (machineGun2.getLives() > 0 && distanceFromMG2 < 8) {
+            MachineGun.Laser laser = machineGun.new Laser(this, machineGun2, slingshotBoy);
+        }
+
+        if (dragon.getLives() > 0) {
+            dragon.jump(4);
+            Fireball fireball = new Fireball(this, dragon);
+        }
+
+        if (dragon2.getLives() > 0) {
+            dragon2.jump(4);
+            Fireball fireball = new Fireball(this, dragon2);
+        }
+
+        if (blueKnight.getLives() > 0) {
+            blueKnight.jump(4);
+        }
+        if (blueKnight2.getLives() > 0) {
+            blueKnight2.jump(4);
+        }
+        if (redKnight.getLives() > 0) {
+            redKnight.jump(4);
+        }
+        if (redKnight2.getLives() > 0) {
+            redKnight2.jump(4);
+        }
     }
 }
