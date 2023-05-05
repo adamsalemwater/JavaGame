@@ -50,6 +50,7 @@ public class GameView extends UserView {
 
         drawHealthBarsLevelOne();
         drawHealthBarsLevelTwo();
+        drawHealthBarsLevelThree();
 
 
 
@@ -198,6 +199,84 @@ public class GameView extends UserView {
                 }
             }
         }
+    }
+
+    public void drawHealthBarsLevelThree() {
+            if (world instanceof Level3) {
+                for (Enemy enemy : this.game.getThirdLevel().getEnemies()) {
+                    if (enemy.getName() ==  "Dragon") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getDragon().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "Dragon2") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getDragon2().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "BlueKnight") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getBlueKnight().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "BlueKnight2") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getBlueKnight2().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "RedKnight") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getRedKnight().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "RedKnight2") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getRedKnight2().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "MachineGun") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getMachineGun().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+
+                    if (enemy.getName() ==  "MachineGun2") {
+                        float ratio = enemy.getLives() / this.game.getThirdLevel().getMachineGun2().getFullLife();
+                        if (ratio > 0) {
+                            Image healthImage = changeHealthBar(ratio).getImage();
+                            Point2D.Float enemyCoord = this.worldToView(enemy.getPosition().add(new Vec2(-2,4)));
+                            g.drawImage(healthImage, (int) enemyCoord.x, (int) enemyCoord.y, 50, 50, this);
+                        }
+                    }
+                }
+            }
     }
 
 }

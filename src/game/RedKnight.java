@@ -40,6 +40,10 @@ public class RedKnight extends Enemy implements StepListener {
         return fullLife;
     }
 
+    public void setFullLife(float fullLife) {
+        this.fullLife = fullLife;
+    }
+
     public void setMove(float move) {
         this.move = move;
     }

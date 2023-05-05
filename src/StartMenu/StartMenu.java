@@ -8,6 +8,7 @@ import game.StartBackground;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -28,6 +29,8 @@ public class StartMenu {
     public StartMenu(Game game) throws IOException {
 
         highScore.setText("High Score : " + getHighScore());
+        Font font = new Font("Bernard MT Condensed", Font.BOLD, 20);
+        highScore.setFont(font);
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

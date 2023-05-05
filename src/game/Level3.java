@@ -14,7 +14,7 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Level3 extends GameLevel implements ActionListener {
+public class Level3 extends GameLevel implements ActionListener, StepListener {
 
     private Slingshot slingshotBoy;
     private Game game;
@@ -25,6 +25,7 @@ public class Level3 extends GameLevel implements ActionListener {
     private Dragon dragon, dragon2;
     private RedKnight redKnight, redKnight2;
     private BlueKnight blueKnight, blueKnight2;
+    boolean flag = false;
     public Level3(Game game) {
         super(3);
 
@@ -87,6 +88,14 @@ public class Level3 extends GameLevel implements ActionListener {
         smallBody2.setPosition(new Vec2(3.5f, -6));
         smallBody2.addImage(smallPlatformImage);
 
+        StaticBody smallBody3 = new StaticBody(this, smallShape);
+        smallBody3.setPosition(new Vec2(-13, 5));
+        smallBody3.addImage(smallPlatformImage);
+
+        StaticBody smallBody4 = new StaticBody(this, smallShape);
+        smallBody4.setPosition(new Vec2(3, 13));
+        smallBody4.addImage(smallPlatformImage);
+
 
         // add main character
 
@@ -100,29 +109,39 @@ public class Level3 extends GameLevel implements ActionListener {
         redKnight.setLeftBorder(-7.5f);
         redKnight.setImage();
         redKnight.setLives(3.5f);
+        redKnight.setName("RedKnight");
+        redKnight.setFullLife(3.5f);
 
         redKnight2 = new RedKnight(this, -6, 0, false);
         redKnight2.setRightBorder(-4.5f);
         redKnight2.setLeftBorder(-10);
         redKnight2.setImage();
         redKnight2.setLives(3.5f);
+        redKnight2.setName("RedKnight2");
 
         blueKnight = new BlueKnight(this, 12,17, true);
         blueKnight.setRightBorder(13);
         blueKnight.setLeftBorder(9);
         blueKnight.setImage();
         blueKnight.setLives(3.5f);
+        blueKnight.setName("BlueKnight");
+        blueKnight.setFullLife(3.5f);
 
         blueKnight2 = new BlueKnight(this, 5, -12, false);
         blueKnight2.setRightBorder(7.5f);
         blueKnight2.setLeftBorder(3);
         blueKnight2.setImage();
         blueKnight2.setLives(3.5f);
+        blueKnight2.setName("BlueKnight2");
+        blueKnight.setFullLife(3.5f);
 
         // add machinegun
 
         machineGun = new MachineGun(this, -14, 11, true, slingshotBoy);
+        machineGun.setName("MachineGun");
+
         machineGun2 = new MachineGun(this, 16, 11, false, slingshotBoy);
+        machineGun2.setName("MachineGun2");
 
         // add dragons
 
@@ -130,15 +149,24 @@ public class Level3 extends GameLevel implements ActionListener {
         dragon.setImage();
         dragon.setMove(4);
         dragon.setLives(6.5f);
+        dragon.setName("Dragon");
+        dragon.setFullLife(6.5f);
 
         dragon2 = new Dragon(this, -5, 16, false, slingshotBoy, -2, -10);
         dragon2.setImage();
         dragon2.setMove(3);
         dragon2.setLives(6.5f);
+        dragon2.setName("Dragon2");
+        dragon2.setFullLife(6.5f);
 
-        // test coin
+        // adding all keys to the game
 
-        Coin coin = new Coin(this, -8, 16);
+        Key key = new Key(this, -13, 6);
+        Key key2 = new Key(this, 10, -10);
+        Key key3 = new Key(this, 18, -13);
+        Key key4 = new Key(this, 20, 0);
+        Key key5 = new Key(this, -6, -8);
+
 
 
 
@@ -157,12 +185,53 @@ public class Level3 extends GameLevel implements ActionListener {
 
     }
 
+    public ArrayList<Enemy> getEnemies() {
+        return this.enemies;
+    }
+
     public Slingshot getSlingshotBoy() {
         return this.slingshotBoy;
     }
 
     public SoundClip getClip() {
         return clip;
+    }
+
+
+    public ArrayList<Key> getKeyList() {
+        return keyList;
+    }
+
+    public MachineGun getMachineGun() {
+        return machineGun;
+    }
+
+    public MachineGun getMachineGun2() {
+        return machineGun2;
+    }
+
+    public Dragon getDragon() {
+        return dragon;
+    }
+
+    public Dragon getDragon2() {
+        return dragon2;
+    }
+
+    public RedKnight getRedKnight() {
+        return redKnight;
+    }
+
+    public RedKnight getRedKnight2() {
+        return redKnight2;
+    }
+
+    public BlueKnight getBlueKnight() {
+        return blueKnight;
+    }
+
+    public BlueKnight getBlueKnight2() {
+        return blueKnight2;
     }
 
     @Override
@@ -200,5 +269,18 @@ public class Level3 extends GameLevel implements ActionListener {
         if (redKnight2.getLives() > 0) {
             redKnight2.jump(4);
         }
+    }
+
+    @Override
+    public void preStep(StepEvent stepEvent) {
+        if (keyList.size() == slingshotBoy.getKeys() && !this.flag) {
+            Door door = new Door(this, 5, 0, this.game);
+            this.flag = true;
+        }
+    }
+
+    @Override
+    public void postStep(StepEvent stepEvent) {
+
     }
 }

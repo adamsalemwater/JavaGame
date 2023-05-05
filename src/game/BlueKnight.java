@@ -93,6 +93,10 @@ public class BlueKnight extends Enemy implements StepListener {
         this.leftBorder = leftBorder;
     }
 
+    public void setFullLife(float fullLife) {
+        this.fullLife = fullLife;
+    }
+
     @Override
     public void postStep(StepEvent stepEvent) {
 

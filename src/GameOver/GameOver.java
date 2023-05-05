@@ -22,6 +22,8 @@ public class GameOver {
     public GameOver(Game game) throws IOException {
 
         highScore.setText("High Score : " + getHighScore());
+        Font font = new Font("Bernard MT Condensed", Font.BOLD, 20);
+        highScore.setFont(font);
 
         exitButton.addActionListener(new ActionListener() {
             @Override

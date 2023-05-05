@@ -67,6 +67,10 @@ public class Dragon extends Enemy implements StepListener {
         this.attackImage();
     }
 
+    public void setFullLife(float fullLife) {
+        this.fullLife = fullLife;
+    }
+
 
 
    public void setImage() {
