@@ -240,8 +240,8 @@ public class PolygonEditor extends JPanel
      * @param args command line arguments.
      */
     public static void main(String[] args) {
-        String fileName = "data/platform.png";
-        float boxHeight = 4;
+        String fileName = "data/GateRight.png";
+        float boxHeight = 16;
         int firstCoordIndex = 0;
         if (args.length > 0) {
             try {

@@ -1,13 +1,14 @@
 package game;
 
 
-import javax.swing.JFrame;
+import javax.swing.*;
 
 import GameOver.*;
 import StartMenu.StartMenu;
 
 import java.awt.*;
 
+import java.io.File;
 import java.io.IOException;
 
 
@@ -37,24 +38,28 @@ public class Game {
     private HighScoreReader scoreReaderLevelTwo;
     private HighScoreWriter scoreWriterLevelThree;
     private HighScoreReader scoreReaderLevelThree;
-
+    private JFrame instructionFrame;
     /**
      * Initialise a new Game.
      */
     public Game() throws IOException {
 
+        File file = new File("HighScore");
+        if (file.exists()) {
+            HighScoreReader reader = new HighScoreReader("HighScore");
+            highScore = reader.getReadScore();
+        } else {
+            highScore = 0;
+        }
+
         startMenu = new StartMenu(this);
-        thirdLevel = new Level3(this);
 
         //4. create a Java window (frame) and add the game
         //   view to it
         this.frame = new JFrame("Slingshot Adventures");
 
-        thirdView = new GameView(thirdLevel, 700, 700, thirdLevel.getSlingshotBoy(), "CastleBackground", this);
 
 
-
-//        frame.add(thirdView);
 
         // enable the frame to quit the application
         // when the x button is pressed
@@ -68,7 +73,7 @@ public class Game {
 //        frame.pack();
         // finally, make the frame visible
 
-        frame.add(thirdView);
+        frame.add(startMenu.getMenuPanel());
 
         frame.setVisible(true);
         frame.repaint();
@@ -78,28 +83,10 @@ public class Game {
 
 
 
-        SlingController thirdLevelController = new SlingController(thirdLevel, thirdLevel.getSlingshotBoy());
-        thirdView.addKeyListener(thirdLevelController);
-        thirdView.requestFocus();
-
-        thirdLevel.start();
-
-        Switch check = new Switch(this, thirdLevel.getSlingshotBoy());
-        thirdLevel.addStepListener(check);
-//
-//
-//
-//        thirdLevel.start();
-
 
 
 //        optional: uncomment this to make a debugging view
 //         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
-
-
-
-
-
 
     }
 

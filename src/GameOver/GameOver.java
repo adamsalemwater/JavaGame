@@ -1,9 +1,12 @@
 package GameOver;
 
+import city.cs.engine.SoundClip;
 import game.Game;
 import game.GameOverBackground;
 import game.HighScoreReader;
 
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -18,8 +21,11 @@ public class GameOver {
     private JButton restartButton;
     private JButton exitButton;
     private JLabel highScore;
+    private SoundClip buttonClick;
+    private File scoreLivesFile;
 
     public GameOver(Game game) throws IOException {
+
 
         highScore.setText("High Score : " + getHighScore());
         Font font = new Font("Bernard MT Condensed", Font.BOLD, 20);
@@ -28,7 +34,12 @@ public class GameOver {
         exitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                try {
+                    buttonClick = new SoundClip("sound/ClickSound.wav");
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                 ex.printStackTrace();
+                }
+                buttonClick.play();
             }
         });
 
@@ -36,6 +47,12 @@ public class GameOver {
         restartButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                try {
+                    buttonClick = new SoundClip("sound/ClickSound.wav");
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                buttonClick.play();
                 game.switchStartMenu();
             }
         });
@@ -55,6 +72,8 @@ public class GameOver {
     }
 
     private void createUIComponents() throws IOException {
+
+
         mainPanel = new GameOverBackground();
         highScore = new JLabel();
     }

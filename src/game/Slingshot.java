@@ -27,18 +27,20 @@ public class Slingshot extends Walker implements StepListener {
     private float lives = 3;
 
     private float resetX, resetY;
+    private float fallingY;
 
 
-    public Slingshot(World w, float x, float y, boolean rightFacing, float resetX, float resetY) {
-        super(w, slingshotBody);
+    public Slingshot(World world, float x, float y, boolean rightFacing, float resetX, float resetY, float fallingY) {
+        super(world, slingshotBody);
         this.rightFacing = rightFacing;
         this.x = x;
         this.y = y;
         this.resetX = resetX;
         this.resetY = resetY;
-        this.world = w;
+        this.world = world;
         score = 0;
         this.keys = 0;
+        this.fallingY = fallingY;
 
         SlingshotHit slingshotHit = new SlingshotHit();
         this.addCollisionListener(slingshotHit);
@@ -151,7 +153,7 @@ public class Slingshot extends Walker implements StepListener {
 
     @Override
     public void postStep(StepEvent stepEvent) {
-        if (this.getPosition().y < -20) {
+        if (this.getPosition().y < this.fallingY) {
             this.decrementLives(1);
             this.setPosition(new Vec2(resetX, resetY));
         }
@@ -175,12 +177,12 @@ public class Slingshot extends Walker implements StepListener {
             collisionEvent.getOtherBody() instanceof RedKnight) {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }
-            if (collisionEvent.getOtherBody() instanceof Coin) {
-                ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
-                collisionEvent.getOtherBody().destroy();
-                this.sound.setFile("Coin");
-                this.sound.play();
-            }
+//            if (collisionEvent.getOtherBody() instanceof Coin) {
+//                ((Slingshot)collisionEvent.getReportingBody()).addScore(10);
+//                collisionEvent.getOtherBody().destroy();
+//                this.sound.setFile("Coin");
+//                this.sound.play();
+//            }
             if (collisionEvent.getOtherBody().getName() ==  "Fireball") {
                 ((Slingshot)collisionEvent.getReportingBody()).decrementLives(0.5f);
             }

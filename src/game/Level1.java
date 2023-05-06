@@ -51,7 +51,7 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
 
             // make the boy with the slingshot character
 
-            slingshotBoy = new Slingshot(this, -5, -9f, true, -10, -2.5f);
+            slingshotBoy = new Slingshot(this, -5, -9f, true, -10, -2.5f, -20);
             slingshotBoy.setImage();
 
 
@@ -101,14 +101,14 @@ public class Level1 extends GameLevel implements ActionListener, StepListener {
                 platform.addImage(platformImage2);
             }
 
-            Coin coin = new Coin(this, -11, 15);
-            Coin coin2 = new Coin(this, -9, 15);
-            Coin coin3 = new Coin(this, -7, 15);
-            Coin coin4 = new Coin(this, -5, 15);
-            Coin coin5 = new Coin(this, 4, 15);
-            Coin coin6 = new Coin(this, 6, 15);
-            Coin coin7 = new Coin(this, 8, 15);
-            Coin coin8 = new Coin(this, 10, 15);
+            Coin coin = new Coin(this, -11, 15, slingshotBoy);
+            Coin coin2 = new Coin(this, -9, 15, slingshotBoy);
+            Coin coin3 = new Coin(this, -7, 15, slingshotBoy);
+            Coin coin4 = new Coin(this, -5, 15, slingshotBoy);
+            Coin coin5 = new Coin(this, 4, 15, slingshotBoy);
+            Coin coin6 = new Coin(this, 6, 15, slingshotBoy);
+            Coin coin7 = new Coin(this, 8, 15, slingshotBoy);
+            Coin coin8 = new Coin(this, 10, 15, slingshotBoy);
 
             // Another two platforms to be able to get onto the other three
 

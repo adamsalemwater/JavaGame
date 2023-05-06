@@ -53,12 +53,12 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // make the boy with the slingshot character
 
-        slingshotBoy = new Slingshot(this, -5, -9, true, 20, 20);
+        slingshotBoy = new Slingshot(this, -5, -9, true, 20, 20, -20);
         slingshotBoy.setImage();
 
         // Add the dragon to the platform which can jump and moves faster
 
-        dragon = new Dragon(this, 6, -7, false, slingshotBoy, 7, -1);
+        dragon = new Dragon(this, 6, -7, false, slingshotBoy, 8, -4);
         dragon.setImage();
         dragon.setMove(5);
 
@@ -143,13 +143,13 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // add collectibles for extra points for the player to collect
 
-        Coin coin = new Coin(this, 0, -1);
-        Coin coin2 = new Coin(this, 4, -1);
-        Coin coin3 = new Coin(this, -4, -1);
-        Coin coin4 = new Coin(this, -12, -6 );
-        Coin coin5 = new Coin(this, 12, -5);
-        Coin coin6 = new Coin(this, 2, 16.5f);
-        Coin coin7 = new Coin(this, -2, 16.5f);
+        Coin coin = new Coin(this, 0, -1, slingshotBoy);
+        Coin coin2 = new Coin(this, 4, -1, slingshotBoy);
+        Coin coin3 = new Coin(this, -4, -1, slingshotBoy);
+        Coin coin4 = new Coin(this, -12, -6, slingshotBoy);
+        Coin coin5 = new Coin(this, 12, -5, slingshotBoy);
+        Coin coin6 = new Coin(this, 2, 16.5f, slingshotBoy);
+        Coin coin7 = new Coin(this, -2, 16.5f, slingshotBoy);
 
 
         Timer timer = new Timer(30, this);

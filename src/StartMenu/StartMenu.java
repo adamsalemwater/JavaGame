@@ -21,6 +21,7 @@ public class StartMenu {
     private JButton help;
     private JLabel highScore;
     private SoundClip clip;
+    private SoundClip buttonClick;
 
     public StartBackground getMenuPanel() {
         return (StartBackground) this.menuPanel;
@@ -43,6 +44,13 @@ public class StartMenu {
             @Override
             public void actionPerformed(ActionEvent e) {
                 try {
+                    buttonClick = new SoundClip("sound/ClickSound.wav");
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                buttonClick.play();
+
+                try {
                     game.switchLevelOne();
                     clip.stop();
                 } catch (IOException ex) {
@@ -58,7 +66,12 @@ public class StartMenu {
         help.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-
+                try {
+                    buttonClick = new SoundClip("sound/ClickSound.wav");
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException ex) {
+                    ex.printStackTrace();
+                }
+                buttonClick.play();
             }
         });
     }

@@ -99,7 +99,7 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
 
         // add main character
 
-        slingshotBoy = new Slingshot(this, 10, -3, true, 0, 10);
+        slingshotBoy = new Slingshot(this, 10, -3, true, 0, 10, -25);
         slingshotBoy.setImage();
 
         // add knights
@@ -140,7 +140,7 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
         machineGun = new MachineGun(this, -14, 11, true, slingshotBoy);
         machineGun.setName("MachineGun");
 
-        machineGun2 = new MachineGun(this, 16, 11, false, slingshotBoy);
+        machineGun2 = new MachineGun(this, -16, 3, true, slingshotBoy);
         machineGun2.setName("MachineGun2");
 
         // add dragons
@@ -162,11 +162,43 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
         // adding all keys to the game
 
         Key key = new Key(this, -13, 6);
-        Key key2 = new Key(this, 10, -10);
-        Key key3 = new Key(this, 18, -13);
-        Key key4 = new Key(this, 20, 0);
+        Key key2 = new Key(this, 14, 6);
+        Key key3 = new Key(this, 16, -11.5f);
+        Key key4 = new Key(this, -15.5f, -11.25f);
         Key key5 = new Key(this, -6, -8);
 
+        // add gates and small platforms which has to be broken to get to the key
+
+        StaticBody smallPlatform4 = new StaticBody(this, smallShape);
+        smallPlatform4.setPosition(new Vec2(16, -10f));
+        smallPlatform4.addImage(smallPlatformImage);
+
+        Gate gate = new Gate(this, 14.85f,-12, false);
+
+        StaticBody smallPlatform5 = new StaticBody(this, smallShape);
+        smallPlatform5.setPosition(new Vec2(-16, -10));
+        smallPlatform5.addImage(smallPlatformImage);
+
+        Gate gate2 = new Gate(this, -14f, -12.5f, true);
+
+
+        // add portals to level
+
+        Portal portal = new Portal(this, 14, -2, true, new Vec2(5, 15));
+        Portal portal2 = new Portal(this, 3, 15, true, new Vec2(12, -2));
+        Portal portal3 = new Portal(this, -1, 0, false, new Vec2(-14.5f, -6));
+        Portal portal4 = new Portal(this, -16.5f, -6, false, new Vec2(1, 0));
+
+        // add coins to the level
+
+        Coin coin = new Coin(this, -14, -6.5f, slingshotBoy);
+        Coin coin2 = new Coin(this, 0, 14.5f, slingshotBoy);
+        Coin coin3 = new Coin(this, 2, 14.5f, slingshotBoy);
+        Coin coin4 = new Coin(this, 1, -2, slingshotBoy);
+        Coin coin5 = new Coin(this, 3, -2, slingshotBoy);
+        Coin coin6 = new Coin(this, 15, 3.5f, slingshotBoy);
+        Coin coin7 = new Coin(this, 14, -8, slingshotBoy);
+        Coin coin8 = new Coin(this, 16, -8, slingshotBoy);
 
 
 
@@ -182,6 +214,7 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
         Timer timer = new Timer(0, this);
         timer.setDelay(1500);
         timer.start();
+
 
     }
 
@@ -239,12 +272,12 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
         double distanceFromMG1 = Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun.getPosition().x, machineGun.getPosition().y);
         double distanceFromMG2 = Point2D.distance(slingshotBoy.getPosition().x, slingshotBoy.getPosition().y, machineGun2.getPosition().x, machineGun2.getPosition().y);
 
-        if (machineGun.getLives() > 0 && distanceFromMG1 < 8) {
+        if (machineGun.getLives() > 0 && distanceFromMG1 < 20) {
             MachineGun.Laser laser = machineGun.new Laser(this, machineGun, slingshotBoy);
         }
 
-        if (machineGun2.getLives() > 0 && distanceFromMG2 < 8) {
-            MachineGun.Laser laser = machineGun.new Laser(this, machineGun2, slingshotBoy);
+        if (machineGun2.getLives() > 0 && distanceFromMG2 < 20) {
+            MachineGun.Laser laser = machineGun2.new Laser(this, machineGun2, slingshotBoy);
         }
 
         if (dragon.getLives() > 0) {
@@ -274,7 +307,7 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
     @Override
     public void preStep(StepEvent stepEvent) {
         if (keyList.size() == slingshotBoy.getKeys() && !this.flag) {
-            Door door = new Door(this, 5, 0, this.game);
+            Door door = new Door(this, 15, -8.5f, this.game);
             this.flag = true;
         }
     }
