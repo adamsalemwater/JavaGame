@@ -99,7 +99,7 @@ public class Level3 extends GameLevel implements ActionListener, StepListener {
 
         // add main character
 
-        slingshotBoy = new Slingshot(this, 10, -3, true, 0, 10, -25);
+        slingshotBoy = new Slingshot(this, 10, -3, true, 10, -3, -25);
         slingshotBoy.setImage();
 
         // add knights

@@ -4,6 +4,7 @@ package game;
 import javax.swing.*;
 
 import GameOver.*;
+import Instruction.Instruction;
 import StartMenu.StartMenu;
 
 import java.awt.*;
@@ -14,6 +15,7 @@ import java.io.IOException;
 
 /**
  * Your main game entry point
+ * Contains all the necessary methods to switch through different user views and panels
  */
 public class Game {
 
@@ -31,6 +33,7 @@ public class Game {
     private GameView secondView;
     private GameView thirdView;
     private StartMenu startMenu;
+    private Instruction instruction;
     private int highScore;
     private HighScoreWriter scoreWriterLevelOne;
     private HighScoreReader scoreReaderLevelOne;
@@ -38,7 +41,6 @@ public class Game {
     private HighScoreReader scoreReaderLevelTwo;
     private HighScoreWriter scoreWriterLevelThree;
     private HighScoreReader scoreReaderLevelThree;
-    private JFrame instructionFrame;
     /**
      * Initialise a new Game.
      */
@@ -84,12 +86,42 @@ public class Game {
 
 
 
-
 //        optional: uncomment this to make a debugging view
 //         JFrame debugView = new DebugViewer(secondLevel, 500, 500);
 
     }
 
+    /**
+     * Creates an object of type Intruction which is a JPanel that has some text in it.
+     * We remove the previous view and add the instruction panel to our global frame
+     */
+    public void instructionPage() {
+
+         instruction = new Instruction(this);
+         instruction.getInstructionPanel().setPreferredSize(new Dimension(500, 500));
+
+
+        this.frame.remove(startMenu.getMenuPanel());
+        this.frame.add(instruction.getInstructionPanel());
+
+        this.frame.repaint();
+        this.frame.pack();
+        this.frame.revalidate();
+    }
+
+    public void returnFromInstructions() {
+        this.frame.remove(instruction.getInstructionPanel());
+        this.frame.add(startMenu.getMenuPanel());
+        this.frame.repaint();
+        this.frame.pack();
+        this.frame.revalidate();
+    }
+
+    /**
+     * This method stops and removes the first level user view and replaces it with a game over panel
+     * We check if the high score has been reached by reading from the previous high score and comparing the current one
+     * @throws IOException
+     */
     public void gameEndedOne() throws IOException {
         firstLevel.stop();
         firstLevel.getClip().stop();
@@ -135,6 +167,12 @@ public class Game {
         frame.repaint();
         frame.pack();
     }
+
+    /**
+     *  When the main character reaches the last door of level 3, a success panel is added
+     *  This is followed by a SoundClip of a victory sound with any high scores reached displayed
+     * @throws IOException
+     */
 
     public void gameSuccess() throws IOException {
         thirdLevel.stop();

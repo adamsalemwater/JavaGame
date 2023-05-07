@@ -22,13 +22,13 @@ public class GameOver {
     private JButton exitButton;
     private JLabel highScore;
     private SoundClip buttonClick;
-    private File scoreLivesFile;
 
     public GameOver(Game game) throws IOException {
 
 
         highScore.setText("High Score : " + getHighScore());
         Font font = new Font("Bernard MT Condensed", Font.BOLD, 20);
+        highScore.setForeground(Color.red);
         highScore.setFont(font);
 
         exitButton.addActionListener(new ActionListener() {
@@ -42,6 +42,8 @@ public class GameOver {
                 buttonClick.play();
             }
         });
+
+
 
 
         restartButton.addActionListener(new ActionListener() {

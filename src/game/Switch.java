@@ -14,9 +14,21 @@ public class Switch implements StepListener{
 
     Game game;
     Slingshot slingshotBoy;
+
+    /**
+     * Each one of the flag variables are used so that the StepListener only calls the methods below once
+     * when the condition is met
+     */
     private boolean flagOne = false;
     private boolean flagTwo = false;
     private boolean flagThree = false;
+
+    /**
+     *  The Switch checks if the slingshotBoy has lost all his lives so that the game over panel can
+     *  then be added to the frame
+     * @param game
+     * @param slingshotBoy
+     */
     public Switch(Game game, Slingshot slingshotBoy) {
         this.game = game;
         this.slingshotBoy = slingshotBoy;

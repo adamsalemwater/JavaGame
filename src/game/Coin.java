@@ -8,7 +8,10 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.IOException;
 import java.util.EventListener;
 
-
+/**
+ * Class which creates an object simulating a coin which can be collected by the player
+ * The coins are ghostly fixtures and so do not collide with any other body
+ */
 public class Coin extends StaticBody implements EventListener {
 
     private World world;
@@ -50,6 +53,11 @@ public class Coin extends StaticBody implements EventListener {
         }
 
 
+        /**
+         * Overrides the beginContact method to allow for the main character to collect coins
+         * and increase their score as they do so.
+         * @param sensorEvent
+         */
         @Override
         public void beginContact(SensorEvent sensorEvent) {
 
@@ -58,12 +66,8 @@ public class Coin extends StaticBody implements EventListener {
                     coinSound = new SoundClip("sound/Coin.wav");
                     this.coin.destroy();
                     this.slingshotBoy.addScore(10);
-                } catch (UnsupportedAudioFileException e) {
-                    throw new RuntimeException(e);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                } catch (LineUnavailableException e) {
-                    throw new RuntimeException(e);
+                } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+                    e.printStackTrace();
                 }
                 coinSound.play();
             }

@@ -53,7 +53,7 @@ public class Level2 extends GameLevel implements ActionListener, StepListener {
 
         // make the boy with the slingshot character
 
-        slingshotBoy = new Slingshot(this, -5, -9, true, 20, 20, -20);
+        slingshotBoy = new Slingshot(this, -5, -9, true, -5, -9, -20);
         slingshotBoy.setImage();
 
         // Add the dragon to the platform which can jump and moves faster
