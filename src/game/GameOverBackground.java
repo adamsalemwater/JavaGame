@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 
+/**
+ * GameOverBackground class which displays the JPanel for when the main character either wins or loses
+ */
 public class GameOverBackground extends JPanel {
 
     private boolean won;
@@ -24,6 +27,12 @@ public class GameOverBackground extends JPanel {
         this.won = won;
     }
 
+
+    /**
+     * If the slingshot boy wins, an image icon of the princess and the main character appears with the victory music.
+     * Else, the game over background image shows up.
+     * @param g the <code>Graphics</code> object to protect
+     */
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

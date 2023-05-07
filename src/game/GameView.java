@@ -8,6 +8,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
+/**
+ * GameView class contains the display of all features on the user view, like the lives of the main character and the enemy
+ */
 public class GameView extends UserView {
 
     private Image background;
@@ -112,6 +115,11 @@ public class GameView extends UserView {
 
     }
 
+    /**
+     *
+     * @param ratio - takes the ratio of the current health against the full health of the enemies
+     * @return ImageIcon - the ratio coincides with the health bar image which is displayed above the enemy
+     */
     public ImageIcon changeHealthBar(float ratio) {
         ImageIcon image = new ImageIcon("data/HealthBar100.png");
         if (ratio >= 0.9 && ratio <1.0) {
@@ -128,6 +136,9 @@ public class GameView extends UserView {
         return image;
     }
 
+    /**
+     * drawHealthBarsLevelOne method adds the health bars to each enemy into the level
+     */
     public void drawHealthBarsLevelOne() {
 
         if (world instanceof Level1) {
