@@ -191,7 +191,9 @@ public class Game {
 
 
 
-    public void switchStartMenu() {
+    public void switchStartMenu() throws IOException {
+        startMenu = new StartMenu(this);
+        startMenu.getMenuPanel().setPreferredSize(new Dimension(500, 500));
         frame.setVisible(false);
         gameOver.getMainPanel().setPreferredSize(new Dimension(500, 500));
         this.frame.remove(gameOver.getMainPanel());

@@ -55,7 +55,11 @@ public class GameOver {
                     ex.printStackTrace();
                 }
                 buttonClick.play();
-                game.switchStartMenu();
+                try {
+                    game.switchStartMenu();
+                } catch (IOException ex) {
+                    throw new RuntimeException(ex);
+                }
             }
         });
     }
